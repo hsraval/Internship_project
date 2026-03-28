@@ -1,5 +1,5 @@
 const JWT=require("jsonwebtoken");
-const model=require("../models/User");
+const model=require("../models/user.model");
 
 const protect=async(req,res,next)=>{
     const token=req.cookies.token;

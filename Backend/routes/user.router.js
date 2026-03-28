@@ -5,12 +5,17 @@ const {
     getUsers,
     singleUser,
     editUser,
-    deleteUser
+    deleteUser,
+    restoreUser
 } = require('../controllers/user.controller')
 
-router.get('/',getUsers)
-router.get('/:id',singleUser)
-router.patch('/:id',editUser)
-router.delete('/:id',deleteUser)
+const authorizeRoles = require('../middleware/role.middleware');
+const protect = require('../middleware/auth.middleware')
+
+router.get('/',protect,authorizeRoles('admin'),getUsers)
+router.get('/:id',protect,authorizeRoles('admin'),singleUser)
+router.patch('/:id',protect,authorizeRoles('admin'),editUser)
+router.patch('/:id/restore',protect,authorizeRoles('admin'),restoreUser)
+router.delete('/:id',protect,deleteUser)
 
 module.exports = router
