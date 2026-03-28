@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'moderator', 'admin'],
-      default: 'user',
+      enum: ['customer', 'admin'],
+      default: 'customer',
     },
     deleted:{
       type:Boolean,
