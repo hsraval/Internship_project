@@ -5,6 +5,7 @@ const connection = require('./config/connection')
 const dotenv = require('dotenv')
 const authRouter = require('./routes/auth.router')
 const userRouter = require('./routes/user.router')
+const orderRouter = require('./routes/order.router')
 
 dotenv.config()
 connection()
@@ -21,6 +22,7 @@ app.use(cookiparser())
 // Auth Router
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
+app.use('/api/order',orderRouter)
 
 
 app.use((err, req, res, next) => {

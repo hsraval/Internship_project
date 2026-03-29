@@ -111,7 +111,7 @@ exports.editUser = async (req,res,next) =>{
 
 exports.deleteUser = async (req,res,next) =>{
     try{
-        const { id } = req.params;
+        const { id } = req.params.id;
 
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({success:false,message:"Invalid Id"})
@@ -139,7 +139,7 @@ exports.deleteUser = async (req,res,next) =>{
 
 exports.restoreUser = async (req,res,next) =>{
     try{
-        const { id } = req.params;
+        const { id } = req.params.id;
 
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({success:false,message:"Invalid Id"})
