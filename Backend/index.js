@@ -7,12 +7,15 @@ const connection = require('./config/connection')
 const authRouter = require('./routes/auth.router')
 const categoryRouter= require('./routes/category.router');
 const productRouter=require('./routes/product.router');
+const {limiter,GeneralLimiter}=require('./middleware/rate.limiter');
+
 
 connection()
 
 // Instnace of Express
 const app = express()
 app.set('trust proxy',1)
+app.use(GeneralLimiter);
 
 // Middleware
 app.use(express.json())
