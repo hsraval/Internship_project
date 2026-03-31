@@ -4,6 +4,27 @@ const bcrypt=require("bcryptjs");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 
+exports.getMe = async (req, res) => {
+  try {
+    // req.user is populated by the 'protect' middleware
+    if (!req.user) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    // Double check if user is active and not deleted
+    if (req.user.deleted || !req.user.isActive) {
+      return res.status(401).json({ message: 'Account is deactivated or deleted' });
+    }
+
+    res.status(200).json({
+      success: true,
+      user: req.user
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 exports.register= async(req,res) =>{
     const {name,email,passwordHash,role}=req.body;
 

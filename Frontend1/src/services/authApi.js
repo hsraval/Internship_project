@@ -1,0 +1,30 @@
+import axios from "axios";
+
+const API_BASE_URL = "http://localhost:5000/api/auth";
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const registerUser = (data) => api.post("/register", data);
+export const loginUser = (data) => api.post("/login", data);
+export const logoutUser = () => api.post("/logout");
+export const forgotPassword = (data) => api.post("/forgot-password", data);
+export const resetPassword = (token, data) => api.post(`/reset-password/${token}`, data);
+export const getMe = () => api.get("/me");
+
+export default api;

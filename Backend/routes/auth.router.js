@@ -1,8 +1,10 @@
 const express=require("express");
 const router=express.Router();
+const protect=require("../middleware/auth.middleware");
 const {limiter,GeneralLimiter}=require("../middleware/rate.limiter");
-const {register,login,logout,forgotPassword,resetPassword}=require("../controllers/auth.controller");
+const {getMe,register,login,logout,forgotPassword,resetPassword}=require("../controllers/auth.controller");
 
+router.get("/me",protect,getMe)
 router.post("/register",register);
 router.post("/login",limiter,login);
 router.post("/logout",logout);
