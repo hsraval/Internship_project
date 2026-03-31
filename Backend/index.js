@@ -7,6 +7,7 @@ const connection = require('./config/connection')
 const authRouter = require('./routes/auth.router')
 const categoryRouter= require('./routes/category.router');
 const productRouter=require('./routes/product.router');
+const orderRouter = require('./routes/order.router')
 const userRouter = require('./routes/user.router');
 
 connection()
@@ -23,6 +24,7 @@ app.use('/api/auth',authRouter)
 app.use('/api/category',categoryRouter);
 app.use('/api/product',productRouter);
 app.use('/api/user',userRouter);
+app.use('/api/order',orderRouter)
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
