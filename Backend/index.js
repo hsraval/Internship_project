@@ -1,14 +1,4 @@
 const express = require('express')
-<<<<<<< HEAD
-const cors = require('cors')
-const cookiparser = require('cookie-parser')
-const connection = require('./config/connection')
-const dotenv = require('dotenv')
-const authRouter = require('./routes/auth.router')
-const userRouter = require('./routes/user.router')
-
-dotenv.config()
-=======
 const dotenv = require('dotenv')
 dotenv.config()
 const cors = require('cors')
@@ -17,8 +7,8 @@ const connection = require('./config/connection')
 const authRouter = require('./routes/auth.router')
 const categoryRouter= require('./routes/category.router');
 const productRouter=require('./routes/product.router');
+const userRouter = require('./routes/user.router');
 
->>>>>>> harsh
 connection()
 
 // Instnace of Express
@@ -28,16 +18,6 @@ app.set('trust proxy',1)
 // Middleware
 app.use(express.json())
 app.use(cors())
-<<<<<<< HEAD
-app.use(cookiparser())
-
-// Auth Router
-app.use('/api/auth',authRouter)
-app.use('/api/user',userRouter)
-
-
-app.use((err, req, res, next) => {
-=======
 app.use(cookieparser())
 app.use(express.urlencoded({extended:true}));
 
@@ -45,6 +25,7 @@ app.use(express.urlencoded({extended:true}));
 app.use('/api/auth',authRouter)
 app.use('/api/category',categoryRouter);
 app.use('/api/product',productRouter);
+app.use('/api/user',userRouter);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
@@ -54,7 +35,6 @@ app.use((err, req, res, next) => {
    if(err.code==="LIMIT_UNEXPECTED_FILE"){
       return res.status(400).json({success:false,message:"you can upload maximum 5 images only"});
    }
->>>>>>> harsh
    const statusCode = err.statusCode || 500;
    res.status(statusCode).json({
       success: false,
@@ -63,8 +43,4 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000
-<<<<<<< HEAD
-app.listen(PORT,'0.0.0.0',()=>console.log(`Server Runnig On ${PORT}`))
-=======
 app.listen(PORT,'0.0.0.0',()=>console.log(`Server Running On ${PORT}`))
->>>>>>> harsh
