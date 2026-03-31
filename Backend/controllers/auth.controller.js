@@ -22,7 +22,7 @@ exports.register= async(req,res) =>{
         return res.status(201).json({success:true,msg:"User Registered successfully"});
     }
     catch(err){
-        return res.status(500).json(err.message);
+        return res.status(500).json({success:false,msg:err.message});
     }
 }
 
@@ -31,24 +31,25 @@ exports.login= async(req,res) =>{
     const {email,password}=req.body;
     
     if(!email?.trim() || !password?.trim()){
-        return res.status(400).json({msg:"All field required"});
+        return res.status(400).json({success:false,msg:"All field required"});
     }
 
     try{
         const user=await model.findOne({email});
         
         if(!user){
-            return res.status(400).json({msg:"Invalid Email or password"});
+            return res.status(400).json({success:false,msg:"Invalid Email or password"});
         }
         
         const ismatch=await bcrypt.compare(password,user.passwordHash);
         
         if(!ismatch){
-            return res.status(400).json({msg:"Invalid Email or password"});
+            return res.status(400).json({success:false,msg:"Invalid Email or password"});
         }
 
         if(user.deleted || !user.isActive){
             return res.status(403).json({
+                success:false,
                 msg: "Account is deactivated ot deleted. Please contact admin"
             });
         }
@@ -69,19 +70,19 @@ exports.login= async(req,res) =>{
             maxAge:24*60*60*1000
         });
 
-        res.status(200).json({msg:"Login successfully"});
+        res.status(200).json({success:true,msg:"Login successfully"});
     }
     catch(err){
-        return res.status(500).json(err.message);
+        return res.status(500).json({success:false,message:err.message});
     }
 }
 
 exports.logout=(req,res)=>{
     try{
         res.clearCookie("token");
-        res.status(200).json({msg:"Logged out successfully"});
+        res.status(200).json({success:true,msg:"Logged out successfully"});
     }catch(err){
-        return res.status(500).json(err.message);
+        return res.status(500).json({success:false,message:err.message});
     }
 }
 
@@ -100,7 +101,7 @@ exports.forgotPassword = async (req, res) => {
 
         if (!user) {
             return res.json({
-                success: true,
+                success: false,
                 msg: "If email exists, reset link sent"
             });
         }
