@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 
 exports.register= async(req,res) =>{
-    const {name,email,passwordHash,role}=req.body;
+    const {name,email,passwordHash}=req.body;
 
     try{
         const data=await model.findOne({email});
@@ -17,7 +17,7 @@ exports.register= async(req,res) =>{
         const salt=await bcrypt.genSalt(10);
         const password=await bcrypt.hash(passwordHash,salt);
 
-        await model.create({name,email,passwordHash:password,role});
+        await model.create({name,email,passwordHash:password});
 
         return res.status(201).json({success:true,msg:"User Registered successfully"});
     }
