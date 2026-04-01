@@ -10,9 +10,9 @@ const api = axios.create({
   },
 });
 
-api.interceptors.response.catch(
-  (error) => Promise.reject(error)
-);
+// api.interceptors.response.catch(
+//   (error) => Promise.reject(error)
+// );
 
 export const registerUser = (data) => api.post("/register", data);
 export const loginUser = (data) => api.post("/login", data);
