@@ -79,7 +79,7 @@ exports.getUserOrders = async (req,res,next) =>{
 
 exports.getAllOrders = async (req,res,next) =>{
     try{
-        let { page=1,limit=5,status} = req.query;
+        let { page=1,limit=5,status,stitching} = req.query;
 
         page = Number(page);
         limit = Number(limit);
@@ -91,8 +91,34 @@ exports.getAllOrders = async (req,res,next) =>{
         
         const filter = { isDeleted:false }
         
-        if(status){
+        if (status) {
+            const validStatus = [
+                "pending",
+                "confirmed",
+                "stitching",
+                "ready",
+                "delivered",
+                "cancelled"
+            ];
+
+            if (!validStatus.includes(status)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid status value"
+                });
+            }
+
             filter.status = status;
+        }
+        if (stitching !== undefined) {
+            if (stitching === "true" || stitching === "false") {
+                filter["stitching.type"] = stitching === "true";
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message: "stitching must be true or false"
+                });
+            }
         }
 
         const orders = await Order.find(filter).skip(skip).limit(limit).sort({CreatedAt:-1})
@@ -230,7 +256,7 @@ exports.updateOrderDetail = async (req,res,next) =>{
             return res.status(400).json({success:false,message:"Please Enter Valid ID"})
         }
 
-        const order = await Order.findById(id,userId)   ;
+        const order = await Order.findOne({_id:id,userId});
         if(!order || order.isDeleted){
             return res.status(404).json({success:true,message:"Order Not Found"})
         }
@@ -241,16 +267,16 @@ exports.updateOrderDetail = async (req,res,next) =>{
 
         const { items,stitching,measurements,address } = req.body;
 
-        if(!Array.isArray(items) || items.length === 0){
-            return res.status(400).json({
-                success: false,
-                message: "Items must be a non-empty array"
-            });
-        }
-
         let totalAmount = 0;
 
         if(items && items.length>0){
+
+            if(!Array.isArray(items) || items.length === 0){
+                return res.status(400).json({
+                    success: false,
+                    message: "Items must be a non-empty array"
+                });
+            }
 
             const updatedItems = [];
 
@@ -284,7 +310,14 @@ exports.updateOrderDetail = async (req,res,next) =>{
             order.totalAmount = totalAmount;
         }
 
-        if(stitching !== undefined) order.stitching = stitching;
+        if (stitching) {
+            if (stitching.type !== undefined) {
+                order.stitching.type = stitching.type;
+            }
+            if (stitching.instructions !== undefined) {
+                order.stitching.instructions = stitching.instructions;
+            }
+        }
         if(measurements) {
             for (let key in measurements) {
                 if (measurements[key] <= 0) {
@@ -323,7 +356,7 @@ exports.cancleOrder = async (req,res,next) =>{
             return res.status(400).json({success:false,message:"Please Enter Valid ID"})
         }
 
-        const order = await Order.findById(id,userId)
+        const order = await Order.findById({_id:id,userId}) 
 
         if(!order || order.isDeleted){
             return res.status(404).json({success:false,message:"Order Not found"})

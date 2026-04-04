@@ -5,7 +5,7 @@ const orderSchema = new mongoose.Schema({
 
   items: [
     {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "product.controller" },
+      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
       quantity: Number,
       price: Number
     }
@@ -20,8 +20,13 @@ const orderSchema = new mongoose.Schema({
   },
 
   stitching: {
-    type: Boolean,
-    instructions: String
+    type: {
+      type: Boolean,
+      default: false
+    },
+    instructions: {
+      type: String
+    }
   },
 
   measurements: {
