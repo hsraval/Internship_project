@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const Order = require('../models/order.model')
 const Product = require('../models/product.model')
+const Bill = require('../models/bill.model')
 
 exports.createOrder = async (req,res,next) =>{
     try{
@@ -35,9 +36,12 @@ exports.createOrder = async (req,res,next) =>{
                 return res.status(404).json({success:false,message:"Product Not Found"})
             }
 
-            const price = item.quantity * product.pricePerMeter;
-            item.price = price;
-            totalAmount += price;
+            const unitPrice = product.pricePerMeter;
+
+            const itemTotal = unitPrice * item.quantity;
+
+            item.price = unitPrice;
+            totalAmount += itemTotal;
         }
 
         if (!address || !address.city || !address.pincode) {
@@ -95,7 +99,7 @@ exports.getAllOrders = async (req,res,next) =>{
             filter.status = status;
         }
 
-        const orders = await Order.find(filter).skip(skip).limit(limit).sort({CreatedAt:-1})
+        const orders = await Order.find(filter).skip(skip).limit(limit).sort({createdAt:-1})
 
         const totalOrders = await Order.countDocuments(filter)
 
@@ -159,6 +163,30 @@ exports.updateOrderStatus = async (req,res,next) =>{
             return res.status(404).json({success:false,message:"Order Not Found"})
         }
 
+        if (status === "delivered") {
+            const existingBill = await Bill.findOne({ order: order._id });
+
+            if (!existingBill) {
+                const items = order.items.map(item => ({
+                    product: item.product,
+                    price: item.price,
+                    quantity: item.quantity,
+                    total: item.price * item.quantity
+                }));
+
+                const subtotal = items.reduce((acc, i) => acc + i.total, 0);
+
+                const bill = await Bill.create({
+                    order: order._id,
+                    user: order.userId,
+                    invoiceNumber: `INV-${Date.now()}`,
+                    items,
+                    subtotal,
+                    totalAmount: subtotal,
+                    billingAddress: order.address
+                });
+            }
+        }
         order.status = status;
         await order.save();
 
@@ -230,9 +258,9 @@ exports.updateOrderDetail = async (req,res,next) =>{
             return res.status(400).json({success:false,message:"Please Enter Valid ID"})
         }
 
-        const order = await Order.findById(id,userId)   ;
+        const order = await Order.findById({ _id:id,userId});
         if(!order || order.isDeleted){
-            return res.status(404).json({success:true,message:"Order Not Found"})
+            return res.status(404).json({success:false,message:"Order Not Found"})
         }
 
         if(order.status !== 'pending'){
@@ -323,7 +351,7 @@ exports.cancleOrder = async (req,res,next) =>{
             return res.status(400).json({success:false,message:"Please Enter Valid ID"})
         }
 
-        const order = await Order.findById(id,userId)
+        const order = await Order.findById({_id:id,userId});
 
         if(!order || order.isDeleted){
             return res.status(404).json({success:false,message:"Order Not found"})
@@ -335,6 +363,8 @@ exports.cancleOrder = async (req,res,next) =>{
 
         order.status = 'cancelled'
         await order.save();
+
+        return res.status(200).json({success:true,message:"Order Cancelled Succeesfully..!"})
     }catch(err){
         next(err)
     }
