@@ -24,6 +24,6 @@ router.patch("/:id/status",updateOrderStatus); // admin can update status
 router.delete("/:id",deleteOrder); // user or admin can delete orders
 router.patch("/:id/restore",restoreOrder); // admin can restore order
 router.patch("/:id",updateOrderDetail) // user update order detail only before pending
-router.post(':/id',cancleOrder) // user can cancle order before pending
+router.post('/:id',cancleOrder) // user can cancle order before pending
 
 module.exports = router;
