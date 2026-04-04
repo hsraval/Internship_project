@@ -7,17 +7,15 @@ const connection = require('./config/connection')
 const authRouter = require('./routes/auth.router')
 const categoryRouter= require('./routes/category.router');
 const productRouter=require('./routes/product.router');
+const wishlistRouter=require('./routes/wishlist.router');
 const {limiter,GeneralLimiter}=require('./middleware/rate.limiter');
-
 
 connection()
 
-// Instnace of Express
 const app = express()
 app.set('trust proxy',1)
 app.use(GeneralLimiter);
 
-// Middleware
 app.use(express.json())
 app.use(
   cors({
@@ -28,10 +26,10 @@ app.use(
 app.use(cookieparser())
 app.use(express.urlencoded({extended:true}));
 
-// Auth Router
 app.use('/api/auth',authRouter)
 app.use('/api/category',categoryRouter);
 app.use('/api/product',productRouter);
+app.use('/api/wishlist',wishlistRouter);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
