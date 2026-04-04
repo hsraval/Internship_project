@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const Order = require('../models/order.model')
 const Product = require('../models/product.model')
+const Bill = require('../models/bill.model')
 
 exports.createOrder = async (req,res,next) =>{
     try{
@@ -35,9 +36,12 @@ exports.createOrder = async (req,res,next) =>{
                 return res.status(404).json({success:false,message:"Product Not Found"})
             }
 
-            const price = item.quantity * product.pricePerMeter;
-            item.price = price;
-            totalAmount += price;
+            const unitPrice = product.pricePerMeter;
+
+            const itemTotal = unitPrice * item.quantity;
+
+            item.price = unitPrice;
+            totalAmount += itemTotal;
         }
 
         if (!address || !address.city || !address.pincode) {
@@ -79,7 +83,7 @@ exports.getUserOrders = async (req,res,next) =>{
 
 exports.getAllOrders = async (req,res,next) =>{
     try{
-        let { page=1,limit=5,status,stitching} = req.query;
+        let { page=1,limit=5,status} = req.query;
 
         page = Number(page);
         limit = Number(limit);
@@ -88,40 +92,14 @@ exports.getAllOrders = async (req,res,next) =>{
             return res.status(400).json({success:false,message:"page and limit must be postive value"})
         }
         const skip = (page-1)*limit;
-        
+
         const filter = { isDeleted:false }
-        
-        if (status) {
-            const validStatus = [
-                "pending",
-                "confirmed",
-                "stitching",
-                "ready",
-                "delivered",
-                "cancelled"
-            ];
 
-            if (!validStatus.includes(status)) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Invalid status value"
-                });
-            }
-
+        if(status){
             filter.status = status;
         }
-        if (stitching !== undefined) {
-            if (stitching === "true" || stitching === "false") {
-                filter["stitching.type"] = stitching === "true";
-            } else {
-                return res.status(400).json({
-                    success: false,
-                    message: "stitching must be true or false"
-                });
-            }
-        }
 
-        const orders = await Order.find(filter).skip(skip).limit(limit).sort({CreatedAt:-1})
+        const orders = await Order.find(filter).skip(skip).limit(limit).sort({createdAt:-1})
 
         const totalOrders = await Order.countDocuments(filter)
 
@@ -185,6 +163,30 @@ exports.updateOrderStatus = async (req,res,next) =>{
             return res.status(404).json({success:false,message:"Order Not Found"})
         }
 
+        if (status === "delivered") {
+            const existingBill = await Bill.findOne({ order: order._id });
+
+            if (!existingBill) {
+                const items = order.items.map(item => ({
+                    product: item.product,
+                    price: item.price,
+                    quantity: item.quantity,
+                    total: item.price * item.quantity
+                }));
+
+                const subtotal = items.reduce((acc, i) => acc + i.total, 0);
+
+                const bill = await Bill.create({
+                    order: order._id,
+                    user: order.userId,
+                    invoiceNumber: `INV-${Date.now()}`,
+                    items,
+                    subtotal,
+                    totalAmount: subtotal,
+                    billingAddress: order.address
+                });
+            }
+        }
         order.status = status;
         await order.save();
 
@@ -256,9 +258,9 @@ exports.updateOrderDetail = async (req,res,next) =>{
             return res.status(400).json({success:false,message:"Please Enter Valid ID"})
         }
 
-        const order = await Order.findOne({_id:id,userId});
+        const order = await Order.findById({ _id:id,userId});
         if(!order || order.isDeleted){
-            return res.status(404).json({success:true,message:"Order Not Found"})
+            return res.status(404).json({success:false,message:"Order Not Found"})
         }
 
         if(order.status !== 'pending'){
@@ -267,16 +269,16 @@ exports.updateOrderDetail = async (req,res,next) =>{
 
         const { items,stitching,measurements,address } = req.body;
 
+        if(!Array.isArray(items) || items.length === 0){
+            return res.status(400).json({
+                success: false,
+                message: "Items must be a non-empty array"
+            });
+        }
+
         let totalAmount = 0;
 
         if(items && items.length>0){
-
-            if(!Array.isArray(items) || items.length === 0){
-                return res.status(400).json({
-                    success: false,
-                    message: "Items must be a non-empty array"
-                });
-            }
 
             const updatedItems = [];
 
@@ -293,12 +295,12 @@ exports.updateOrderDetail = async (req,res,next) =>{
                     });
                 }
                 const product = await Product.findById(item.product)
-    
+
                 if(!product || product.isDeleted){
                     return res.status(404).json({success:false,message:"Product Not Found"})
                 }
                 const price = item.quantity * product.pricePerMeter;
-                
+
                 updatedItems.push({
                     product:product._id,
                     quantity:item.quantity,
@@ -310,14 +312,7 @@ exports.updateOrderDetail = async (req,res,next) =>{
             order.totalAmount = totalAmount;
         }
 
-        if (stitching) {
-            if (stitching.type !== undefined) {
-                order.stitching.type = stitching.type;
-            }
-            if (stitching.instructions !== undefined) {
-                order.stitching.instructions = stitching.instructions;
-            }
-        }
+        if(stitching !== undefined) order.stitching = stitching;
         if(measurements) {
             for (let key in measurements) {
                 if (measurements[key] <= 0) {
@@ -328,7 +323,7 @@ exports.updateOrderDetail = async (req,res,next) =>{
             }
             order.measurements = measurements;
         }
-        
+
         if (address) {
             if (!address.city || !address.pincode) {
                 return res.status(400).json({
@@ -356,7 +351,7 @@ exports.cancleOrder = async (req,res,next) =>{
             return res.status(400).json({success:false,message:"Please Enter Valid ID"})
         }
 
-        const order = await Order.findById({_id:id,userId}) 
+        const order = await Order.findById({_id:id,userId});
 
         if(!order || order.isDeleted){
             return res.status(404).json({success:false,message:"Order Not found"})
@@ -368,7 +363,9 @@ exports.cancleOrder = async (req,res,next) =>{
 
         order.status = 'cancelled'
         await order.save();
+
+        return res.status(200).json({success:true,message:"Order Cancelled Succeesfully..!"})
     }catch(err){
         next(err)
     }
-}   
+}
