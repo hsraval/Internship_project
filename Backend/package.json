@@ -1,10 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "backend",
-  "version": "1.0.0",
-  "main": "index.js",
-=======
->>>>>>> 7522d17418adcfe861e0b5a531e8cd5ca6c180f4
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
