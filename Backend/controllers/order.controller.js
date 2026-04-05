@@ -2,6 +2,7 @@ const { default: mongoose } = require('mongoose');
 const Order = require('../models/order.model')
 const Product = require('../models/product.model')
 const Bill = require('../models/bill.model')
+const User = require('../models/user.model')
 
 exports.createOrder = async (req,res,next) =>{
     try{
@@ -16,6 +17,7 @@ exports.createOrder = async (req,res,next) =>{
         }
 
         let totalAmount = 0;
+        const orderItems = [];
 
         for(let item of items){
 
@@ -40,7 +42,14 @@ exports.createOrder = async (req,res,next) =>{
 
             const itemTotal = unitPrice * item.quantity;
 
-            item.price = unitPrice;
+            orderItems.push({
+                product: product._id,
+                name: product.name,        // 🔥 IMPORTANT FIX
+                quantity: item.quantity,
+                price: unitPrice           // unit price
+            });
+
+            // item.price = unitPrice;
             totalAmount += itemTotal;
         }
 
@@ -61,7 +70,7 @@ exports.createOrder = async (req,res,next) =>{
                 }
             }
         }
-        const order = await Order.create({ userId,items,stitching,measurements,address,totalAmount})
+        const order = await Order.create({ userId,items:orderItems,stitching,measurements,address,totalAmount})
 
         return res.status(201).json({success:true,message:"Order Created Successfully",data:order});
     }catch(err){
@@ -169,6 +178,7 @@ exports.updateOrderStatus = async (req,res,next) =>{
             if (!existingBill) {
                 const items = order.items.map(item => ({
                     product: item.product,
+                    name: item.name,
                     price: item.price,
                     quantity: item.quantity,
                     total: item.price * item.quantity
@@ -183,7 +193,7 @@ exports.updateOrderStatus = async (req,res,next) =>{
                     items,
                     subtotal,
                     totalAmount: subtotal,
-                    billingAddress: order.address
+                    billingAddress: order.address,
                 });
             }
         }

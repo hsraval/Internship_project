@@ -85,7 +85,7 @@ exports.downloadBillPDF = async (req, res, next) => {
             });
         }
 
-        const bill = await Bill.findById(id).lean();
+        const bill = await Bill.findById(id).populate('user', 'name').lean();
 
         if (!bill) {
             return res.status(404).json({
@@ -111,8 +111,7 @@ exports.downloadBillPDF = async (req, res, next) => {
         doc.text(`Date: ${new Date(bill.createdAt).toDateString()}`);
 
         doc.moveDown();
-        // doc.text(`Customer: ${bill.billingAddress?.name || ''}`);
-        // doc.text(`Phone: ${bill.billingAddress?.phone || ''}`);
+        doc.text(`Customer: ${bill.user?.name || 'N/A'}`);
 
         doc.moveDown();
         doc.text(`Payment Status: ${bill.paymentStatus === 'paid' ? 'PAID' : 'PENDING'}`);
@@ -126,7 +125,6 @@ exports.downloadBillPDF = async (req, res, next) => {
         });
 
         doc.moveDown();
-        doc.text(`Subtotal: ₹${bill.subtotal || 0}`);
         doc.text(`Tax: ₹${bill.tax || 0}`);
         doc.text(`Discount: ₹${bill.discount || 0}`);
         doc.text(`Total: ₹${bill.totalAmount}`);
