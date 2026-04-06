@@ -27,7 +27,23 @@ exports.getMe = async (req, res) => {
 }
 
 exports.register= async(req,res) =>{
-    const {name,email,passwordHash}=req.body;
+    const name = req.body.name?.trim();
+    const email = req.body.email?.trim().toLowerCase();
+    const rawPassword = req.body.password?.trim() || req.body.passwordHash?.trim();
+
+    if(!name || !email || !rawPassword){
+        return res.status(400).json({
+            success:false,
+            msg:"All fields are required"
+        });
+    }
+
+    if(rawPassword.length < 8){
+        return res.status(400).json({
+            success:false,
+            msg:"Password must be at least 8 characters"
+        });
+    }
 
     try{
         const data=await model.findOne({email});
@@ -37,14 +53,17 @@ exports.register= async(req,res) =>{
         }
 
         const salt=await bcrypt.genSalt(10);
-        const password=await bcrypt.hash(passwordHash,salt);
+        const password=await bcrypt.hash(rawPassword,salt);
 
         await model.create({name,email,passwordHash:password});
 
         return res.status(201).json({success:true,msg:"User Registered successfully"});
     }
     catch(err){
-        return res.status(500).json(err.message);
+        return res.status(500).json({
+            success:false,
+            msg:err.message
+        });
     }
 }
 

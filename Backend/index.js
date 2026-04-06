@@ -1,6 +1,6 @@
-const express = require('express')
 const dotenv = require('dotenv')
 dotenv.config()
+const express = require('express')
 const cors = require('cors')
 const cookieparser = require('cookie-parser')
 const connection = require('./config/connection')

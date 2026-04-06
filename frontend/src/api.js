@@ -6,13 +6,29 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
-// AUTH APIs
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const serverMessage =
+      error.response?.data?.msg ||
+      error.response?.data?.message ||
+      error.response?.data?.error
+
+    error.userMessage =
+      serverMessage ||
+      (error.code === 'ERR_NETWORK'
+        ? 'Cannot connect to server. Make sure the backend is running on port 5000.'
+        : 'Something went wrong')
+
+    return Promise.reject(error)
+  }
+)
 
 export const registerUser = (data) =>
   api.post('/auth/register', {
     name: data.name,
     email: data.email,
-    passwordHash: data.password, // ✅ MATCH BACKEND
+    password: data.password,
   })
 
 export const loginUser = (data) =>
@@ -29,4 +45,4 @@ export const forgotPassword = (email) =>
 export const resetPassword = (token, password) =>
   api.post(`/auth/reset-password/${token}`, { password })
 
-export const getMe = () => api.get('/user/profile') // ✅ FIXED
+export const getMe = () => api.get('/auth/me')
