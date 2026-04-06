@@ -3,12 +3,13 @@ const cors = require('cors')
 const cookiparser = require('cookie-parser')
 const connection = require('./config/connection')
 const dotenv = require('dotenv')
+dotenv.config()
+
 const authRouter = require('./routes/auth.router')
 const userRouter = require('./routes/user.router')
-const orderRouter = require('./routes/order.router')
-const billRouter = require('./routes/bill.router')
+// const orderRouter = require('./routes/order.router')
+// const billRouter = require('./routes/bill.router')
 
-dotenv.config()
 connection()
 
 // Instnace of Express
@@ -17,14 +18,17 @@ app.set('trust proxy',1)
 
 // Middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+      origin: process.env.CLIENT_URL,
+      credentials: true
+}))
 app.use(cookiparser())
 
 // Auth Router
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
-app.use('/api/order',orderRouter)
-app.use('/api/bill',billRouter)
+// app.use('/api/order',orderRouter)
+// app.use('/api/bill',billRouter)
 
 
 app.use((err, req, res, next) => {
