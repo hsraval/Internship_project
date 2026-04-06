@@ -6,9 +6,9 @@ const Role = require("../middleware/role.middleware");
 
 router.post("/",protect,Role("admin"),createCategory);
 
-router.get("/",protect,getActiveCategories);
+router.get("/",getActiveCategories);
 
-router.get("/admin",protect,Role("admin"),getAllCategories);
+router.get("/admin",Role("admin"),getAllCategories);
 
 router.patch("/:id/restore",protect,Role("admin"),updateCategory);
 

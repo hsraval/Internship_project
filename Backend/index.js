@@ -7,7 +7,7 @@ const connection = require('./config/connection')
 const authRouter = require('./routes/auth.router')
 const categoryRouter= require('./routes/category.router');
 const productRouter=require('./routes/product.router');
-const orderRouter = require('./routes/order.router')
+const orderRouter = require('./routes/order.router');
 const userRouter = require('./routes/user.router');
 const wishlistRouter=require('./routes/wishlist.router');
 const billRouter = require('./routes/bill.router')
@@ -18,7 +18,10 @@ const app = express()
 app.set('trust proxy',1)
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+   origin:process.env.CLIENT_URL,
+   credentials: true
+}))
 app.use(cookieparser())
 app.use(express.urlencoded({extended:true}));
 
