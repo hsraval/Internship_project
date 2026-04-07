@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
-function Sidebar({ active, onNavigate, onLogout, loggingOut, user }) {
+function Sidebar({ active, onNavigate, onLogout, loggingOut, user, isSidebarOpen, setIsSidebarOpen }) {
   const isAdmin = user?.role === 'admin'
   const initial = (user?.name || user?.email || 'U').charAt(0).toUpperCase()
 
@@ -32,23 +32,34 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user }) {
   ]
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-[#1a1b14] border-r border-[#45362C]/50 flex flex-col z-30">
+    <aside className={`
+      fixed inset-y-0 left-0 z-50 w-64 bg-[#E8E0D0] border-r border-[#6B5F50]/50 flex flex-col 
+      transform transition-transform duration-300 ease-in-out
+      ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+      md:translate-x-0 md:static md:inset-auto
+    `}>
       {/* Brand */}
-      <div className="px-6 py-5 border-b border-[#45362C]/40">
-        <Link to="/" className="font-serif text-base font-semibold text-[#e8dcc8] tracking-tight">
-          Larkings<span className="text-[#A8977A]">MensWear</span>
+      <div className="px-6 py-5 border-b border-[#6B5F50]/40 flex justify-between items-center">
+        <Link to="/" className="font-serif text-base font-semibold text-[#6B5F50]">
+          Larkings<span className="text-[#6B5F50]">MensWear</span>
         </Link>
+        <button 
+          className="md:hidden text-[#6B5F50]/70"
+          onClick={() => setIsSidebarOpen(false)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
       </div>
 
       {/* User chip */}
-      <div className="px-4 py-4 border-b border-[#45362C]/40">
-        <div className="flex items-center gap-3 bg-[#161711] rounded-xl px-3 py-3">
-          <div className="w-9 h-9 rounded-xl bg-[#45362C] flex items-center justify-center flex-shrink-0">
-            <span className="font-serif text-base font-semibold text-[#A8977A]">{initial}</span>
+      <div className="px-4 py-4 border-b border-[#6B5F50]/40">
+        <div className="flex items-center gap-3 bg-[#6B5F50]/10 rounded-xl px-3 py-3">
+          <div className="w-9 h-9 rounded-xl bg-[#6B5F50]/30 flex items-center justify-center flex-shrink-0">
+            <span className="font-serif text-base font-semibold text-[#6B5F50]">{initial}</span>
           </div>
           <div className="overflow-hidden">
-            <p className="text-[#e8dcc8] text-sm font-medium truncate">{user?.name || 'User'}</p>
-            <p className="text-[#A8977A] text-[10px] font-mono uppercase tracking-widest">
+            <p className="text-[#6B5F50] text-sm font-medium truncate">{user?.name || 'User'}</p>
+            <p className="text-[#6B5F50]/70 text-[10px] font-mono uppercase tracking-widest">
               {user?.role || 'user'}
             </p>
           </div>
@@ -62,10 +73,11 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user }) {
             <Link
               key={l.id}
               to={l.href}
+              onClick={() => setIsSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider transition-all duration-150 ${
                 active === l.id
-                  ? 'bg-[#45362C] text-[#e8dcc8]'
-                  : 'text-[#9a8f7e] hover:bg-[#45362C]/40 hover:text-[#A8977A]'
+                  ? 'bg-[#6B5F50] text-[#E8E0D0]'
+                  : 'text-[#6B5F50]/70 hover:bg-[#6B5F50]/20 hover:text-[#6B5F50]'
               }`}
             >
               {l.icon}
@@ -74,7 +86,7 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user }) {
           ) : (
             <button
               key={l.id}
-              onClick={() => onNavigate(l.id)}
+              onClick={() => { onNavigate(l.id); setIsSidebarOpen(false) }}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider transition-all duration-150 w-full text-left ${
                 active === l.id
                   ? 'bg-[#45362C] text-[#e8dcc8]'
@@ -89,11 +101,11 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user }) {
       </nav>
 
       {/* Logout */}
-      <div className="px-3 py-4 border-t border-[#45362C]/40">
+      <div className="px-3 py-4 border-t border-[#6B5F50]/40">
         <button
           onClick={onLogout}
           disabled={loggingOut}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider text-[#9a8f7e] hover:bg-red-900/20 hover:text-red-400 transition-all duration-150 disabled:opacity-50"
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider text-[#6B5F50]/70 hover:bg-red-600/20 hover:text-red-600 transition-all duration-150 disabled:opacity-50"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -120,35 +132,29 @@ function AdminDashboard({ user, onNavigate }) {
 
   return (
     <div>
-      <div className="mb-8">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-[#A8977A] mb-2">Admin Panel</p>
-        <h1 className="font-serif text-3xl font-semibold text-[#e8dcc8]">
-          Welcome back, {user?.name || 'Admin'}
-        </h1>
-        <p className="text-[#9a8f7e] text-sm mt-1">
-          You have full access to manage the store.
-        </p>
+      {/* Role badge */}
+      <div className="inline-flex items-center gap-2 bg-[#6B5F50]/30 border border-[#6B5F50] rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#6B5F50]" />
+        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#6B5F50]">Administrator</span>
       </div>
 
-      {/* Role badge */}
-      <div className="inline-flex items-center gap-2 bg-[#45362C]/30 border border-[#45362C] rounded-full px-4 py-1.5 mb-8">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#A8977A]" />
-        <span className="font-mono text-[10px] uppercase tracking-widest text-[#A8977A]">Administrator</span>
-      </div>
+      <p className="text-[#6B5F50]/70 text-sm mb-6 sm:mb-8">
+        You have full access to manage the store.
+      </p>
 
       {/* Quick action cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {cards.map((c) => (
           <Link
             key={c.label}
             to={c.href}
-            className="block bg-[#1a1b14] border border-[#45362C]/50 rounded-xl p-6 hover:border-[#A8977A]/60 hover:shadow-[0_4px_24px_rgba(168,151,122,0.1)] transition-all duration-300 group"
+            className="block bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6 hover:border-[#6B5F50]/60 hover:shadow-[0_4px_24px_rgba(107,95,80,0.1)] transition-all duration-300 group"
           >
-            <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">
+            <div className="text-xl sm:text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">
               {c.icon}
             </div>
-            <h3 className="font-serif font-semibold text-[#e8dcc8] mb-1">{c.label}</h3>
-            <p className="text-[#9a8f7e] text-xs leading-relaxed">{c.desc}</p>
+            <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">{c.label}</h3>
+            <p className="text-[#6B5F50]/70 text-xs leading-relaxed">{c.desc}</p>
           </Link>
         ))}
       </div>
@@ -161,49 +167,42 @@ function AdminDashboard({ user, onNavigate }) {
 function UserDashboard({ user }) {
   return (
     <div>
-      <div className="mb-8">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-[#A8977A] mb-2">
-          {getGreeting()}
-        </p>
-        <h1 className="font-serif text-3xl font-semibold text-[#e8dcc8]">
-          {user?.name || user?.email || 'Welcome'}
-        </h1>
-        <p className="text-[#9a8f7e] text-sm mt-1">
-          Explore our collection of premium fabrics.
-        </p>
+      {/* Active session badge */}
+      <div className="inline-flex items-center gap-2 bg-[#6B5F50]/10 border border-[#6B5F50]/50 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8">
+        <span className="w-1.5 h-1.5 rounded-full bg-green-600" />
+        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#6B5F50]">Active Session</span>
       </div>
 
-      <div className="inline-flex items-center gap-2 bg-[#161711] border border-[#45362C]/50 rounded-full px-4 py-1.5 mb-8">
-        <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-        <span className="font-mono text-[10px] uppercase tracking-widest text-[#A8977A]">Active Session</span>
-      </div>
+      <p className="text-[#6B5F50]/70 text-sm mb-6 sm:mb-8">
+        Explore our collection of premium fabrics.
+      </p>
 
-      {/* Browse card */}
-      <div className="grid sm:grid-cols-2 gap-4">
+      {/* Action cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <Link
           to="/products"
-          className="block bg-[#1a1b14] border border-[#45362C]/50 rounded-xl p-6 hover:border-[#A8977A]/60 hover:shadow-[0_4px_24px_rgba(168,151,122,0.1)] transition-all duration-300 group"
+          className="block bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6 hover:border-[#6B5F50]/60 hover:shadow-[0_4px_24px_rgba(107,95,80,0.1)] transition-all duration-300 group"
         >
-          <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">◎</div>
-          <h3 className="font-serif font-semibold text-[#e8dcc8] mb-1">Browse Products</h3>
-          <p className="text-[#9a8f7e] text-xs leading-relaxed">
+          <div className="text-xl sm:text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">◎</div>
+          <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">Browse Products</h3>
+          <p className="text-[#6B5F50]/70 text-xs leading-relaxed">
             Explore our full catalogue of fabrics with search and category filters.
           </p>
         </Link>
 
-        <div className="bg-[#1a1b14] border border-[#45362C]/50 rounded-xl p-6">
-          <div className="text-2xl mb-3 opacity-40">⬡</div>
-          <h3 className="font-serif font-semibold text-[#e8dcc8] mb-1">Orders</h3>
-          <p className="text-[#9a8f7e] text-xs leading-relaxed">
-            Order history and tracking — <span className="text-[#A8977A]">coming soon</span>.
+        <div className="bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6">
+          <div className="text-xl sm:text-2xl mb-3 opacity-40">⬡</div>
+          <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">Orders</h3>
+          <p className="text-[#6B5F50]/70 text-xs leading-relaxed">
+            Order history and tracking — <span className="text-[#6B5F50]">coming soon</span>.
           </p>
         </div>
       </div>
 
       {/* Account details */}
-      <div className="mt-6 bg-[#1a1b14] border border-[#45362C]/50 rounded-xl p-6">
-        <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#A8977A] mb-4">Account Details</h3>
-        <div className="flex flex-col gap-3 divide-y divide-[#45362C]/30">
+      <div className="mt-6 sm:mt-8 bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6">
+        <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50] mb-4">Account Details</h3>
+        <div className="flex flex-col gap-3 divide-y divide-[#6B5F50]/30">
           {user?.name && <Detail label="Name" value={user.name} />}
           {user?.email && <Detail label="Email" value={user.email} />}
           <Detail label="Auth" value="HTTP-only cookie · Secure" mono />
@@ -215,9 +214,9 @@ function UserDashboard({ user }) {
 
 function Detail({ label, value, mono }) {
   return (
-    <div className="flex justify-between items-center pt-3 first:pt-0">
-      <span className="font-mono text-[10px] uppercase tracking-widest text-[#45362C]">{label}</span>
-      <span className={`text-sm ${mono ? 'font-mono text-[#A8977A]/70' : 'text-[#9a8f7e]'}`}>{value}</span>
+    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pt-3 first:pt-0 gap-1 sm:gap-0">
+      <span className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">{label}</span>
+      <span className={`text-sm break-words ${mono ? 'font-mono text-[#6B5F50]/70' : 'text-[#6B5F50]/70'}`}>{value}</span>
     </div>
   )
 }
@@ -236,6 +235,7 @@ export default function DashboardPage() {
   const navigate = useNavigate()
   const [active, setActive] = useState('dashboard')
   const [loggingOut, setLoggingOut] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const isAdmin = user?.role === 'admin'
 
   const handleLogout = async () => {
@@ -253,22 +253,61 @@ export default function DashboardPage() {
 
   return (
     // Hides global Navbar — full-page layout with sidebar only
-    <div className="min-h-screen bg-[#161711] text-[#e8dcc8] flex">
+    <div className="min-h-screen bg-[#E8E0D0] text-[#6B5F50] flex">
+      
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+      
       <Sidebar
         active={active}
         onNavigate={setActive}
         onLogout={handleLogout}
         loggingOut={loggingOut}
         user={user}
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
       />
 
-      {/* Main content — offset by sidebar width */}
-      <main className="flex-1 ml-64 p-8 overflow-auto min-h-screen">
-        {isAdmin ? (
-          <AdminDashboard user={user} onNavigate={setActive} />
-        ) : (
-          <UserDashboard user={user} />
-        )}
+      {/* Main Content Wrapper */}
+      <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+        
+        {/* Scrollable Header Area */}
+        <div className="p-4 md:p-8 flex-shrink-0">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setIsSidebarOpen(true)}
+                className="md:hidden p-1 text-[#6B5F50] border border-[#6B5F50] rounded"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+              </button>
+              
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]/70 mb-1">
+                  {isAdmin ? 'Admin Panel' : getGreeting()}
+                </p>
+                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#6B5F50]">
+                  {isAdmin ? `Welcome back, ${user?.name || 'Admin'}` : (user?.name || user?.email || 'Welcome')}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto px-4 md:px-8 pb-4">
+          {isAdmin ? (
+            <AdminDashboard user={user} onNavigate={setActive} />
+          ) : (
+            <UserDashboard user={user} />
+          )}
+        </div>
       </main>
     </div>
   )

@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const Bill = require('../models/bill.model');
 const PDFDocument = require('pdfkit');
+const QRCode = require('qrcode'); // ✅ ADDED
 
+// 🔹 Get all bills (Admin)
 exports.getBills = async (req, res, next) => {
     try {
         let { page = 1, limit = 10 } = req.query;
@@ -41,6 +43,7 @@ exports.getBills = async (req, res, next) => {
     }
 };
 
+// 🔹 Get single bill
 exports.getSingleBill = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -74,6 +77,7 @@ exports.getSingleBill = async (req, res, next) => {
     }
 };
 
+// 🔹 Download Bill PDF (WITH QR CODE)
 exports.downloadBillPDF = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -85,7 +89,9 @@ exports.downloadBillPDF = async (req, res, next) => {
             });
         }
 
-        const bill = await Bill.findById(id).populate('user', 'name').lean();
+        const bill = await Bill.findById(id)
+            .populate('user', 'name')
+            .lean();
 
         if (!bill) {
             return res.status(404).json({
@@ -104,6 +110,7 @@ exports.downloadBillPDF = async (req, res, next) => {
 
         doc.pipe(res);
 
+        // 🔹 HEADER
         doc.fontSize(18).text('INVOICE', { align: 'center' });
 
         doc.moveDown();
@@ -118,6 +125,7 @@ exports.downloadBillPDF = async (req, res, next) => {
 
         doc.moveDown(2);
 
+        // 🔹 ITEMS
         bill.items.forEach((item, i) => {
             doc.text(
                 `${i + 1}. ${item.name} | ${item.quantity} x ₹${item.price} = ₹${item.total}`
@@ -128,6 +136,21 @@ exports.downloadBillPDF = async (req, res, next) => {
         doc.text(`Tax: ₹${bill.tax || 0}`);
         doc.text(`Discount: ₹${bill.discount || 0}`);
         doc.text(`Total: ₹${bill.totalAmount}`);
+
+        // 🔥 🔹 QR CODE GENERATION
+        const upiUrl = `upi://pay?pa=kashyapgaliya295@okhdfcbank@bank&pn=Your Store&am=${bill.totalAmount}&cu=INR&tn=${bill.invoiceNumber}`;
+
+        const qrImage = await QRCode.toDataURL(upiUrl);
+
+        const qrBuffer = Buffer.from(qrImage.split(',')[1], 'base64');
+
+        doc.moveDown(2);
+        doc.text("Scan to Pay", { align: 'center' });
+
+        doc.image(qrBuffer, {
+            fit: [150, 150],
+            align: 'center'
+        });
 
         doc.end();
 
