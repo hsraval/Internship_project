@@ -13,6 +13,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import DashboardPage from './pages/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
+import ProductPage from './pages/ProductPage'
+import AdminProductPage from './pages/AdminProductPage'
 
 export default function App() {
   return (
@@ -88,7 +90,8 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-
+            <Route path="/products" element={<ProtectedRoute><ProductPage /></ProtectedRoute>} />
+            <Route path="/admin/products" element={<ProtectedRoute><AdminProductPage /></ProtectedRoute>} />
             {/* Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

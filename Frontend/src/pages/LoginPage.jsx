@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
-import { loginUser } from '../api'
+import { loginUser } from '../api/api'
 import { useFormValidation, validators } from '../hooks/useFormValidation'
 import { FormField, PasswordInput, Spinner } from '../components/FormField'
 import { useState } from 'react'

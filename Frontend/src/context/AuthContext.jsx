@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer, useCallback } from 'react'
-import { getMe, logoutUser } from '../api'
+import { getMe, logoutUser } from '../api/api'
 
 // ─── Context ─────────────────────────────────────────────────────────────────
 
