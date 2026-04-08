@@ -47,11 +47,11 @@ export default function ResetPasswordPage() {
 
   if (!token) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-24">
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center px-4 py-24">
         <div className="text-center max-w-sm">
-          <p className="font-mono text-xs text-ink-400 uppercase tracking-widest mb-4">Error</p>
-          <h2 className="font-display text-2xl font-semibold text-ink-900 mb-3">Invalid link</h2>
-          <p className="font-body text-ink-500 text-sm mb-6">
+          <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-4">Error</p>
+          <h2 className="font-display text-2xl font-semibold text-[#0F172A] mb-3">Invalid link</h2>
+          <p className="font-body text-[#64748B] text-sm mb-6">
             This reset link is missing a token. Please request a new one.
           </p>
           <Link to="/forgot-password" className="btn-primary">
@@ -63,13 +63,13 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-24">
+    <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center px-4 py-24">
       <div className="w-full max-w-md animate-fade-up">
         <div className="text-center mb-8">
-          <Link to="/" className="font-display text-2xl font-semibold text-ink-900 hover:text-ink-600 transition-colors">
+          <Link to="/" className="font-display text-2xl font-semibold text-[#0F172A] hover:text-[#333333] transition-colors">
             Luminary
           </Link>
-          <p className="font-mono text-xs text-ink-400 uppercase tracking-widest mt-3">
+          <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mt-3">
             Choose new password
           </p>
         </div>
@@ -82,16 +82,16 @@ export default function ResetPasswordPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h2 className="font-display text-xl font-semibold text-ink-900 mb-2">
+              <h2 className="font-display text-xl font-semibold text-[#0F172A] mb-2">
                 Password updated!
               </h2>
-              <p className="font-body text-ink-500 text-sm">
+              <p className="font-body text-[#64748B] text-sm">
                 Redirecting you to sign in…
               </p>
             </div>
           ) : (
             <>
-              <p className="font-body text-ink-500 text-sm mb-6 leading-relaxed">
+              <p className="font-body text-[#64748B] text-sm mb-6 leading-relaxed">
                 Choose a new strong password for your account. Make it at least 8 characters.
               </p>
 
@@ -148,10 +148,10 @@ export default function ResetPasswordPage() {
             </>
           )}
 
-          <div className="mt-6 pt-6 border-t border-ink-100 text-center">
+          <div className="mt-6 pt-6 border-t border-[#CBD5E1] text-center">
             <Link
               to="/login"
-              className="inline-flex items-center gap-1.5 text-sm font-body text-ink-500 hover:text-ink-900 transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm font-body text-[#64748B] hover:text-[#333333] transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />

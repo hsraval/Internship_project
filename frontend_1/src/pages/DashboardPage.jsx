@@ -43,18 +43,18 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user, isSidebarOpen
 
   return (
     <aside className={`
-      fixed inset-y-0 left-0 z-50 w-64 bg-[#E8E0D0] border-r border-[#6B5F50]/50 flex flex-col 
+      fixed inset-y-0 left-0 z-50 w-64 bg-[#F8F9FA] border-r border-[#CBD5E1] flex flex-col 
       transform transition-transform duration-300 ease-in-out
       ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       md:translate-x-0 md:static md:inset-auto
     `}>
       {/* Brand */}
-      <div className="px-6 py-5 border-b border-[#6B5F50]/40 flex justify-between items-center">
-        <Link to="/" className="font-serif text-base font-semibold text-[#6B5F50]">
-          Larkings<span className="text-[#6B5F50]">MensWear</span>
+      <div className="px-6 py-5 border-b border-[#CBD5E1] flex justify-between items-center">
+        <Link to="/" className="font-serif text-base font-semibold text-[#0F172A]">
+          Larkings<span className="text-[#C5A059]">MensWear</span>
         </Link>
         <button 
-          className="md:hidden text-[#6B5F50]/70"
+          className="md:hidden text-[#64748B]/70"
           onClick={() => setIsSidebarOpen(false)}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -62,14 +62,14 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user, isSidebarOpen
       </div>
 
       {/* User chip */}
-      <div className="px-4 py-4 border-b border-[#6B5F50]/40">
-        <div className="flex items-center gap-3 bg-[#6B5F50]/10 rounded-xl px-3 py-3">
-          <div className="w-9 h-9 rounded-xl bg-[#6B5F50]/30 flex items-center justify-center flex-shrink-0">
-            <span className="font-serif text-base font-semibold text-[#6B5F50]">{initial}</span>
+      <div className="px-4 py-4 border-b border-[#CBD5E1]">
+        <div className="flex items-center gap-3 bg-[#F8F9FA]/10 rounded-xl px-3 py-3">
+          <div className="w-9 h-9 rounded-xl bg-[#CBD5E1]/30 flex items-center justify-center flex-shrink-0">
+            <span className="font-serif text-base font-semibold text-[#0F172A]">{initial}</span>
           </div>
           <div className="overflow-hidden">
-            <p className="text-[#6B5F50] text-sm font-medium truncate">{user?.name || 'User'}</p>
-            <p className="text-[#6B5F50]/70 text-[10px] font-mono uppercase tracking-widest">
+            <p className="text-[#333333] text-sm font-medium truncate">{user?.name || 'User'}</p>
+            <p className="text-[#64748B]/70 text-[10px] font-mono uppercase tracking-widest">
               {user?.role || 'user'}
             </p>
           </div>
@@ -86,8 +86,8 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user, isSidebarOpen
               onClick={() => setIsSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider transition-all duration-150 ${
                 active === l.id
-                  ? 'bg-[#6B5F50] text-[#E8E0D0]'
-                  : 'text-[#6B5F50]/70 hover:bg-[#6B5F50]/20 hover:text-[#6B5F50]'
+                  ? 'bg-[#C5A059] text-[#FFFFFF]'
+                  : 'text-[#64748B]/70 hover:bg-[#F8F9FA]/20 hover:text-[#333333]'
               }`}
             >
               {l.icon}
@@ -99,8 +99,8 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user, isSidebarOpen
               onClick={() => { onNavigate(l.id); setIsSidebarOpen(false) }}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider transition-all duration-150 w-full text-left ${
                 active === l.id
-                  ? 'bg-[#45362C] text-[#e8dcc8]'
-                  : 'text-[#9a8f7e] hover:bg-[#45362C]/40 hover:text-[#A8977A]'
+                  ? 'bg-[#C5A059] text-[#FFFFFF]'
+                  : 'text-[#64748B]/70 hover:bg-[#F8F9FA]/20 hover:text-[#333333]'
               }`}
             >
               {l.icon}
@@ -115,7 +115,7 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user, isSidebarOpen
         <button
           onClick={onLogout}
           disabled={loggingOut}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider text-[#6B5F50]/70 hover:bg-red-600/20 hover:text-red-600 transition-all duration-150 disabled:opacity-50"
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider text-[#64748B]/70 hover:bg-[#EF4444]/20 hover:text-[#EF4444] transition-all duration-150 disabled:opacity-50"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -149,9 +149,9 @@ function AdminDashboard({ user, onNavigate }) {
   return (
     <div>
       {/* Role badge */}
-      <div className="inline-flex items-center gap-2 bg-[#6B5F50]/30 border border-[#6B5F50] rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#6B5F50]" />
-        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#6B5F50]">Administrator</span>
+      <div className="inline-flex items-center gap-2 bg-[#F8F9FA]/30 border border-[#C5A059] rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#0F172A]">Administrator</span>
       </div>
 
       <p className="text-[#6B5F50]/70 text-sm mb-6 sm:mb-8">
@@ -164,13 +164,13 @@ function AdminDashboard({ user, onNavigate }) {
           <Link
             key={c.label}
             to={c.href}
-            className="block bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6 hover:border-[#6B5F50]/60 hover:shadow-[0_4px_24px_rgba(107,95,80,0.1)] transition-all duration-300 group"
+            className="block bg-[#FFFFFF] border border-[#CBD5E1] rounded-xl p-4 sm:p-6 hover:border-[#C5A059] hover:shadow-[0_4px_24px_rgba(197,165,2,0.1)] transition-all duration-300 group"
           >
             <div className="text-xl sm:text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">
               {c.icon}
             </div>
-            <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">{c.label}</h3>
-            <p className="text-[#6B5F50]/70 text-xs leading-relaxed">{c.desc}</p>
+            <h3 className="font-serif font-semibold text-[#0F172A] text-sm sm:text-base mb-1">{c.label}</h3>
+            <p className="text-[#64748B]/70 text-xs leading-relaxed">{c.desc}</p>
           </Link>
         ))}
       </div>
@@ -184,9 +184,9 @@ function UserDashboard({ user }) {
   return (
     <div>
       {/* Active session badge */}
-      <div className="inline-flex items-center gap-2 bg-[#6B5F50]/10 border border-[#6B5F50]/50 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8">
-        <span className="w-1.5 h-1.5 rounded-full bg-green-600" />
-        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#6B5F50]">Active Session</span>
+      <div className="inline-flex items-center gap-2 bg-[#F8F9FA]/10 border border-[#10B981]/50 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#0F172A]">Active Session</span>
       </div>
 
       <p className="text-[#6B5F50]/70 text-sm mb-6 sm:mb-8">
@@ -200,35 +200,28 @@ function UserDashboard({ user }) {
           className="block bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6 hover:border-[#6B5F50]/60 hover:shadow-[0_4px_24px_rgba(107,95,80,0.1)] transition-all duration-300 group"
         >
           <div className="text-xl sm:text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">◎</div>
-          <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">Browse Products</h3>
-          <p className="text-[#6B5F50]/70 text-xs leading-relaxed">
+          <h3 className="font-serif font-semibold text-[#0F172A] text-sm sm:text-base mb-1">Browse Products</h3>
+          <p className="text-[#64748B]/70 text-xs leading-relaxed">
             Explore our full catalogue of fabrics with search and category filters.
           </p>
         </Link>
 
-        {/* <div className="bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6">
-          <div className="text-xl sm:text-2xl mb-3 opacity-40">⬡</div>
-          <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">Orders</h3>
-          <p className="text-[#6B5F50]/70 text-xs leading-relaxed">
-            Order history and tracking — <span className="text-[#6B5F50]">coming soon</span>.
-          </p>
-        </div> */}
         <Link
           to="/orders"
-          className="block bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6 hover:border-[#6B5F50]/60 hover:shadow-[0_4px_24px_rgba(107,95,80,0.1)] transition-all duration-300 group"
+          className="block bg-[#FFFFFF] border border-[#CBD5E1] rounded-xl p-4 sm:p-6 hover:border-[#C5A059] hover:shadow-[0_4px_24px_rgba(197,165,2,0.1)] transition-all duration-300 group"
         >
           <div className="text-xl sm:text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">⬡</div>
-          <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">My Orders</h3>
-          <p className="text-[#6B5F50]/70 text-xs leading-relaxed">
+          <h3 className="font-serif font-semibold text-[#0F172A] text-sm sm:text-base mb-1">My Orders</h3>
+          <p className="text-[#64748B]/70 text-xs leading-relaxed">
             View your order history and download invoices.
           </p>
         </Link>
       </div>
 
       {/* Account details */}
-      <div className="mt-6 sm:mt-8 bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6">
-        <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50] mb-4">Account Details</h3>
-        <div className="flex flex-col gap-3 divide-y divide-[#6B5F50]/30">
+      <div className="mt-6 sm:mt-8 bg-[#FFFFFF] border border-[#CBD5E1] rounded-xl p-4 sm:p-6">
+        <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#0F172A] mb-4">Account Details</h3>
+        <div className="flex flex-col gap-3 divide-y divide-[#CBD5E1]">
           {user?.name && <Detail label="Name" value={user.name} />}
           {user?.email && <Detail label="Email" value={user.email} />}
           <Detail label="Auth" value="HTTP-only cookie · Secure" mono />
@@ -241,8 +234,8 @@ function UserDashboard({ user }) {
 function Detail({ label, value, mono }) {
   return (
     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pt-3 first:pt-0 gap-1 sm:gap-0">
-      <span className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">{label}</span>
-      <span className={`text-sm break-words ${mono ? 'font-mono text-[#6B5F50]/70' : 'text-[#6B5F50]/70'}`}>{value}</span>
+      <span className="font-mono text-[10px] uppercase tracking-widest text-[#64748B]">{label}</span>
+      <span className={`text-sm break-words ${mono ? 'font-mono text-[#333333]' : 'text-[#64748B]/70'}`}>{value}</span>
     </div>
   )
 }
@@ -279,7 +272,7 @@ export default function DashboardPage() {
 
   return (
     // Hides global Navbar — full-page layout with sidebar only
-    <div className="min-h-screen bg-[#E8E0D0] text-[#6B5F50] flex">
+    <div className="min-h-screen bg-[#F8F9FA] text-[#333333] flex">
       
       {/* Mobile Overlay */}
       {isSidebarOpen && (
@@ -309,16 +302,16 @@ export default function DashboardPage() {
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsSidebarOpen(true)}
-                className="md:hidden p-1 text-[#6B5F50] border border-[#6B5F50] rounded"
+                className="md:hidden p-1 text-[#64748B] border border-[#CBD5E1] rounded"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
               </button>
               
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]/70 mb-1">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-[#64748B]/70 mb-1">
                   {isAdmin ? 'Admin Panel' : getGreeting()}
                 </p>
-                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#6B5F50]">
+                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#0F172A]">
                   {isAdmin ? `Welcome back, ${user?.name || 'Admin'}` : (user?.name || user?.email || 'Welcome')}
                 </h1>
               </div>

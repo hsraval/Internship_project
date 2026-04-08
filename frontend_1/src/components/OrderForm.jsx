@@ -3,11 +3,11 @@ import { useState } from "react";
 import { createOrder } from "../api/api";
 
 const INPUT =
-  "w-full bg-[#E8E0D0] border border-[#6B5F50]/40 rounded-lg px-4 py-2.5 text-[#6B5F50] placeholder-[#6B5F50]/40 focus:outline-none focus:border-[#6B5F50] transition-colors text-sm";
+  "w-full bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg px-3 sm:px-4 py-2.5 text-[#333333] placeholder-[#94A3B8] focus:outline-none focus:border-[#C5A059] transition-colors text-sm";
 const LABEL =
-  "block text-[10px] font-mono font-semibold uppercase tracking-widest text-[#6B5F50]/70 mb-1.5";
+  "block text-[10px] font-mono font-semibold uppercase tracking-widest text-[#64748B]/70 mb-1.5";
 const SECTION =
-  "border border-[#6B5F50]/30 rounded-xl p-5 space-y-4";
+  "border border-[#CBD5E1] rounded-xl p-4 sm:p-5 space-y-4";
 
 export default function OrderForm({ productId, onSuccess }) {
   const [quantity, setQuantity] = useState(1);
@@ -109,7 +109,7 @@ export default function OrderForm({ productId, onSuccess }) {
     <form onSubmit={handleSubmit} className="space-y-5">
 
       {error && (
-        <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-4 py-3 rounded-lg font-mono">
+        <div className="bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#EF4444] text-sm px-4 py-3 rounded-lg font-mono">
           {error}
         </div>
       )}
@@ -143,16 +143,16 @@ export default function OrderForm({ productId, onSuccess }) {
           <div
             onClick={() => setStitchingEnabled((p) => !p)}
             className={`w-11 h-6 rounded-full transition-colors duration-200 flex items-center px-1 ${
-              stitchingEnabled ? "bg-[#6B5F50]" : "bg-[#6B5F50]/20"
+              stitchingEnabled ? "bg-[#C5A059]" : "bg-[#C5A059]/20"
             }`}
           >
             <div
-              className={`w-4 h-4 rounded-full bg-[#E8E0D0] shadow transition-transform duration-200 ${
+              className={`w-4 h-4 rounded-full bg-[#FFFFFF] shadow transition-transform duration-200 ${
                 stitchingEnabled ? "translate-x-5" : "translate-x-0"
               }`}
             />
           </div>
-          <span className="text-sm text-[#6B5F50]">
+          <span className="text-sm text-[#C5A059]">
             {stitchingEnabled ? "Stitching required" : "No stitching"}
           </span>
         </label>
@@ -179,7 +179,7 @@ export default function OrderForm({ productId, onSuccess }) {
           <span className="text-[#6B5F50]/40 normal-case font-sans">(in inches, optional)</span>
         </p>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {[
             { key: "chest",        label: "Chest" },
             { key: "waist",        label: "Waist" },
@@ -255,7 +255,7 @@ export default function OrderForm({ productId, onSuccess }) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#6B5F50] hover:bg-[#45362C] disabled:opacity-50 text-[#E8E0D0] font-mono font-bold py-3 rounded-lg transition-colors text-xs tracking-widest uppercase"
+        className="w-full bg-[#C5A059] hover:bg-[#0F172A] disabled:opacity-50 text-[#FFFFFF] font-mono font-bold py-3 rounded-lg transition-colors text-xs tracking-widest uppercase"
       >
         {loading ? "Placing Order…" : "Place Order"}
       </button>

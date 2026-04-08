@@ -20,14 +20,14 @@ function ProductModal({ product, onClose, onOrder }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-[#E8E0D0]/20 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-[#0F172A]/20 backdrop-blur-md" />
       <div
-        className="relative z-10 w-full max-w-2xl bg-[#E8E0D0] border border-[#6B5F50] rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+        className="relative z-10 w-full max-w-2xl bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-[#6B5F50]/60 text-[#6B5F50] hover:bg-[#6B5F50] md:top-4 md:right-4"
+          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-[#0F172A]/60 text-[#FFFFFF] hover:bg-[#333333] md:top-4 md:right-4"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -37,12 +37,12 @@ function ProductModal({ product, onClose, onOrder }) {
         {/* Mobile: Stack vertically, Desktop: Side by side */}
         <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
           {/* Image Section */}
-          <div className="md:w-1/2 bg-[#6B5F50]/10 flex flex-col min-h-0">
+          <div className="md:w-1/2 bg-[#F8F9FA]/10 flex flex-col min-h-0">
             <div className="relative h-48 sm:h-56 md:h-72 flex items-center justify-center overflow-hidden">
               {images.length > 0 ? (
                 <img src={images[imgIdx]?.url} alt={product.name} className="w-full h-full object-cover" />
               ) : (
-                <div className="text-[#6B5F50]/40">
+                <div className="text-[#64748B]/40">
                   <svg className="w-12 h-12 sm:w-16 sm:h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -50,10 +50,10 @@ function ProductModal({ product, onClose, onOrder }) {
               )}
             </div>
             {images.length > 1 && (
-              <div className="flex gap-2 p-2 sm:p-3 overflow-x-auto bg-[#6B5F50]/10">
+              <div className="flex gap-2 p-2 sm:p-3 overflow-x-auto bg-[#F8F9FA]/10">
                 {images.map((img, i) => (
                   <button key={i} onClick={() => setImgIdx(i)}
-                    className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-colors ${i === imgIdx ? 'border-[#6B5F50]' : 'border-transparent opacity-50'}`}>
+                    className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-colors ${i === imgIdx ? 'border-[#C5A059]' : 'border-transparent opacity-50'}`}>
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -64,23 +64,23 @@ function ProductModal({ product, onClose, onOrder }) {
           {/* Content Section */}
           <div className="md:w-1/2 p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 overflow-y-auto flex-1">
             {product.category?.name && (
-              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-[#6B5F50] border border-[#6B5F50] rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 w-fit">
+              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-[#0F172A] border border-[#0F172A] rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 w-fit">
                 {product.category.name}
               </span>
             )}
-            <h2 className="font-serif text-xl sm:text-2xl font-semibold text-[#6B5F50] leading-tight">{product.name}</h2>
-            <p className="text-[#6B5F50] text-xl sm:text-2xl font-light">
+            <h2 className="font-serif text-xl sm:text-2xl font-semibold text-[#0F172A] leading-tight">{product.name}</h2>
+            <p className="text-[#C5A059] text-xl sm:text-2xl font-light">
               ${Number(product.pricePerMeter).toLocaleString()}
-              <span className="text-xs sm:text-sm text-[#6B5F50]/60 ml-1">/ meter</span>
+              <span className="text-xs sm:text-sm text-[#64748B]/60 ml-1">/ meter</span>
             </p>
             {product.description && (
-              <p className="text-[#6B5F50]/70 text-sm leading-relaxed border-t border-[#6B5F50]/40 pt-3 sm:pt-4">
+              <p className="text-[#64748B]/70 text-sm leading-relaxed border-t border-[#CBD5E1] pt-3 sm:pt-4">
                 {product.description}
               </p>
             )}
             <button
               onClick={() => { onOrder(product); onClose() }}
-              className="mt-auto py-2.5 sm:py-3 bg-[#6B5F50] text-[#E8E0D0] rounded-lg font-mono text-xs sm:text-sm uppercase tracking-widest hover:bg-[#6B5F50] hover:text-[#E8E0D0] transition-all font-semibold"
+              className="mt-auto py-2.5 sm:py-3 bg-[#C5A059] text-[#FFFFFF] rounded-lg font-mono text-xs sm:text-sm uppercase tracking-widest hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all font-semibold"
             >
               Order
             </button>
@@ -96,36 +96,36 @@ function ProductModal({ product, onClose, onOrder }) {
 function ProductCard({ product, onShowDetails, onOrder }) {
   const image = product.images?.[0]?.url
   return (
-    <div className="bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl overflow-hidden group hover:border-[#6B5F50]/60 hover:shadow-[0_8px_32px_rgba(107,95,80,0.1)] transition-all duration-300 flex flex-col">
-      <div className="relative h-48 bg-[#6B5F50]/10 flex items-center justify-center overflow-hidden">
+    <div className="bg-[#FFFFFF] border border-[#CBD5E1]/50 rounded-xl overflow-hidden group hover:border-[#C5A059] hover:shadow-[0_8px_32px_rgba(197,165,2,0.1)] transition-all duration-300 flex flex-col">
+      <div className="relative h-48 bg-[#F8F9FA]/10 flex items-center justify-center overflow-hidden">
         {image ? (
           <img src={image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
-          <svg className="w-10 h-10 text-[#6B5F50]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-10 h-10 text-[#64748B]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
         )}
         {product.category?.name && (
-          <span className="absolute top-2 left-2 text-[9px] font-mono uppercase tracking-widest bg-[#6B5F50]/20 text-[#6B5F50] border border-[#6B5F50] rounded-full px-2 py-0.5 backdrop-blur-sm">
+          <span className="absolute top-2 left-2 text-[9px] font-mono uppercase tracking-widest bg-[#F8F9FA]/20 text-[#0F172A] border border-[#0F172A] rounded-full px-2 py-0.5 backdrop-blur-sm">
             {product.category.name}
           </span>
         )}
       </div>
       <div className="p-4 flex flex-col gap-3 flex-1">
         <div>
-          <h3 className="font-serif font-semibold text-[#6B5F50] text-sm leading-snug line-clamp-2">{product.name}</h3>
-          <p className="text-[#6B5F50] text-base font-light mt-1">
+          <h3 className="font-serif font-semibold text-[#0F172A] text-sm leading-snug line-clamp-2">{product.name}</h3>
+          <p className="text-[#C5A059] text-base font-light mt-1">
             ${Number(product.pricePerMeter).toLocaleString()}
-            <span className="text-xs text-[#6B5F50]/60 ml-1">/m</span>
+            <span className="text-xs text-[#64748B]/60 ml-1">/m</span>
           </p>
         </div>
         <div className="flex gap-2 mt-auto">
           <button onClick={() => onShowDetails(product)}
-            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider border border-[#6B5F50] text-[#6B5F50] rounded-lg hover:border-[#6B5F50] hover:bg-[#6B5F50]/30 transition-all">
+            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider border border-[#C5A059] text-[#FFFFFF] rounded-lg hover:border-[#0F172A] hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all">
             Details
           </button>
           <button onClick={() => onOrder(product)}
-            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider bg-[#6B5F50] text-[#E8E0D0] rounded-lg hover:bg-[#6B5F50] hover:text-[#E8E0D0] transition-all">
+            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider bg-[#C5A059] text-[#FFFFFF] rounded-lg hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all">
             Order
           </button>
         </div>
@@ -152,7 +152,7 @@ export default function ProductPage() {
   const [page, setPage]             = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [selected, setSelected]     = useState(null)
-  const LIMIT = 5
+  const LIMIT = 8
 
   // Load categories once
   useEffect(() => {
@@ -201,7 +201,7 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#E8E0D0] text-[#6B5F50] flex">
+    <div className="min-h-screen bg-[#F8F9FA] text-[#0F172A] flex">
       
       {/* Mobile Overlay */}
       {isSidebarOpen && (
@@ -213,17 +213,17 @@ export default function ProductPage() {
 
       {/* Sidebar */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-[#E8E0D0] border-r border-[#6B5F50]/50 flex flex-col 
+        fixed inset-y-0 left-0 z-50 w-64 bg-[#FFFFFF] border-r border-[#CBD5E1] flex flex-col 
         transform transition-transform duration-300 ease-in-out
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:translate-x-0 md:static md:inset-auto
+        md:translate-x-0 md:static md:inset-auto 
       `}>
-        <div className="px-6 py-5 border-b border-[#6B5F50]/40 flex justify-between items-center">
-          <Link to="/" className="font-serif text-base font-semibold text-[#6B5F50]">
-            Larkings<span className="text-[#6B5F50]">MensWear</span>
+        <div className="px-6 py-5 border-b border-[#0F172A]/40 flex justify-between items-center">
+          <Link to="/" className="font-serif text-base font-semibold text-[#0F172A]">
+            Larkings<span className="text-[#C5A059]">MensWear</span>
           </Link>
           <button 
-            className="md:hidden text-[#6B5F50]/70"
+            className="md:hidden text-[#64748B]/70"
             onClick={() => setIsSidebarOpen(false)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -232,7 +232,7 @@ export default function ProductPage() {
         <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
           <Link to="/dashboard"
             onClick={() => setIsSidebarOpen(false)}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider text-[#6B5F50]/70 hover:bg-[#6B5F50]/20 hover:text-[#6B5F50] transition-all"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider text-[#64748B]/70 hover:bg-[#F8F9FA]/20 hover:text-[#333333] transition-all"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -241,7 +241,7 @@ export default function ProductPage() {
           </Link>
           <Link to="/products"
             onClick={() => setIsSidebarOpen(false)}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider bg-[#6B5F50] text-[#E8E0D0] transition-all"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider bg-[#C5A059] text-[#FFFFFF] transition-all"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -267,8 +267,8 @@ export default function ProductPage() {
               </button>
               
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]/70 mb-1">Collection</p>
-                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#6B5F50]">Browse Fabrics</h1>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-[#64748B]/70 mb-1">Collection</p>
+                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#333333]">Browse Fabrics</h1>
               </div>
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function ProductPage() {
                 placeholder="Search fabrics…"
                 value={search}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-[#E8E0D0] border border-[#6B5F50]/60 rounded-lg text-[#6B5F50] text-sm placeholder-[#6B5F50]/50 focus:outline-none focus:border-[#6B5F50] transition-colors font-mono"
+                className="w-full pl-9 pr-4 py-2.5 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg text-[#333333] text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#C5A059] transition-colors font-mono"
               />
             </div>
             <div className="relative w-full sm:w-auto">
@@ -293,7 +293,7 @@ export default function ProductPage() {
                 <button
                   type="button"
                   onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                  className="w-full px-4 pr-10 py-2.5 bg-[#E8E0D0] border border-[#6B5F50]/60 rounded-lg text-sm text-[#6B5F50]/70 focus:outline-none focus:border-[#6B5F50] transition-colors font-mono appearance-none cursor-pointer text-left flex items-center justify-between"
+                  className="w-full px-4 pr-10 py-2.5 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg text-sm text-[#64748B]/70 focus:outline-none focus:border-[#C5A059] transition-colors font-mono appearance-none cursor-pointer text-left flex items-center justify-between"
                 >
                   <span className="truncate">{category ? categories.find(c => c._id === category)?.name || 'All Categories' : 'All Categories'}</span>
                 </button>
@@ -303,12 +303,12 @@ export default function ProductPage() {
                 
                 {/* Dropdown Options */}
                 {isCategoryOpen && (
-                  <div className="absolute z-50 w-full mt-1 bg-[#E8E0D0] border border-[#6B5F50]/60 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  <div className="absolute z-50 w-full mt-1 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg shadow-lg max-h-60 overflow-y-auto">
                     <div className="py-1">
                       <button
                         type="button"
                         onClick={() => { handleCategory(''); setIsCategoryOpen(false) }}
-                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#6B5F50]/20 transition-colors truncate ${!category ? 'text-[#6B5F50]' : 'text-[#6B5F50]/70'}`}
+                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${!category ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
                       >
                         All Categories
                       </button>
@@ -317,7 +317,7 @@ export default function ProductPage() {
                           key={c._id}
                           type="button"
                           onClick={() => { handleCategory(c._id); setIsCategoryOpen(false) }}
-                          className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#6B5F50]/20 transition-colors truncate ${category === c._id ? 'text-[#6B5F50]' : 'text-[#6B5F50]/70'}`}
+                          className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${category === c._id ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
                         >
                           {c.name}
                         </button>
@@ -336,13 +336,15 @@ export default function ProductPage() {
           {/* Grid */}
           {loading ? (
             <div className="flex items-center justify-center py-24">
-              <div className="w-8 h-8 border-2 border-[#6B5F50] border-t-[#6B5F50] rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-[#E5E5E5] border-t-[#E5E5E5] rounded-full animate-spin" />
             </div>
           ) : products.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-[#6B5F50]/50">
+            <div className="flex flex-col items-center justify-center py-24 text-[#333333]/50">
               <svg className="w-12 h-12 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414-2.414A1 1 0 00-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
               </svg>
+              <p className="font-mono text-sm uppercase tracking-widest text-[#333333]/70">No products found</p>
+              <p className="font-mono text-sm uppercase tracking-widest text-[#64748B]/70">No products found</p>
               <p className="font-mono text-sm uppercase tracking-widest">No products found</p>
             </div>
           ) : (
@@ -363,7 +365,7 @@ export default function ProductPage() {
               >
                 ← Prev
               </button>
-              <span className="font-mono text-xs text-[#6B5F50] px-3">{page} / {totalPages}</span>
+              <span className="font-mono text-xs text-[#333333] px-3">{page} / {totalPages}</span>
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}

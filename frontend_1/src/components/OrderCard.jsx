@@ -41,68 +41,68 @@ export default function OrderCard({ order, onViewDetail }) {
   };
 
   return (
-    <div className="bg-[#E8E0D0] border border-[#6B5F50]/30 rounded-xl p-5 hover:border-[#6B5F50]/60 hover:shadow-[0_4px_24px_rgba(107,95,80,0.1)] transition-all duration-200">
+    <div className="bg-[#FFFFFF] border border-[#CBD5E1] rounded-xl p-4 sm:p-5 hover:border-[#C5A059] hover:shadow-[0_4px_24px_rgba(197,165,2,0.1)] transition-all duration-200">
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-3 mb-4">
-        <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-[#6B5F50]/50 mb-1">Order ID</p>
-          <p className="text-[#6B5F50] font-mono text-xs">{order._id}</p>
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+        <div className="flex-1">
+          <p className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]/50 mb-1">Order ID</p>
+          <p className="text-[#333333] font-mono text-xs break-all">#{order._id?.slice(-8)}</p>
         </div>
         <span className={`text-[10px] font-mono font-semibold px-3 py-1 rounded-full border uppercase tracking-wide ${badgeClass}`}>
           {status}
         </span>
       </div>
 
-      <hr className="border-[#6B5F50]/20 mb-4" />
+      <hr className="border-[#CBD5E1] mb-4" />
 
       {/* Details */}
       <div className="grid grid-cols-2 gap-3 text-sm mb-4">
 
         {/* Product name comes from items[0].name (saved at order creation) */}
-        <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-[#6B5F50]/50 mb-0.5">Product</p>
-          <p className="text-[#6B5F50] font-medium">
+        <div className="col-span-1 sm:col-span-2">
+          <p className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]/50 mb-0.5">Product</p>
+          <p className="text-[#333333] font-medium">
             {firstItem?.name || "—"}
             {itemCount > 1 && (
-              <span className="text-[#6B5F50]/50 text-xs ml-1">+{itemCount - 1} more</span>
+              <span className="text-[#64748B]/40 text-xs ml-1">+{itemCount - 1} more</span>
             )}
           </p>
         </div>
 
         {/* Quantity from items[0].quantity */}
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-[#6B5F50]/50 mb-0.5">Quantity</p>
-          <p className="text-[#6B5F50] font-medium">{firstItem?.quantity ?? "—"}</p>
+          <p className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]/50 mb-0.5">Quantity</p>
+          <p className="text-[#333333] font-medium">{firstItem?.quantity ?? "—"}</p>
         </div>
 
         {/* totalAmount from model */}
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-[#6B5F50]/50 mb-0.5">Total</p>
-          <p className="text-[#6B5F50] font-bold">₹{total}</p>
+          <p className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]/50 mb-0.5">Total</p>
+          <p className="text-[#C5A059] font-bold text-lg">₹{total}</p>
         </div>
 
         {/* stitching.type Boolean */}
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-[#6B5F50]/50 mb-0.5">Stitching</p>
-          <p className="text-[#6B5F50]">{hasStitching ? "Yes" : "No"}</p>
+          <p className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]/50 mb-0.5">Stitching</p>
+          <p className="text-[#333333]">{hasStitching ? "Yes" : "No"}</p>
         </div>
 
       </div>
 
       {/* Stitching instructions if present */}
       {hasStitching && order.stitching?.instructions && (
-        <p className="text-xs text-[#6B5F50]/60 bg-[#6B5F50]/5 rounded-lg px-3 py-2 mb-4 border border-[#6B5F50]/10">
+        <p className="text-[#64748B]/70 bg-[#94A3B8] rounded-lg px-3 py-2 text-sm border border-[#CBD5E1]">
           {order.stitching.instructions}
         </p>
       )}
 
       {/* Actions */}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
         {onViewDetail && (
           <button
             onClick={() => onViewDetail(order._id)}
-            className="text-xs font-mono px-4 py-2 rounded-lg bg-[#6B5F50]/10 hover:bg-[#6B5F50]/20 text-[#6B5F50] transition-colors border border-[#6B5F50]/20"
+            className="text-xs font-mono px-4 py-2 rounded-lg bg-[#C5A059]/10 hover:bg-[#0F172A] text-[#FFFFFF] transition-colors border border-[#C5A059]/20 w-full sm:w-auto"
           >
             View Details
           </button>
@@ -110,7 +110,7 @@ export default function OrderCard({ order, onViewDetail }) {
         {status === "delivered" && (
           <button
             onClick={handleDownload}
-            className="text-xs font-mono px-4 py-2 rounded-lg bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-700 transition-colors flex items-center gap-1.5"
+            className="text-xs font-mono px-4 py-2 rounded-lg bg-[#10B981]/10 hover:bg-[#10B981]/20 border border-[#10B981]/30 text-[#10B981] transition-colors flex items-center justify-center gap-1.5 w-full sm:w-auto"
           >
             ↓ Download Invoice
           </button>

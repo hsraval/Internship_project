@@ -46,14 +46,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-24">
+    <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center px-4 py-24">
       <div className="w-full max-w-md animate-fade-up">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="font-display text-2xl font-semibold text-ink-900 hover:text-ink-600 transition-colors">
+          <Link to="/" className="font-display text-2xl font-semibold text-[#0F172A] hover:text-[#333333] transition-colors">
             Luminary
           </Link>
-          <p className="font-mono text-xs text-ink-400 uppercase tracking-widest mt-3">Create account</p>
+          <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mt-3">Create Account</p>
         </div>
 
         <div className="auth-card">

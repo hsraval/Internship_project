@@ -39,14 +39,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-24">
+    <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center px-4 py-24">
       <div className="w-full max-w-md animate-fade-up">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="font-display text-2xl font-semibold text-ink-900 hover:text-ink-600 transition-colors">
+          <Link to="/" className="font-display text-2xl font-semibold text-[#0F172A] hover:text-[#333333] transition-colors">
             Luminary
           </Link>
-          <p className="font-mono text-xs text-ink-400 uppercase tracking-widest mt-3">Sign in</p>
+          <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mt-3">Sign in</p>
         </div>
 
         <div className="auth-card">
@@ -61,7 +61,7 @@ export default function LoginPage() {
                 onBlur={handleBlur}
                 placeholder="you@example.com"
                 autoComplete="email"
-                className={`input-field ${touched.email && errors.email ? 'error' : ''}`}
+                className={`input-field ${touched.email && errors.email ? 'border-[#EF4444]' : 'border-[#CBD5E1]'}`}
               />
             </FormField>
 
@@ -80,7 +80,7 @@ export default function LoginPage() {
             <div className="flex justify-end">
               <Link
                 to="/forgot-password"
-                className="text-xs font-body text-ink-500 hover:text-ink-900 transition-colors underline underline-offset-2"
+                className="text-xs font-body text-[#64748B] hover:text-[#333333] transition-colors underline underline-offset-2"
               >
                 Forgot password?
               </Link>
