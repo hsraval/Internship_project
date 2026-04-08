@@ -127,13 +127,24 @@ exports.getAllOrders = async (req,res,next) =>{
 exports.getOrderById = async (req,res,next) =>{
     try{
         const userId = req.user.id;
+        const role = req.user.role;
         const id = req.params.id;
 
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({success:false,message:"Please Enter Valid ID"})
         }
 
-        const order = await Order.findOne({userId,_id:id,isDeleted:false})
+        // const order = await Order.findOne({userId,_id:id,isDeleted:false})
+        let order;
+
+        // Admin can view any order
+        if (role === "admin") {
+            order = await Order.findOne({ _id: id, isDeleted: false }).populate("items.product");
+        } else {
+        // Normal user can view only own order
+            order = await Order.findOne({ userId, _id: id, isDeleted: false }).populate("items.product");
+        }
+        
         if(!order){
             return res.status(404).json({success:false,message:"Order Not Found"})
         }

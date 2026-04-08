@@ -652,7 +652,7 @@ function ProductCard({ product, onShowDetails, onOrder }) {
 
 // ─── Dropdown Menu Component ───────────────────────────────────────────────────
 
-function UserMenu({ isAuthenticated, navigate }) {
+function UserMenu({ isAuthenticated, navigate, onLogout}) {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef(null)
 
@@ -693,14 +693,14 @@ function UserMenu({ isAuthenticated, navigate }) {
               >
                 Dashboard
               </button>
-              <button
+              {/* <button
                 onClick={() => { navigate('/profile'); setIsOpen(false) }}
                 className="block w-full text-left px-5 py-3 text-sm font-mono text-[#6B5F50]/70 hover:bg-[#6B5F50]/10 hover:text-[#6B5F50] transition-colors"
               >
                 My Profile
-              </button>
+              </button> */}
               <button
-                onClick={() => { navigate('/logout'); setIsOpen(false) }}
+                onClick={ async () => { await onLogout(); setIsOpen(false); navigate('/'); } }
                 className="block w-full text-left px-5 py-3 text-sm font-mono text-red-400/80 hover:bg-[#6B5F50]/10 hover:text-red-400 transition-colors"
               >
                 Sign Out
@@ -737,7 +737,7 @@ const NAV_LINKS = [
 ]
 
 export default function HomePage() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
 
   const heroRef    = useRef(null)
@@ -783,10 +783,10 @@ export default function HomePage() {
             className="group flex items-center gap-1"
           >
             <span className="font-serif text-xl md:text-2xl font-bold text-[#6B5F50] tracking-tight group-hover:text-[#6B5F50] transition-colors">
-              Larkings
+              Larkinse
             </span>
             <span className="font-serif text-sm md:text-base font-normal text-[#6B5F50] group-hover:text-[#6B5F50] transition-colors">
-              MensWear
+              MensWear & PurchasePoint
             </span>
           </button>
 
@@ -807,7 +807,7 @@ export default function HomePage() {
 
           {/* Right Menu */}
           <div className="flex items-center">
-            <UserMenu isAuthenticated={isAuthenticated} navigate={navigate} />
+            <UserMenu isAuthenticated={isAuthenticated} navigate={navigate} onLogout={logout} />
           </div>
         </nav>
       </header>

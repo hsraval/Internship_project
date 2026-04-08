@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getProducts, getCategories } from '../api/api'
 import toast from 'react-hot-toast'
+import OrderForm from '../components/OrderForm'
 
 // ─── Product Detail Modal ─────────────────────────────────────────────────────
 
@@ -39,7 +40,7 @@ function ProductModal({ product, onClose, onOrder }) {
           <div className="md:w-1/2 bg-[#6B5F50]/10 flex flex-col min-h-0">
             <div className="relative h-48 sm:h-56 md:h-72 flex items-center justify-center overflow-hidden">
               {images.length > 0 ? (
-                <img src={images[imgIdx]} alt={product.name} className="w-full h-full object-cover" />
+                <img src={images[imgIdx]?.url} alt={product.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="text-[#6B5F50]/40">
                   <svg className="w-12 h-12 sm:w-16 sm:h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +94,7 @@ function ProductModal({ product, onClose, onOrder }) {
 // ─── Product Card ─────────────────────────────────────────────────────────────
 
 function ProductCard({ product, onShowDetails, onOrder }) {
-  const image = product.images?.[0]
+  const image = product.images?.[0]?.url
   return (
     <div className="bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl overflow-hidden group hover:border-[#6B5F50]/60 hover:shadow-[0_8px_32px_rgba(107,95,80,0.1)] transition-all duration-300 flex flex-col">
       <div className="relative h-48 bg-[#6B5F50]/10 flex items-center justify-center overflow-hidden">
@@ -151,7 +152,7 @@ export default function ProductPage() {
   const [page, setPage]             = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [selected, setSelected]     = useState(null)
-  const LIMIT = 12
+  const LIMIT = 5
 
   // Load categories once
   useEffect(() => {
@@ -194,9 +195,9 @@ export default function ProductPage() {
   const handleSearch = (val) => { setSearch(val); setPage(1) }
   const handleCategory = (val) => { setCategory(val); setPage(1) }
 
-  const handleOrder = () => {
+  const handleOrder = (product) => {
     if (!isAuthenticated) { navigate('/login'); return }
-    alert('Coming soon')
+    navigate(`/order?product=${product._id}`)
   }
 
   return (

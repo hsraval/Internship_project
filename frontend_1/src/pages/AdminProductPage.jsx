@@ -72,7 +72,7 @@ export default function AdminProductPage() {
   // Confirm dialog state
   const [confirm, setConfirm] = useState(null) // { type: 'delete'|'restore', product }
 
-  const LIMIT = 12
+  const LIMIT = 5
 
   useEffect(() => {
     getCategories()
@@ -313,7 +313,7 @@ export default function AdminProductPage() {
                           <div className="flex items-start gap-3">
                             <div className="w-16 h-16 rounded-lg bg-[#6B5F50]/10 overflow-hidden flex-shrink-0 flex items-center justify-center">
                               {p.images?.[0] ? (
-                                <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
+                                <img src={p.images[0]?.url} alt={p.name} className="w-full h-full object-cover" />
                               ) : (
                                 <svg className="w-6 h-6 text-[#6B5F50]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />

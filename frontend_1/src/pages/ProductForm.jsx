@@ -89,7 +89,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
     existingImages.forEach((url) => fd.append('existingImages', url))
 
     // New files
-    imageFiles.forEach((f) => fd.append('images', f))
+    imageFiles.forEach((f) => fd.append('uploadedImages', f))
 
     setSubmitting(true)
     try {
@@ -206,9 +206,9 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
             {(existingImages.length > 0 || imagePreviews.length > 0) && (
               <div className="flex flex-wrap gap-2 mb-3">
                 {/* Existing images */}
-                {existingImages.map((url, i) => (
+                {existingImages.map((img, i) => (
                   <div key={`existing-${i}`} className="relative w-16 h-16 rounded-lg overflow-hidden group border border-[#6B5F50]/50">
-                    <img src={url} alt="" className="w-full h-full object-cover" />
+                    <img src={img.url} alt="" className="w-full h-full object-cover" />
                     <button
                       type="button"
                       onClick={() => removeExistingImage(i)}

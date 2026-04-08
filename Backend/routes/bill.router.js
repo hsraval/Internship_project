@@ -7,13 +7,15 @@ const {
     downloadBillPDF
 } = require('../controllers/bill.controller');
 
+const protect = require('../middleware/auth.middleware');
+
 // 🔹 Admin - Get all bills
-router.get('/',getBills);
+router.get('/',protect,getBills);
 
 // 🔹 User/Admin - Get single bill
-router.get('/:id', getSingleBill);
+router.get('/:id', protect, getSingleBill);
 
 // 🔹 Download PDF
-router.get('/:id/download', downloadBillPDF);
+router.get('/:id/download', protect, downloadBillPDF);
 
 module.exports = router;

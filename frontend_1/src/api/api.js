@@ -112,4 +112,15 @@ export const restoreProduct = (id) => api.patch(`/product/${id}/restore`)
 export const getAllProductsAdmin = (params = {}) =>
   api.get('/product/admin', { params })
 
+// ─── ORDER (new) ──────────────────────────────────────────────────────────────
+export const createOrder      = (data)         => api.post("/order", data);
+export const getMyOrders      = ()             => api.get("/order/user");
+export const getAllOrders      = ()             => api.get("/order");
+export const getOrderById     = (id)           => api.get(`/order/${id}`);
+export const updateOrderStatus = (id, status)  => api.patch(`/order/${id}/status`, { status });
+export const cancelOrder      = (id)           => api.post(`/order/${id}`);
+ 
+// ─── BILL (new) ───────────────────────────────────────────────────────────────
+export const getBillById   = (id) => api.get(`/bill/${id}`);
+export const downloadBill  = (id) => api.get(`/bill/${id}/download`, { responseType: "blob" });
 export default api

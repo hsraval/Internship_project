@@ -29,6 +29,16 @@ function Sidebar({ active, onNavigate, onLogout, loggingOut, user, isSidebarOpen
         </svg>
       ),
     },
+    {
+      id: 'orders',
+      label: isAdmin ? 'Manage Orders' : 'My Orders',
+      href: isAdmin ? '/admin/orders' : '/orders',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      ),
+    },
   ]
 
   return (
@@ -128,6 +138,12 @@ function AdminDashboard({ user, onNavigate }) {
       action: () => onNavigate('products'),
       href: '/admin/products',
     },
+    {
+      label: 'Manage Orders',
+      desc: 'View all orders, update status, and download invoices.',
+      icon: '◎',
+      href: '/admin/orders',
+    },
   ]
 
   return (
@@ -190,13 +206,23 @@ function UserDashboard({ user }) {
           </p>
         </Link>
 
-        <div className="bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6">
+        {/* <div className="bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6">
           <div className="text-xl sm:text-2xl mb-3 opacity-40">⬡</div>
           <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">Orders</h3>
           <p className="text-[#6B5F50]/70 text-xs leading-relaxed">
             Order history and tracking — <span className="text-[#6B5F50]">coming soon</span>.
           </p>
-        </div>
+        </div> */}
+        <Link
+          to="/orders"
+          className="block bg-[#E8E0D0] border border-[#6B5F50]/50 rounded-xl p-4 sm:p-6 hover:border-[#6B5F50]/60 hover:shadow-[0_4px_24px_rgba(107,95,80,0.1)] transition-all duration-300 group"
+        >
+          <div className="text-xl sm:text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">⬡</div>
+          <h3 className="font-serif font-semibold text-[#6B5F50] text-sm sm:text-base mb-1">My Orders</h3>
+          <p className="text-[#6B5F50]/70 text-xs leading-relaxed">
+            View your order history and download invoices.
+          </p>
+        </Link>
       </div>
 
       {/* Account details */}

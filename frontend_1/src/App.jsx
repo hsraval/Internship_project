@@ -15,6 +15,10 @@ import DashboardPage from './pages/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProductPage from './pages/ProductPage'
 import AdminProductPage from './pages/AdminProductPage'
+import OrderPage        from "./pages/OrderPage";
+import MyOrdersPage     from "./pages/MyOrdersPage";
+import AdminOrdersPage  from "./pages/AdminOrdersPage";
+import OrderDetailPage  from "./pages/OrderDetailPage";
 
 export default function App() {
   return (
@@ -92,6 +96,15 @@ export default function App() {
             />
             <Route path="/products" element={<ProtectedRoute><ProductPage /></ProtectedRoute>} />
             <Route path="/admin/products" element={<ProtectedRoute><AdminProductPage /></ProtectedRoute>} />
+            
+            <Route path="/order"      element={<ProtectedRoute><OrderPage /></ProtectedRoute>} />
+            <Route path="/orders"     element={<ProtectedRoute><MyOrdersPage /></ProtectedRoute>} />
+            <Route path="/orders/:id" element={<ProtectedRoute><OrderDetailPage /></ProtectedRoute>} />
+
+            {/* Admin routes */}
+            <Route path="/admin/orders"     element={<ProtectedRoute><AdminOrdersPage /></ProtectedRoute>} />
+            <Route path="/admin/orders/:id" element={<ProtectedRoute><OrderDetailPage /></ProtectedRoute>} />
+
             {/* Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
