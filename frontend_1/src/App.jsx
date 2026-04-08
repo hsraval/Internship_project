@@ -92,7 +92,6 @@ export default function App() {
             />
             <Route path="/products" element={<ProtectedRoute><ProductPage /></ProtectedRoute>} />
             <Route path="/admin/products" element={<ProtectedRoute><AdminProductPage /></ProtectedRoute>} />
-            {/* Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </AuthProvider>

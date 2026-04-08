@@ -112,4 +112,7 @@ export const restoreProduct = (id) => api.patch(`/product/${id}/restore`)
 export const getAllProductsAdmin = (params = {}) =>
   api.get('/product/admin', { params })
 
+
+
+
 export default api
