@@ -67,10 +67,10 @@ export default function MyOrdersPage() {
           <div className="text-center py-20">
             <p className="text-[#64748B] text-sm">No orders yet.</p>
             <button
-              onClick={() => navigate("/order")}
+              onClick={() => navigate("/products")}
               className="mt-4 text-[#C5A059] hover:text-[#0F172A] text-sm underline"
             >
-              Place your first order →
+              Browse Products →
             </button>
           </div>
         )}

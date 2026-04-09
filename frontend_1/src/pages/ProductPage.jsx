@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useWishlist } from '../context/WishlistContext'
 import { getProducts, getCategories } from '../api/api'
 import toast from 'react-hot-toast'
 import OrderForm from '../components/OrderForm'
@@ -65,9 +66,11 @@ function ProductModal({ product, onClose, onOrder }) {
           {/* Content Section */}
           <div className="md:w-1/2 p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 overflow-y-auto flex-1">
             {product.category?.name && (
-              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-[#0F172A] border border-[#0F172A] rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 w-fit">
-                {product.category.name}
-              </span>
+              <div className="inline-flex items-center">
+                <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.15em] bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white rounded-full px-3 sm:px-4 py-1 sm:py-1.5 shadow-lg shadow-[#C5A059]/25 backdrop-blur-sm font-semibold">
+                  {product.category.name}
+                </span>
+              </div>
             )}
             <h2 className="font-serif text-xl sm:text-2xl font-semibold text-[#0F172A] leading-tight">{product.name}</h2>
             <p className="text-[#C5A059] text-xl sm:text-2xl font-light">
@@ -96,6 +99,9 @@ function ProductModal({ product, onClose, onOrder }) {
 
 function ProductCard({ product, onShowDetails, onOrder }) {
   const image = product.images?.[0]?.url
+  const { isInWishlist } = useWishlist()
+  const wishlisted = isInWishlist(product._id)
+  
   return (
     <div className="bg-[#FFFFFF] border border-[#CBD5E1]/50 rounded-xl overflow-hidden group hover:border-[#C5A059] hover:shadow-[0_8px_32px_rgba(197,165,2,0.1)] transition-all duration-300 flex flex-col">
       <div className="relative h-48 bg-[#F8F9FA]/10 flex items-center justify-center overflow-hidden">
@@ -107,26 +113,42 @@ function ProductCard({ product, onShowDetails, onOrder }) {
           </svg>
         )}
         {product.category?.name && (
-          <span className="absolute top-2 left-2 text-[9px] font-mono uppercase tracking-widest bg-[#F8F9FA]/20 text-[#0F172A] border border-[#0F172A] rounded-full px-2 py-0.5 backdrop-blur-sm">
-            {product.category.name}
-          </span>
+          <div className="absolute top-3 left-3 z-10">
+            <span className="inline-flex items-center text-[10px] font-mono uppercase tracking-[0.15em] bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white rounded-full px-3 py-1.5 shadow-lg shadow-[#C5A059]/25 backdrop-blur-sm font-semibold">
+              {product.category.name}
+            </span>
+          </div>
         )}
       </div>
       <div className="p-4 flex flex-col gap-3 flex-1">
         <div>
           <h3 className="font-serif font-semibold text-[#0F172A] text-sm leading-snug line-clamp-2">{product.name}</h3>
           <p className="text-[#C5A059] text-base font-light mt-1">
-            ${Number(product.pricePerMeter).toLocaleString()}
+            ₹{Number(product.pricePerMeter).toLocaleString()}
             {/* <span className="text-xs text-[#64748B]/60 ml-1">/m</span> */}
           </p>
         </div>
         <div className="flex gap-2 mt-auto">
-          <WishlistButton
-            productId={product._id}
-            className="transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms]"
-          />
+          <button
+            onClick={() => {
+              const wishlistBtn = document.querySelector(`[data-product-wishlist="${product._id}"] button`)
+              wishlistBtn?.click()
+            }}
+            className={`px-3 py-2 border text-[10px] font-mono uppercase tracking-wider rounded-lg transition-all flex items-center justify-center ${
+              wishlisted 
+                ? 'border-[#C5A059] bg-[#C5A059] text-white hover:bg-[#b08d47]' 
+                : 'border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-[#FFFFFF]'
+            }`}
+          >
+            <svg className="w-3.5 h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+          <div data-product-wishlist={product._id} className="hidden">
+            <WishlistButton productId={product._id} />
+          </div>
           <button onClick={() => onShowDetails(product)}
-            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider border border-[#C5A059] text-[#FFFFFF] rounded-lg hover:border-[#0F172A] hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all">
+            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider border border-[#C5A059] text-[#C5A059] bg-[#FFFFFF] rounded-lg hover:border-[#0F172A] hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all">
             Details
           </button>
           <button onClick={() => onOrder(product)}
@@ -157,6 +179,7 @@ export default function ProductPage() {
   const [page, setPage]             = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [selected, setSelected]     = useState(null)
+  const [isTransitioning, setIsTransitioning] = useState(false)
   const LIMIT = 8
 
   // Load categories once
@@ -199,6 +222,24 @@ export default function ProductPage() {
   // Reset to page 1 on filter change
   const handleSearch = (val) => { setSearch(val); setPage(1) }
   const handleCategory = (val) => { setCategory(val); setPage(1) }
+
+  // Enhanced smooth transition with fade effect
+  const handlePageChange = (newPage) => {
+    if (newPage === page) return
+    
+    setIsTransitioning(true)
+    
+    // Fade out current content
+    setTimeout(() => {
+      setPage(newPage)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      
+      // Fade in new content
+      setTimeout(() => {
+        setIsTransitioning(false)
+      }, 150)
+    }, 200)
+  }
 
   const handleOrder = (product) => {
     if (!isAuthenticated) { navigate('/login'); return }
@@ -336,47 +377,84 @@ export default function ProductPage() {
         </div>
 
         {/* Scrollable Content Area */}
-        <div className="flex-1 overflow-y-auto px-4 md:px-8 pb-4">
-
-          {/* Grid */}
-          {loading ? (
-            <div className="flex items-center justify-center py-24">
-              <div className="w-8 h-8 border-2 border-[#E5E5E5] border-t-[#E5E5E5] rounded-full animate-spin" />
-            </div>
-          ) : products.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-[#333333]/50">
-              <svg className="w-12 h-12 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414-2.414A1 1 0 00-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-              </svg>
-              <p className="font-mono text-sm uppercase tracking-widest text-[#333333]/70">No products found</p>
-              <p className="font-mono text-sm uppercase tracking-widest text-[#64748B]/70">No products found</p>
-              <p className="font-mono text-sm uppercase tracking-widest">No products found</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {products.map((p) => (
-                <ProductCard key={p._id} product={p} onShowDetails={setSelected} onOrder={handleOrder} />
-              ))}
+        <div className="flex-1 overflow-y-auto px-4 md:px-8 pb-4 relative">
+          
+          {/* Transition Overlay */}
+          {isTransitioning && (
+            <div className="absolute inset-0 bg-[#F8F9FA]/80 backdrop-blur-sm z-10 flex items-center justify-center">
+              <div className="w-8 h-8 border-2 border-[#C5A059]/30 border-t-[#C5A059] rounded-full animate-spin" />
             </div>
           )}
 
-          {/* Pagination */}
+          {/* Content with fade transition */}
+          <div className={`transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+            {/* Grid */}
+            {loading ? (
+              <div className="flex items-center justify-center py-24">
+                <div className="w-8 h-8 border-2 border-[#E5E5E5] border-t-[#E5E5E5] rounded-full animate-spin" />
+              </div>
+            ) : products.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-24 text-[#333333]/50">
+                <svg className="w-12 h-12 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0V5a2 2 0 01-2 2H6a2 2 0 01-2 2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414-2.414A1 1 0 00-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+                <p className="font-mono text-sm uppercase tracking-widest text-[#333333]/70">No products found</p>
+                <p className="font-mono text-sm uppercase tracking-widest text-[#64748B]/70">No products found</p>
+                <p className="font-mono text-sm uppercase tracking-widest">No products found</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                {products.map((p) => (
+                  <ProductCard key={p._id} product={p} onShowDetails={setSelected} onOrder={handleOrder} />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Clean Modern Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 mt-6 mb-4">
+            <div className="flex items-center justify-center gap-1 mt-6 mb-4">
+              {/* Previous Button */}
               <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                onClick={() => handlePageChange(Math.max(1, page - 1))}
                 disabled={page === 1}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider border border-[#6B5F50] text-[#6B5F50]/70 rounded-lg hover:border-[#6B5F50] hover:text-[#6B5F50] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
+                  page === 1 
+                    ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' 
+                    : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                }`}
               >
-                ← Prev
+                ←
               </button>
-              <span className="font-mono text-xs text-[#333333] px-3">{page} / {totalPages}</span>
+
+              {/* Page Numbers */}
+              <div className="flex items-center gap-1">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handlePageChange(i + 1)}
+                    className={`w-10 h-10 rounded-lg font-mono text-sm transition-all duration-200 ${
+                      page === i + 1
+                        ? 'bg-[#0F172A] text-white font-semibold'
+                        : 'bg-[#FFFFFF] text-[#64748B] hover:bg-[#C5A059] hover:text-white'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+
+              {/* Next Button */}
               <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
                 disabled={page === totalPages}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider border border-[#6B5F50] text-[#6B5F50]/70 rounded-lg hover:border-[#6B5F50] hover:text-[#6B5F50] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
+                  page === totalPages 
+                    ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' 
+                    : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                }`}
               >
-                Next →
+                →
               </button>
             </div>
           )}

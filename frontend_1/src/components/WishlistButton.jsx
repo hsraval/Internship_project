@@ -1,13 +1,24 @@
 // src/components/WishlistButton.jsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import { useWishlist } from '../context/WishlistContext'
 import { addToWishlist, removeFromWishlist } from '../api/api'
 
 export default function WishlistButton({ productId, initialWishlisted = false, className = '' }) {
   const { isAuthenticated } = useAuth()
-  const [wishlisted, setWishlisted] = useState(initialWishlisted)
-  const [loading, setLoading]       = useState(false)
+  const { isInWishlist, addToWishlist: addToGlobalWishlist, removeFromWishlist: removeFromGlobalWishlist, loadWishlist } = useWishlist()
+  const [loading, setLoading] = useState(false)
+  
+  // Use global state to determine if product is wishlisted
+  const wishlisted = isInWishlist(productId)
+
+  // Load wishlist when component mounts if user is authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadWishlist()
+    }
+  }, [isAuthenticated, loadWishlist])
 
   const handleToggle = async (e) => {
     e.stopPropagation()
@@ -21,11 +32,11 @@ export default function WishlistButton({ productId, initialWishlisted = false, c
     try {
       if (wishlisted) {
         await removeFromWishlist(productId)
-        setWishlisted(false)
+        removeFromGlobalWishlist(productId)
         toast.success('Removed from wishlist')
       } else {
         await addToWishlist(productId)
-        setWishlisted(true)
+        addToGlobalWishlist(productId)
         toast.success('Added to wishlist')
       }
     } catch {
@@ -41,7 +52,7 @@ export default function WishlistButton({ productId, initialWishlisted = false, c
       disabled={loading}
       title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
       className={`
-        w-9 h-9 rounded-full flex items-center justify-center
+        w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center
         border transition-all duration-200 disabled:opacity-50
         ${wishlisted
           ? 'bg-[#C5A059] border-[#C5A059] text-white hover:bg-[#b08d47]'
@@ -51,7 +62,7 @@ export default function WishlistButton({ productId, initialWishlisted = false, c
       `}
     >
       <svg
-        className="w-4 h-4"
+        className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5"
         fill={wishlisted ? 'currentColor' : 'none'}
         stroke="currentColor"
         strokeWidth={2}

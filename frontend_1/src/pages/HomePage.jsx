@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useWishlist } from '../context/WishlistContext'
 import { getProducts } from '../api/api'
+import toast from 'react-hot-toast'
 import WishlistButton from '../components/WishlistButton'
 
 // ─── Styles for Custom Animations ─────────────────────────────────────────────
@@ -67,7 +69,7 @@ function ProductModal({ product, onClose }) {
 
         {/* Images Section */}
         <div className="md:w-3/5 bg-[#F8F9FA]/10 flex flex-col relative group">
-          <div className="relative h-80 md:h-[500px] overflow-hidden">
+          <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] overflow-hidden">
             {images.length > 0 ? (
               <img
                 src={images[imgIdx]?.url}
@@ -100,7 +102,7 @@ function ProductModal({ product, onClose }) {
         </div>
 
         {/* Details Section */}
-        <div className="md:w-2/5 p-8 flex flex-col justify-center bg-[#FFFFFF]">
+        <div className="md:w-2/5 p-6 sm:p-8 flex flex-col justify-center bg-[#FFFFFF]">
           {product.category?.name && (
             <span className="inline-block text-[10px] font-mono uppercase tracking-[0.2em] text-[#0F172A] border border-[#0F172A] rounded-full px-3 py-1 w-fit mb-6">
               {product.category.name}
@@ -148,29 +150,36 @@ function ProductModal({ product, onClose }) {
 
 function ProductCard({ product, onShowDetails, onOrder }) {
   const image = product.images?.[0]?.url
+  const { isInWishlist } = useWishlist()
+  const wishlisted = isInWishlist(product._id)
 
   return (
-    <div className="group relative bg-[#FFFFFF] border border-[#CBD5E1]/30 rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(197,165,2,0.12)] hover:-translate-y-1">
+    <div className="group relative bg-gradient-to-br from-white via-[#FAFAFA] to-[#F8F9FA] border border-[#E2E8F]/20 backdrop-blur-sm rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:shadow-[0_25px_50px_-15px_rgba(197,165,2,0.15)] hover:-translate-y-1 hover:border-[#C5A059]/30">
       
-      <div className="relative h-64 overflow-hidden bg-[#F8F9FA]/10">
+      <div className="relative h-72 overflow-hidden bg-gradient-to-br from-white/10 via-white/5 to-white/10 rounded-xl">
         {image ? (
-          <img
-            src={image}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-          />
+          <div className="relative w-full h-full">
+            <img
+              src={image}
+              alt={product.name}
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+          </div>
         ) : (
-          <div className="flex items-center justify-center w-full h-full text-[#64748B]/40">
-            <svg className="w-16 h-16 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-[#F1F5F]/10 via-[#E5E7EB]/5 to-[#F8F9FA]/20">
+            <svg className="w-20 h-20 opacity-30" fill="none" stroke="#E5E7EB" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
         )}
         
         {product.category?.name && (
-          <span className="absolute top-4 left-4 text-[9px] font-mono uppercase tracking-[0.2em] bg-[#0F172A]/20 text-[#0F172A] border border-[#0F172A] rounded-full px-3 py-1.5 transition-opacity duration-300 opacity-80 group-hover:opacity-100">
-            {product.category.name}
-          </span>
+          <div className="absolute top-3 left-3 z-10">
+            <span className="inline-flex items-center text-[10px] font-mono uppercase tracking-[0.15em] bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white rounded-full px-3 py-1.5 shadow-lg shadow-[#C5A059]/25 backdrop-blur-sm">
+              {product.category.name}
+            </span>
+          </div>
         )}
 
         {/* <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
@@ -187,39 +196,56 @@ function ProductCard({ product, onShowDetails, onOrder }) {
             Order
           </button>
         </div> */}
-        <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-          <WishlistButton
-            productId={product._id}
-            className="transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms]"
-          />
+        <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 px-3">
+          <button
+            onClick={() => {
+              const wishlistBtn = document.querySelector(`[data-wishlist-btn="${product._id}"] button`)
+              wishlistBtn?.click()
+            }}
+            className={`px-3 py-2 border text-xs font-mono uppercase tracking-widest rounded-lg transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms] flex items-center justify-center ${
+              wishlisted 
+                ? 'border-[#C5A059] bg-[#C5A059] text-white hover:bg-[#b08d47]' 
+                : 'border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-[#FFFFFF]'
+            }`}
+          >
+            <svg className="w-3.5 h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+          <div data-wishlist-btn={product._id} className="hidden">
+            <WishlistButton productId={product._id} />
+          </div>
           <button
             onClick={() => onShowDetails(product)}
-            className="px-6 py-2.5 bg-[#FFFFFF] text-[#0F172A] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75"
+            className="px-3 py-2 bg-[#FFFFFF] text-[#0F172A] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75"
           >
-            View
+            <span className="hidden xs:inline">View</span>
+            <span className="xs:hidden">V</span>
           </button>
           <button
             onClick={() => onOrder(product)}
-            className="px-6 py-2.5 border border-[#C5A059] text-[#C5A059] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#C5A059] hover:text-[#FFFFFF] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100"
+            className="px-3 py-2 border border-[#C5A059] text-[#C5A059] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#C5A059] hover:text-[#FFFFFF] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100"
           >
-            Order
+            <span className="hidden xs:inline">Order</span>
+            <span className="xs:hidden">O</span>
           </button>
         </div>
       </div>
 
-      <div className="p-5 flex flex-col flex-1 relative bg-[#FFFFFF] z-10">
+      <div className="p-6 flex flex-col flex-1 relative bg-gradient-to-b from-white to-[#FAFAFA]/50 border-t border-[#CBD5E1]/20 z-10">
         <div className="mb-auto">
-          <h3 className="font-serif font-semibold text-[#0F172A] text-lg leading-tight mb-2 line-clamp-2 group-hover:text-[#C5A059] transition-colors">
+          <h3 className="font-serif font-semibold text-[#0F172A] text-lg leading-tight mb-3 line-clamp-2 group-hover:text-[#C5A059] transition-colors duration-300">
             {product.name}
           </h3>
-          <div className="flex items-baseline gap-2">
-            <p className="text-[#C5A059] text-xl font-light">
-              ₹{Number(product.pricePerMeter).toLocaleString()}
-            </p>
-            {/* <span className="text-[10px] text-[#64748B] font-mono uppercase">/ meter</span> */}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[#C5A059] text-2xl font-semibold">
+                ₹{Number(product.pricePerMeter).toLocaleString()}
+              </span>
+            </div>
           </div>
         </div>
-        <div className="mt-4 h-[1px] w-full bg-gradient-to-r from-[#CBD5E1]/30 to-transparent group-hover:from-[#C5A059]/50 transition-colors duration-300" />
+        <div className="mt-4 h-[1px] w-full bg-gradient-to-r from-[#CBD5E1]/20 via-[#C5A059]/30 to-transparent group-hover:from-[#C5A059]/60 group-hover:via-[#C5A059]/40 transition-all duration-500" />
       </div>
     </div>
   )
@@ -227,9 +253,21 @@ function ProductCard({ product, onShowDetails, onOrder }) {
 
 // ─── Dropdown Menu Component ───────────────────────────────────────────────────
 
-function UserMenu({ isAuthenticated, navigate, onLogout}) {
+function UserMenu({ isAuthenticated, navigate, onLogout }) {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef(null)
+
+  const handleLogout = async () => {
+    try {
+      await onLogout()
+      toast.success('Signed out successfully')
+      setIsOpen(false)
+      navigate('/')
+    } catch (error) {
+      toast.error('Failed to sign out. Please try again.')
+      console.error('Logout error:', error)
+    }
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -275,7 +313,7 @@ function UserMenu({ isAuthenticated, navigate, onLogout}) {
                 My Profile
               </button> */}
               <button
-                onClick={ async () => { await onLogout(); setIsOpen(false); navigate('/'); } }
+                onClick={handleLogout}
                 className="block w-full text-left px-5 py-3 text-sm font-mono text-[#EF4444]/80 hover:bg-[#F8F9FA] hover:text-[#EF4444] transition-colors"
               >
                 Sign Out
@@ -312,8 +350,11 @@ const NAV_LINKS = [
 ]
 
 export default function HomePage() {
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated, user, logout } = useAuth()
   const navigate = useNavigate()
+
+  // Check if user is admin
+  const isAdmin = isAuthenticated && user?.role === 'admin'
 
   const heroRef = useRef(null)
   const aboutRef = useRef(null)
@@ -352,6 +393,21 @@ export default function HomePage() {
     }
   }
 
+  const handleLogout = async () => {
+    if (!isAuthenticated) {
+      navigate('/login')
+    } else {
+      try {
+        await logout()
+        toast.success('Signed out successfully')
+        navigate('/')
+      } catch (error) {
+        toast.error('Failed to sign out. Please try again.')
+        console.error('Logout error:', error)
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#F8F9FA] text-[#333333] font-sans">
 
@@ -387,13 +443,21 @@ export default function HomePage() {
                 {l.label}
               </button>
             ))}
-            {isAuthenticated && (
-              <button
-                onClick={() => navigate('/wishlist')}
-                className="px-5 py-2 text-xs font-mono uppercase tracking-widest text-[#64748B]/70 hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#F8F9FA]/50"
-              >
-                Wishlist
-              </button>
+            {isAuthenticated && !isAdmin && (
+              <>
+                <button
+                  onClick={() => navigate('/wishlist')}
+                  className="px-5 py-2 text-xs font-mono uppercase tracking-widest text-[#64748B]/70 hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#F8F9FA]/50"
+                >
+                  Wishlist
+                </button>
+                <button
+                  onClick={() => navigate('/orders')}
+                  className="px-5 py-2 text-xs font-mono uppercase tracking-widest text-[#64748B]/70 hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#F8F9FA]/50"
+                >
+                  My Orders
+                </button>
+              </>
             )}
           </div>
 

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
+import { WishlistProvider } from './context/WishlistContext'
 import ErrorBoundary from './components/ErrorBoundary'
 import ProtectedRoute from './components/ProtectedRoute'
 import GuestRoute from './components/GuestRoute'
@@ -26,6 +27,7 @@ export default function App() {
     <BrowserRouter>
       <ErrorBoundary>
         <AuthProvider>
+          <WishlistProvider>
           {/* Global toast notifications */}
           <Toaster
             position="top-right"
@@ -111,6 +113,7 @@ export default function App() {
             {/* Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          </WishlistProvider>
         </AuthProvider>
       </ErrorBoundary>
     </BrowserRouter>

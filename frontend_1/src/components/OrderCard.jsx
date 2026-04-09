@@ -102,7 +102,7 @@ export default function OrderCard({ order, onViewDetail }) {
         {onViewDetail && (
           <button
             onClick={() => onViewDetail(order._id)}
-            className="text-xs font-mono px-4 py-2 rounded-lg bg-[#C5A059]/10 hover:bg-[#0F172A] text-[#FFFFFF] transition-colors border border-[#C5A059]/20 w-full sm:w-auto"
+            className="text-xs font-mono px-4 py-2 rounded-lg bg-[#C5A059] hover:bg-[#0F172A] text-[#FFFFFF] transition-all duration-300 border border-[#C5A059] hover:border-[#0F172A] shadow-sm hover:shadow-md w-full sm:w-auto uppercase tracking-wider"
           >
             View Details
           </button>
@@ -110,9 +110,12 @@ export default function OrderCard({ order, onViewDetail }) {
         {status === "delivered" && (
           <button
             onClick={handleDownload}
-            className="text-xs font-mono px-4 py-2 rounded-lg bg-[#10B981]/10 hover:bg-[#10B981]/20 border border-[#10B981]/30 text-[#10B981] transition-colors flex items-center justify-center gap-1.5 w-full sm:w-auto"
+            className="text-xs font-mono px-4 py-2 rounded-lg bg-gradient-to-r from-[#10B981] to-[#059669] hover:from-[#059669] hover:to-[#047857] text-[#FFFFFF] transition-all duration-300 border border-[#10B981]/20 shadow-sm hover:shadow-lg hover:scale-[1.02] flex items-center justify-center gap-2 w-full sm:w-auto uppercase tracking-wider font-semibold"
           >
-            ↓ Download Invoice
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Download Invoice</span>
           </button>
         )}
       </div>

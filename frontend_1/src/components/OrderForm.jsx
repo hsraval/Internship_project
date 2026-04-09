@@ -3,11 +3,11 @@ import { useState } from "react";
 import { createOrder } from "../api/api";
 
 const INPUT =
-  "w-full bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg px-3 sm:px-4 py-2.5 text-[#333333] placeholder-[#94A3B8] focus:outline-none focus:border-[#C5A059] transition-colors text-sm";
+  "w-full bg-gradient-to-br from-white to-[#FAFAFA] border border-[#CBD5E1]/50 rounded-xl px-4 sm:px-5 py-3 text-[#333333] placeholder-[#94A3B8] focus:outline-none focus:border-[#C5A059] focus:shadow-[0_0_0_3px_rgba(197,165,2,0.1)] transition-all duration-300 text-sm font-medium";
 const LABEL =
-  "block text-[10px] font-mono font-semibold uppercase tracking-widest text-[#64748B]/70 mb-1.5";
+  "block text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748B]/80 mb-2 flex items-center gap-2";
 const SECTION =
-  "border border-[#CBD5E1] rounded-xl p-4 sm:p-5 space-y-4";
+  "border border-[#CBD5E1]/30 bg-gradient-to-br from-white via-[#FAFAFA] to-[#F8F9FA] rounded-2xl p-5 sm:p-6 space-y-5 shadow-lg shadow-[#CBD5E1]/10 backdrop-blur-sm";
 
 export default function OrderForm({ productId, onSuccess }) {
   const [quantity, setQuantity] = useState(1);
@@ -109,8 +109,13 @@ export default function OrderForm({ productId, onSuccess }) {
     <form onSubmit={handleSubmit} className="space-y-5">
 
       {error && (
-        <div className="bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#EF4444] text-sm px-4 py-3 rounded-lg font-mono">
-          {error}
+        <div className="bg-gradient-to-r from-[#EF4444]/10 to-[#DC2626]/5 border border-[#EF4444]/30 text-[#EF4444] text-sm px-5 py-4 rounded-xl font-mono shadow-lg shadow-[#EF4444]/10 backdrop-blur-sm">
+          <div className="flex items-center gap-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.932-3L13.932 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.932 3z" />
+            </svg>
+            <span className="font-semibold">{error}</span>
+          </div>
         </div>
       )}
 
@@ -173,36 +178,43 @@ export default function OrderForm({ productId, onSuccess }) {
       </div>
 
       {/* ── Measurements ── */}
-      <div className={SECTION}>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">
-          Measurements{" "}
-          <span className="text-[#6B5F50]/40 normal-case font-sans">(in inches, optional)</span>
-        </p>
+      {stitchingEnabled && (
+        <div className={`border border-[#CBD5E1] rounded-xl p-4 sm:p-5 space-y-4 bg-gradient-to-br from-[#FAFAFA] to-[#F8F9FA] transition-all duration-300 ${SECTION}`}>
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse" />
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">
+              Measurements Required
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {[
-            { key: "chest",        label: "Chest" },
-            { key: "waist",        label: "Waist" },
-            { key: "shoulder",     label: "Shoulder" },
-            { key: "sleeveLength", label: "Sleeve Length" },
-            { key: "neck",         label: "Neck" },
-            { key: "length",       label: "Length" },
-          ].map(({ key, label }) => (
-            <div key={key}>
-              <label className={LABEL}>{label}</label>
-              <input
-                type="number"
-                min={0}
-                step="0.1"
-                value={measurements[key]}
-                onChange={setM(key)}
-                placeholder="0.0"
-                className={INPUT}
-              />
-            </div>
-          ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { key: "chest", label: "Chest", icon: "" },
+              { key: "waist", label: "Waist", icon: "" },
+              { key: "shoulder", label: "Shoulder", icon: "" },
+              { key: "sleeveLength", label: "Sleeve Length", icon: "" },
+              { key: "neck", label: "Neck", icon: "" },
+              { key: "length", label: "Length", icon: "" },
+            ].map(({ key, label, icon }) => (
+              <div key={key} className="group">
+                <label className={`${LABEL} flex items-center gap-2`}>
+                  <span className="text-lg">{icon}</span>
+                  {label}
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  step="0.1"
+                  value={measurements[key]}
+                  onChange={setM(key)}
+                  placeholder="0.0"
+                  className={`${INPUT} border-[#CBD5E1]/50 focus:border-[#C5A059] focus:shadow-[0_0_0_3px_rgba(197,165,2,0.1)] transition-all duration-200`}
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── Delivery Address ── */}
       <div className={SECTION}>
@@ -255,9 +267,23 @@ export default function OrderForm({ productId, onSuccess }) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#C5A059] hover:bg-[#0F172A] disabled:opacity-50 text-[#FFFFFF] font-mono font-bold py-3 rounded-lg transition-colors text-xs tracking-widest uppercase"
+        className="w-full bg-[#C5A059] hover:bg-[#0F172A] disabled:bg-[#94A3B8] disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-sm tracking-wide shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2"
       >
-        {loading ? "Placing Order…" : "Place Order"}
+        {loading ? (
+          <>
+            <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Placing Order…
+          </>
+        ) : (
+          <>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Place Order
+          </>
+        )}
       </button>
     </form>
   );
