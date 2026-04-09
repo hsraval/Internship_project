@@ -18,9 +18,13 @@ export default function BillCard({ bill }) {
           <p className="text-xs uppercase tracking-widest text-[#64748B] mb-0.5">Invoice</p>
           <p className="text-[#C5A059] font-mono font-bold text-lg">#{bill?.invoiceNumber || bill?._id?.slice(-8)}</p>
         </div>
-        <span className={`text-xs font-semibold px-3 py-1 rounded-full border uppercase tracking-wide ${payBadge}`}>
-          {bill?.paymentStatus || "pending"}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-[#64748B]">Payment status:</span>
+          <span className={`text-xs font-semibold px-3 py-1 rounded-full border uppercase tracking-wide ${payBadge}`}>
+            {(bill?.paymentStatus || "pending").toUpperCase()}
+          </span>
+        </div>
+
       </div>
 
       <div className="p-6 space-y-5">
@@ -72,7 +76,7 @@ export default function BillCard({ bill }) {
         {/* Total */}
         <div className="flex justify-between items-center pt-3 border-t border-[#CBD5E1]">
           <span className="text-[#64748B] font-medium text-sm">Total Amount</span>
-          <span className="text-2xl font-bold text-[#C5A059]">₹{bill?.total ?? "—"}</span>
+          <span className="text-2xl font-bold text-[#C5A059]">₹{bill?.totalAmount ?? "—"}</span>
         </div>
       </div>
     </div>

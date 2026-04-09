@@ -45,10 +45,10 @@ export default function OrderCard({ order, onViewDetail }) {
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
-        <div className="flex-1">
+        {/* <div className="flex-1">
           <p className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]/50 mb-1">Order ID</p>
           <p className="text-[#333333] font-mono text-xs break-all">#{order._id?.slice(-8)}</p>
-        </div>
+        </div> */}
         <span className={`text-[10px] font-mono font-semibold px-3 py-1 rounded-full border uppercase tracking-wide ${badgeClass}`}>
           {status}
         </span>

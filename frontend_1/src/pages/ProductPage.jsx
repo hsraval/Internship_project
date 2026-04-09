@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { getProducts, getCategories } from '../api/api'
 import toast from 'react-hot-toast'
 import OrderForm from '../components/OrderForm'
+import WishlistButton from '../components/WishlistButton'
 
 // ─── Product Detail Modal ─────────────────────────────────────────────────────
 
@@ -71,7 +72,7 @@ function ProductModal({ product, onClose, onOrder }) {
             <h2 className="font-serif text-xl sm:text-2xl font-semibold text-[#0F172A] leading-tight">{product.name}</h2>
             <p className="text-[#C5A059] text-xl sm:text-2xl font-light">
               ${Number(product.pricePerMeter).toLocaleString()}
-              <span className="text-xs sm:text-sm text-[#64748B]/60 ml-1">/ meter</span>
+              {/* <span className="text-xs sm:text-sm text-[#64748B]/60 ml-1">/ meter</span> */}
             </p>
             {product.description && (
               <p className="text-[#64748B]/70 text-sm leading-relaxed border-t border-[#CBD5E1] pt-3 sm:pt-4">
@@ -116,10 +117,14 @@ function ProductCard({ product, onShowDetails, onOrder }) {
           <h3 className="font-serif font-semibold text-[#0F172A] text-sm leading-snug line-clamp-2">{product.name}</h3>
           <p className="text-[#C5A059] text-base font-light mt-1">
             ${Number(product.pricePerMeter).toLocaleString()}
-            <span className="text-xs text-[#64748B]/60 ml-1">/m</span>
+            {/* <span className="text-xs text-[#64748B]/60 ml-1">/m</span> */}
           </p>
         </div>
         <div className="flex gap-2 mt-auto">
+          <WishlistButton
+            productId={product._id}
+            className="transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms]"
+          />
           <button onClick={() => onShowDetails(product)}
             className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider border border-[#C5A059] text-[#FFFFFF] rounded-lg hover:border-[#0F172A] hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all">
             Details

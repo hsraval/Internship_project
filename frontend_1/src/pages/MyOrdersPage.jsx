@@ -40,13 +40,13 @@ export default function MyOrdersPage() {
             <h1 className="text-xl sm:text-2xl font-bold text-[#0F172A]">Order History</h1>
           </div>
           
-          <button
+          {/* <button
             onClick={() => navigate("/order")}
             className="bg-[#C5A059] hover:bg-[#0F172A] text-[#FFFFFF] text-xs font-bold px-3 sm:px-4 py-2 rounded-lg transition-colors uppercase tracking-wide w-full sm:w-auto"
           >
             <span className="hidden sm:inline">+ New Order</span>
             <span className="sm:hidden">+ Order</span>
-          </button>
+          </button> */}
         </div>
 
         {loading && (

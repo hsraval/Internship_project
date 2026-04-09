@@ -19,6 +19,7 @@ import OrderPage        from "./pages/OrderPage";
 import MyOrdersPage     from "./pages/MyOrdersPage";
 import AdminOrdersPage  from "./pages/AdminOrdersPage";
 import OrderDetailPage  from "./pages/OrderDetailPage";
+import WishlistPage from './pages/WishlistPage'
 
 export default function App() {
   return (
@@ -104,6 +105,8 @@ export default function App() {
             {/* Admin routes */}
             <Route path="/admin/orders"     element={<ProtectedRoute><AdminOrdersPage /></ProtectedRoute>} />
             <Route path="/admin/orders/:id" element={<ProtectedRoute><OrderDetailPage /></ProtectedRoute>} />
+
+            <Route path="/wishlist" element={<WishlistPage />}/>
 
             {/* Catch-all */}
             <Route path="*" element={<NotFoundPage />} />

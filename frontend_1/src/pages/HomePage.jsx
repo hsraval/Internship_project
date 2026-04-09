@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getProducts } from '../api/api'
+import WishlistButton from '../components/WishlistButton'
 
 // ─── Styles for Custom Animations ─────────────────────────────────────────────
 const styleSheet = document.createElement("style");
@@ -105,14 +106,20 @@ function ProductModal({ product, onClose }) {
               {product.category.name}
             </span>
           )}
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-[#0F172A] leading-tight mb-2">
+          {/* <h2 className="font-serif text-3xl md:text-4xl font-semibold text-[#0F172A] leading-tight mb-2">
             {product.name}
-          </h2>
+          </h2> */}
+          <div className="flex items-start justify-between gap-3 mb-2">
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-[#0F172A] leading-tight">
+              {product.name}
+            </h2>
+            <WishlistButton productId={product._id} className="flex-shrink-0 mt-1" />
+          </div>
           <div className="w-12 h-1 bg-[#C5A059]/30 mb-6 rounded-full" />
           
           <p className="text-[#0F172A] text-3xl font-light mb-8">
             ₹{Number(product.pricePerMeter).toLocaleString()}
-            <span className="text-sm font-normal text-[#64748B]/60 ml-2">/ meter</span>
+            {/* <span className="text-sm font-normal text-[#64748B]/60 ml-2"></span> */}
           </p>
           
           {product.description && (
@@ -166,7 +173,25 @@ function ProductCard({ product, onShowDetails, onOrder }) {
           </span>
         )}
 
+        {/* <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+          <button
+            onClick={() => onShowDetails(product)}
+            className="px-6 py-2.5 bg-[#FFFFFF] text-[#0F172A] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75"
+          >
+            View
+          </button>
+          <button
+            onClick={() => onOrder(product)}
+            className="px-6 py-2.5 border border-[#C5A059] text-[#C5A059] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#C5A059] hover:text-[#FFFFFF] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100"
+          >
+            Order
+          </button>
+        </div> */}
         <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+          <WishlistButton
+            productId={product._id}
+            className="transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms]"
+          />
           <button
             onClick={() => onShowDetails(product)}
             className="px-6 py-2.5 bg-[#FFFFFF] text-[#0F172A] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75"
@@ -191,7 +216,7 @@ function ProductCard({ product, onShowDetails, onOrder }) {
             <p className="text-[#C5A059] text-xl font-light">
               ₹{Number(product.pricePerMeter).toLocaleString()}
             </p>
-            <span className="text-[10px] text-[#64748B] font-mono uppercase">/ meter</span>
+            {/* <span className="text-[10px] text-[#64748B] font-mono uppercase">/ meter</span> */}
           </div>
         </div>
         <div className="mt-4 h-[1px] w-full bg-gradient-to-r from-[#CBD5E1]/30 to-transparent group-hover:from-[#C5A059]/50 transition-colors duration-300" />
@@ -340,6 +365,18 @@ export default function HomePage() {
           </span>
 
           {/* Center links */}
+          {/* <div className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((l) => (
+              <button
+                key={l.id}
+                onClick={() => scrollTo(l.id)}
+                className="px-5 py-2 text-xs font-mono uppercase tracking-widest text-[#64748B]/70 hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#F8F9FA]/50"
+              >
+                {l.label}
+              </button>
+            ))}
+          </div> */}
+
           <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((l) => (
               <button
@@ -350,6 +387,14 @@ export default function HomePage() {
                 {l.label}
               </button>
             ))}
+            {isAuthenticated && (
+              <button
+                onClick={() => navigate('/wishlist')}
+                className="px-5 py-2 text-xs font-mono uppercase tracking-widest text-[#64748B]/70 hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#F8F9FA]/50"
+              >
+                Wishlist
+              </button>
+            )}
           </div>
 
           {/* Right CTAs */}

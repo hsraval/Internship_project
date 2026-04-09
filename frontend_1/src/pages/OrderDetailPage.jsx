@@ -61,7 +61,7 @@ export default function OrderDetailPage() {
   const fetchBill = async (orderId) => {
     try {
       const res = await getBillById(orderId);
-      setBill(res.data?.bill || res.data);
+      setBill(res.data?.data || res.data);
     } catch {
       // Bill doesn't exist yet â ignore silently
     }
@@ -157,8 +157,8 @@ export default function OrderDetailPage() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7 7" />
             </svg>
-            <span className="hidden sm:inline">â Dashboard</span>
-            <span className="sm:hidden">Dashboard</span>
+            <span className="hidden sm:inline">Back to Dashboard</span>
+            {/* <span className="sm:hidden">Dashboard</span> */}
           </button>
           
           <div className="flex items-center gap-2 text-xs sm:text-sm">
@@ -169,17 +169,17 @@ export default function OrderDetailPage() {
               {isAdmin ? "All Orders" : "My Orders"}
             </button>
             <span className="text-[#6B5F50]/30">/</span>
-            <span className="text-[#6B5F50] font-mono">#{id?.slice(-8)}</span>
+            {/* <span className="text-[#6B5F50] font-mono">#{id?.slice(-8)}</span> */}
           </div>
         </div>
 
         {/* Order Header Card */}
         <div className="bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl overflow-hidden">
           <div className="px-6 py-4 border-b border-[#CBD5E1] flex items-center justify-between">
-            <div>
+            {/* <div>
               <p className={FIELD_LABEL}>Order ID</p>
               <p className="font-mono text-[#333333] text-sm">{order?._id}</p>
-            </div>
+            </div> */}
             <span className={`text-[10px] font-mono font-semibold px-3 py-1 rounded-full border uppercase tracking-wide ${badgeClass}`}>
               {status}
             </span>
@@ -206,13 +206,13 @@ export default function OrderDetailPage() {
             {/* Price per unit â from items[0].price */}
             <div>
               <p className={FIELD_LABEL}>Unit Price</p>
-              <p className={FIELD_VALUE}>â{firstItem?.price ?? "â"} / meter</p>
+              <p className={FIELD_VALUE}>₹{firstItem?.price ?? "â"}</p>
             </div>
 
             {/* Total â from totalAmount */}
             <div>
               <p className={FIELD_LABEL}>Total Amount</p>
-              <p className="text-[#C5A059] font-bold text-lg">â{order?.totalAmount ?? "â"}</p>
+              <p className="text-[#C5A059] font-bold text-lg">₹{order?.totalAmount ?? "â"}</p>
             </div>
 
             {/* Stitching â { type: Boolean, instructions: String } */}

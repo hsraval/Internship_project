@@ -123,4 +123,9 @@ export const cancelOrder      = (id)           => api.post(`/order/${id}`);
 // ─── BILL (new) ───────────────────────────────────────────────────────────────
 export const getBillById   = (id) => api.get(`/bill/${id}`);
 export const downloadBill  = (id) => api.get(`/bill/${id}/download`, { responseType: "blob" });
+
+export const addToWishlist      = (productId)      => api.post('/wishlist', { productId })
+export const removeFromWishlist = (productId)      => api.delete(`/wishlist/${productId}`)
+export const getWishlist        = (params = {})    => api.get('/wishlist', { params })
+ 
 export default api

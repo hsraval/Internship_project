@@ -26,7 +26,7 @@ export default function OrderTable({ orders = [] }) {
       <table className="w-full text-sm text-left min-w-[600px]">
         <thead>
           <tr className="bg-[#F8F9FA] border-b border-[#CBD5E1]">
-            {["Order ID", "Product", "Qty", "Total", "Stitching", "Status", "Date"].map((h) => (
+            {["Product", "Qty", "Total", "Stitching", "Status", "Date"].map((h) => (
               <th
                 key={h}
                 className="px-3 sm:px-4 py-3 text-[10px] font-mono font-semibold uppercase tracking-widest text-[#64748B]/60"
@@ -60,9 +60,9 @@ export default function OrderTable({ orders = [] }) {
                 }`}
               >
                 {/* Order ID — last 8 chars */}
-                <td className="px-3 sm:px-4 py-3 font-mono text-[#64748B]/50 text-xs">
+                {/* <td className="px-3 sm:px-4 py-3 font-mono text-[#64748B]/50 text-xs">
                   #{order._id?.slice(-8)}
-                </td>
+                </td> */}
 
                 {/* Product name from items[0].name */}
                 <td className="px-3 sm:px-4 py-3 text-[#333333] font-medium">
