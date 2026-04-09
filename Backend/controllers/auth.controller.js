@@ -26,7 +26,7 @@ exports.getMe = async (req, res) => {
 };
 
 exports.register= async(req,res) =>{
-    const {name,email,passwordHash,role}=req.body;
+    const {name,email,passwordHash}=req.body;
 
     try{
         const data=await model.findOne({email});

@@ -2,7 +2,7 @@ const express=require("express");
 const router=express.Router();
 const protect=require("../middleware/auth.middleware");
 const Role=require("../middleware/role.middleware");
-const uploadImages=require("../middleware/upload.middleware");
+const {uploadImages,uploadSingleImage}=require("../middleware/upload.middleware");
 const 
     {createProduct,
     getActiveProduct,

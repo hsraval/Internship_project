@@ -7,6 +7,18 @@ const categorySchema = new mongoose.Schema({
     required: true
   },
 
+  images:
+  {
+    url:{
+      type:String,
+      required:true
+    },
+    public_id:{
+      type:String,
+      required:true
+    }
+  },
+
   isActive: {
     type: Boolean,
     default: true
@@ -16,7 +28,6 @@ const categorySchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
-
 }, { timestamps: true });
 
 module.exports = mongoose.model("category", categorySchema);
