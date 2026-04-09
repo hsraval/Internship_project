@@ -74,6 +74,8 @@ export const getProducts = (params = {}) => api.get('/product', { params })
  */
 export const getProductById = (id) => api.get(`/product/${id}`)
 
+export const getFabricProducts  = () => api.get('/product/fabric')
+
 /**
  * POST /api/products
  * formData: FormData (name, description, pricePerMeter, category, images[])

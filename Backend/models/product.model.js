@@ -36,6 +36,12 @@ const productSchema = new mongoose.Schema({
     }
   ],
 
+  productType: {
+    type: String,
+    enum: ["fabric", "product"],
+    default: "product"
+  },
+
   isActive: {
     type: Boolean,
     default: true
