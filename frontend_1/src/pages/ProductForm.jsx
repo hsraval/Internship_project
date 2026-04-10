@@ -147,7 +147,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
       <div className="absolute inset-0 bg-[#0F172A]/20 backdrop-blur-md" />
 
       <div
-        className="relative z-10 w-full max-w-lg bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in-0 zoom-in-95 duration-300 slide-in-from-bottom-4"
+        className="relative z-10 w-full max-w-lg bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -179,7 +179,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} noValidate className="overflow-y-auto flex-1 px-6 py-5 flex flex-col gap-5 animate-in fade-in-0 slide-in-from-top-2 duration-500 delay-100">
+        <form onSubmit={handleSubmit} noValidate className="overflow-y-auto flex-1 px-6 py-5 flex flex-col gap-5">
           {/* Name */}
           <Field label="Product Name" error={errors.name}>
             <input
@@ -228,7 +228,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
                     e.stopPropagation()
                     setIsCategoryOpen(!isCategoryOpen)
                   }}
-                  className="relative w-full pl-3 pr-8 py-2.5 text-left bg-white border border-[#E2E8F0] rounded-lg shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] text-sm transition-all duration-200 hover:border-[#CBD5E1] hover:shadow-md hover:-translate-y-0.5"
+                  className="relative w-full pl-3 pr-8 py-2.5 text-left bg-white border border-[#E2E8F0] rounded-lg shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] text-sm transition-all hover:border-[#CBD5E1]"
                 >
                   <span className="block truncate text-[#334155]">
                     {values.category ? categories.find(c => c._id === values.category)?.name || 'Select category…' : 'Select category…'}
