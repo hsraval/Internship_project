@@ -39,8 +39,30 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-2">
+          {/* Product and Fabric links - always visible */}
+          <button
+            onClick={() => {
+              const element = document.getElementById('products-section')
+              element?.scrollIntoView({ behavior: 'smooth' })
+            }}
+            className="px-4 py-2 rounded-lg text-sm font-body text-ink-600 hover:text-ink-900 hover:bg-ink-50 transition-colors"
+          >
+            Products
+          </button>
+          <button
+            onClick={() => {
+              const element = document.getElementById('fabrics-section')
+              element?.scrollIntoView({ behavior: 'smooth' })
+            }}
+            className="px-4 py-2 rounded-lg text-sm font-body text-ink-600 hover:text-ink-900 hover:bg-ink-50 transition-colors"
+          >
+            Fabrics
+          </button>
+
           {isAuthenticated ? (
             <>
+              <div className="w-px h-5 bg-ink-200 mx-2" />
+              
               <Link
                 to="/dashboard"
                 className={`px-4 py-2 rounded-lg text-sm font-body transition-colors ${
@@ -111,9 +133,31 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-cream border-t border-ink-100 px-4 pb-4 pt-2 animate-fade-in">
+          {/* Product and Fabric links - always visible */}
+          <button
+            onClick={() => {
+              const element = document.getElementById('products-section')
+              element?.scrollIntoView({ behavior: 'smooth' })
+              setMenuOpen(false)
+            }}
+            className="w-full text-left px-3 py-2.5 rounded-lg text-sm text-ink-700 hover:bg-ink-50 font-body"
+          >
+            Products
+          </button>
+          <button
+            onClick={() => {
+              const element = document.getElementById('fabrics-section')
+              element?.scrollIntoView({ behavior: 'smooth' })
+              setMenuOpen(false)
+            }}
+            className="w-full text-left px-3 py-2.5 rounded-lg text-sm text-ink-700 hover:bg-ink-50 font-body"
+          >
+            Fabrics
+          </button>
+
           {isAuthenticated ? (
-            <div className="flex flex-col gap-1">
-              <div className="px-3 py-2 mb-1">
+            <div className="flex flex-col gap-1 mt-2">
+              <div className="px-3 py-2 mb-1 border-t border-ink-100 pt-3">
                 <p className="text-xs font-mono text-ink-400 uppercase tracking-widest">Signed in as</p>
                 <p className="text-sm font-body font-medium text-ink-800">
                   {user?.name || user?.email || 'User'}
@@ -135,7 +179,10 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 mt-2">
+              <div className="px-3 py-2 mb-1 border-t border-ink-100 pt-3">
+                <p className="text-xs font-mono text-ink-400 uppercase tracking-widest">Account</p>
+              </div>
               <Link
                 to="/login"
                 onClick={() => setMenuOpen(false)}

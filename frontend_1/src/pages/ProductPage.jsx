@@ -654,6 +654,7 @@ export default function ProductPage() {
   const [category, setCategory]     = useState('')
   const [productType, setProductType] = useState('')          // ← NEW
   const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+  const [isProductTypeOpen, setIsProductTypeOpen] = useState(false)  // ← NEW
   const [page, setPage]             = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [selected, setSelected]     = useState(null)
@@ -671,10 +672,13 @@ export default function ProductPage() {
       if (isCategoryOpen && !event.target.closest('.category-dropdown')) {
         setIsCategoryOpen(false)
       }
+      if (isProductTypeOpen && !event.target.closest('.product-type-dropdown')) {
+        setIsProductTypeOpen(false)
+      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isCategoryOpen])
+  }, [isCategoryOpen, isProductTypeOpen])
 
   const fetchProducts = useCallback(() => {
     setLoading(true)
@@ -824,17 +828,46 @@ export default function ProductPage() {
 
             {/* ── NEW: Product Type Filter ── */}
             <div className="relative w-full sm:w-auto">
-              <select
-                value={productType}
-                onChange={(e) => handleProductType(e.target.value)}
-                className="w-full px-4 pr-10 py-2.5 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg text-sm text-[#64748B]/70 focus:outline-none focus:border-[#C5A059] transition-colors font-mono appearance-none cursor-pointer"
-              >
-                <option value="">All Types</option>
-                <option value="product">Products</option>
-                <option value="fabric">Fabrics</option>
-              </select>
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg className="w-4 h-4 text-[#6B5F50]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              <div className="relative product-type-dropdown">
+                <button
+                  type="button"
+                  onClick={() => setIsProductTypeOpen(!isProductTypeOpen)}
+                  className="w-full px-4 pr-10 py-2.5 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg text-sm text-[#64748B]/70 focus:outline-none focus:border-[#C5A059] transition-colors font-mono appearance-none cursor-pointer text-left flex items-center justify-between"
+                >
+                  <span className="truncate">{productType === 'product' ? 'Products' : productType === 'fabric' ? 'Fabrics' : 'All Types'}</span>
+                </button>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 text-[#6B5F50]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </div>
+                
+                {/* Dropdown Options */}
+                {isProductTypeOpen && (
+                  <div className="absolute z-50 w-full mt-1 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    <div className="py-1">
+                      <button
+                        type="button"
+                        onClick={() => { handleProductType(''); setIsProductTypeOpen(false) }}
+                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${!productType ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
+                      >
+                        All Types
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { handleProductType('product'); setIsProductTypeOpen(false) }}
+                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${productType === 'product' ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
+                      >
+                        Products
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { handleProductType('fabric'); setIsProductTypeOpen(false) }}
+                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${productType === 'fabric' ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
+                      >
+                        Fabrics
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

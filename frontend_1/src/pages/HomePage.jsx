@@ -883,6 +883,112 @@ function ProductCard({ product, onShowDetails, onOrder }) {
   )
 }
 
+// ─── Infinite Carousel Component ───────────────────────────────────────────────────
+
+function InfiniteCarousel({ fabrics, onOrder }) {
+  const carouselRef = useRef(null)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    const carousel = carouselRef.current
+    if (!carousel || fabrics.length === 0) return
+
+    let scrollPosition = 0
+    let animationId
+
+    const scroll = () => {
+      if (!isPaused) {
+        scrollPosition += 1.5 // Increased speed for faster scrolling
+        
+        // Get total width of one set of items
+        const firstItem = carousel.querySelector('.carousel-item')
+        if (firstItem) {
+          const itemWidth = firstItem.offsetWidth + 20 // Include gap
+          const totalWidth = itemWidth * fabrics.length
+          
+          // Reset position when we've scrolled past one complete set
+          if (scrollPosition >= totalWidth) {
+            scrollPosition = 0
+          }
+          
+          carousel.style.transform = `translateX(-${scrollPosition}px)`
+        }
+      }
+      
+      animationId = requestAnimationFrame(scroll)
+    }
+
+    animationId = requestAnimationFrame(scroll)
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
+  }, [fabrics, isPaused])
+
+  return (
+    <div 
+      className="relative overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div 
+        ref={carouselRef}
+        className="flex gap-5 transition-none"
+        style={{ width: 'max-content' }}
+      >
+        {/* Render fabrics twice for seamless loop */}
+        {[...fabrics, ...fabrics].map((fabric, index) => {
+          const image = fabric.images?.[0]?.url
+          return (
+            <div
+              key={`${fabric._id}-${index}`}
+              className="carousel-item group flex-shrink-0 w-64 bg-[#FFFFFF] border border-[#CBD5E1]/30 rounded-2xl overflow-hidden hover:border-[#C5A059] hover:shadow-[0_8px_32px_rgba(197,165,2,0.1)] transition-all duration-300"
+            >
+              {/* Image */}
+              <div className="relative h-44 overflow-hidden">
+                {image ? (
+                  <img
+                    src={image}
+                    alt={fabric.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full bg-[#F8F9FA] text-[#CBD5E1]">
+                    <svg className="w-10 h-10 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                )}
+                {fabric.category?.name && (
+                  <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-[0.2em] bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white rounded-full px-2.5 py-1">
+                    {fabric.category.name}
+                  </span>
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="font-serif font-semibold text-[#0F172A] text-sm leading-snug line-clamp-1 mb-1 group-hover:text-[#C5A059] transition-colors">
+                  {fabric.name}
+                </h3>
+                <p className="text-[#C5A059] text-base font-light mb-3">
+                  ₹{Number(fabric.pricePerMeter).toLocaleString()}
+                </p>
+                <button
+                  onClick={() => onOrder(fabric)}
+                  className="w-full py-2 bg-[#0F172A] text-[#FFFFFF] font-mono text-[10px] uppercase tracking-widest rounded-lg hover:bg-[#C5A059] transition-all duration-300"
+                >
+                  Order
+                </button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 // ─── Dropdown Menu Component ───────────────────────────────────────────────────
 
 function UserMenu({ isAuthenticated, navigate, onLogout }) {
@@ -957,6 +1063,7 @@ const NAV_LINKS = [
   { label: 'Home', id: 'hero' },
   { label: 'About Us', id: 'about' },
   { label: 'Products', id: 'products' },
+  { label: 'fabrics', id: 'fabrics' },
 ]
 
 export default function HomePage() {
@@ -967,7 +1074,8 @@ export default function HomePage() {
   const heroRef     = useRef(null)
   const aboutRef    = useRef(null)
   const productsRef = useRef(null)
-  const sectionRefs = { hero: heroRef, about: aboutRef, products: productsRef }
+  const fabricsRef = useRef(null)
+  const sectionRefs = { hero: heroRef, about: aboutRef, products: productsRef ,fabrics: fabricsRef}
 
   const [products,        setProducts]        = useState([])
   const [loadingProducts, setLoadingProducts] = useState(true)
@@ -983,7 +1091,7 @@ export default function HomePage() {
 
   // Fetch homepage products
   useEffect(() => {
-    getProducts({ limit: 8 })
+    getProducts({ limit: 8,productType:"product" })
       .then(({ data }) => setProducts(data.data ?? data.products ?? data ?? []))
       .catch(() => setProducts([]))
       .finally(() => setLoadingProducts(false))
@@ -1119,7 +1227,7 @@ export default function HomePage() {
 
       {/* ── NEW: Fabric Highlights ── */}
       {fabrics.length > 0 && (
-        <section className="py-20 px-6 bg-[#F8F9FA] border-t border-[#CBD5E1]">
+        <section ref={fabricsRef} id="fabrics"  className="py-20 px-6 bg-[#F8F9FA] border-t border-[#CBD5E1]">
           <div className="max-w-7xl mx-auto">
             {/* Section header */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
@@ -1142,56 +1250,8 @@ export default function HomePage() {
               )}
             </div>
 
-            {/* Horizontal scroll on mobile, 4-col grid on desktop */}
-            <div className="flex gap-5 overflow-x-auto pb-3 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide">
-              {fabrics.slice(0, 4).map((p) => {
-                const image = p.images?.[0]?.url
-                return (
-                  <div
-                    key={p._id}
-                    className="group flex-shrink-0 w-64 md:w-auto bg-[#FFFFFF] border border-[#CBD5E1]/30 rounded-2xl overflow-hidden snap-start hover:border-[#C5A059] hover:shadow-[0_8px_32px_rgba(197,165,2,0.1)] transition-all duration-300"
-                  >
-                    {/* Image */}
-                    <div className="relative h-44 overflow-hidden">
-                      {image ? (
-                        <img
-                          src={image}
-                          alt={p.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center w-full h-full bg-[#F8F9FA] text-[#CBD5E1]">
-                          <svg className="w-10 h-10 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      )}
-                      {p.category?.name && (
-                        <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-[0.2em] bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white rounded-full px-2.5 py-1">
-                          {p.category.name}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Info */}
-                    <div className="p-4">
-                      <h3 className="font-serif font-semibold text-[#0F172A] text-sm leading-snug line-clamp-1 mb-1 group-hover:text-[#C5A059] transition-colors">
-                        {p.name}
-                      </h3>
-                      <p className="text-[#C5A059] text-base font-light mb-3">
-                        ₹{Number(p.pricePerMeter).toLocaleString()}
-                      </p>
-                      <button
-                        onClick={() => handleOrder(p)}
-                        className="w-full py-2 bg-[#0F172A] text-[#FFFFFF] font-mono text-[10px] uppercase tracking-widest rounded-lg hover:bg-[#C5A059] transition-all duration-300"
-                      >
-                        Order
-                      </button>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+            {/* Infinite carousel */}
+            <InfiniteCarousel fabrics={fabrics} onOrder={handleOrder} />
           </div>
         </section>
       )}

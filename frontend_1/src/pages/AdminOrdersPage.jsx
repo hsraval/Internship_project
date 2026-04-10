@@ -22,17 +22,22 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState("");
   const [filter,  setFilter]  = useState("all");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    getAllOrders()
+    const params = { page, limit: 10 };
+    getAllOrders(params)
       .then((r) => {
         // Backend returns: { success, page, totalPage, totalOrders, data: [...] }
         const list = r.data?.data || [];
         setOrders(list);
+        if (r.pagination?.totalPages) setTotalPages(r.pagination.totalPages);
+        else if (r.total) setTotalPages(Math.ceil(r.total / 10));
       })
       .catch(() => setError("Failed to load orders."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [page]);
 
   const filtered =
     filter === "all" ? orders : orders.filter((o) => o.status === filter);
@@ -184,6 +189,54 @@ export default function AdminOrdersPage() {
         {!loading && !error && filtered.length > 0 && (
           <div className="hidden sm:block">
             <OrderTable orders={filtered} />
+          </div>
+        )}
+
+        {/* Clean Modern Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-1 mt-6 mb-4">
+            {/* Previous Button */}
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
+                page === 1 
+                  ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' 
+                  : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                }`}
+            >
+              ←
+            </button>
+
+            {/* Page Numbers */}
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPage(i + 1)}
+                  className={`w-10 h-10 rounded-lg font-mono text-sm transition-all duration-200 ${
+                    page === i + 1
+                      ? 'bg-[#0F172A] text-white font-semibold'
+                      : 'bg-[#FFFFFF] text-[#64748B] hover:bg-[#C5A059] hover:text-white'
+                    }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
+                page === totalPages 
+                  ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' 
+                  : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                }`}
+            >
+              →
+            </button>
           </div>
         )}
 

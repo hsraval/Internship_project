@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useState, useEffect } from 'react'
+import { getProducts, getFabrics } from '../api'
 
 const features = [
   {
@@ -21,6 +23,28 @@ const features = [
 
 export default function HomePage() {
   const { isAuthenticated } = useAuth()
+  const [products, setProducts] = useState([])
+  const [fabrics, setFabrics] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, fabricsRes] = await Promise.all([
+          getProducts({ productType: 'product', limit: 6 }),
+          getProducts({ productType: 'fabric', limit: 8 })
+        ])
+        setProducts(productsRes.data.data || [])
+        setFabrics(fabricsRes.data.data || [])
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <main className="min-h-screen bg-cream overflow-hidden">
@@ -96,6 +120,141 @@ export default function HomePage() {
                 <p className="font-body text-ink-500 text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Products Section */}
+      <section id="products-section" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-4">
+              Our Products
+            </h2>
+            <p className="font-body text-ink-500 max-w-2xl mx-auto">
+              Discover our premium collection of high-quality products crafted with attention to detail.
+            </p>
+          </div>
+          
+          {loading ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white rounded-xl p-6 animate-pulse">
+                  <div className="h-48 bg-ink-100 rounded-lg mb-4"></div>
+                  <div className="h-4 bg-ink-100 rounded mb-2"></div>
+                  <div className="h-4 bg-ink-100 rounded w-3/4"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {products.map((product) => (
+                <div key={product._id} className="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 group">
+                  {product.images && product.images.length > 0 && (
+                    <div className="h-48 overflow-hidden">
+                      <img 
+                        src={product.images[0].url} 
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <h3 className="font-display font-semibold text-ink-900 mb-2">{product.name}</h3>
+                    <p className="font-body text-ink-500 text-sm mb-3 line-clamp-2">{product.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-body font-semibold text-gold-600">
+                        ${product.pricePerMeter}/meter
+                      </span>
+                      {product.category && (
+                        <span className="text-xs font-mono text-ink-400 bg-ink-100 px-2 py-1 rounded">
+                          {product.category.name}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          <div className="text-center">
+            <button className="btn-primary">
+              Browse More Products →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="border-t border-ink-100" />
+      </div>
+
+      {/* Fabrics Section with Carousel */}
+      <section id="fabrics-section" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-4">
+              Premium Fabrics
+            </h2>
+            <p className="font-body text-ink-500 max-w-2xl mx-auto">
+              Explore our exquisite range of fabrics, perfect for all your creative projects.
+            </p>
+          </div>
+          
+          {loading ? (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="bg-white rounded-xl p-4 animate-pulse">
+                  <div className="h-32 bg-ink-100 rounded-lg mb-3"></div>
+                  <div className="h-3 bg-ink-100 rounded mb-1"></div>
+                  <div className="h-3 bg-ink-100 rounded w-3/4"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="relative mb-8">
+              <div className="overflow-hidden">
+                <div className="flex gap-4 animate-scroll">
+                  {/* Double the fabrics array for seamless loop */}
+                  {[...fabrics, ...fabrics].map((fabric, index) => (
+                    <div key={`${fabric._id}-${index}`} className="flex-none w-64 lg:w-72">
+                      <div className="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 group">
+                        {fabric.images && fabric.images.length > 0 && (
+                          <div className="h-40 overflow-hidden">
+                            <img 
+                              src={fabric.images[0].url} 
+                              alt={fabric.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                        )}
+                        <div className="p-4">
+                          <h3 className="font-display font-semibold text-ink-900 mb-1 text-sm">{fabric.name}</h3>
+                          <div className="flex items-center justify-between">
+                            <span className="font-body font-semibold text-gold-600 text-sm">
+                              ${fabric.pricePerMeter}/m
+                            </span>
+                            {fabric.category && (
+                              <span className="text-xs font-mono text-ink-400 bg-ink-100 px-2 py-1 rounded">
+                                {fabric.category.name}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div className="text-center">
+            <button className="btn-primary">
+              Browse More Fabrics →
+            </button>
           </div>
         </div>
       </section>

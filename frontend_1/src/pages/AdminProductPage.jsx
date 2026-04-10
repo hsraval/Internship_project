@@ -239,7 +239,6 @@ export default function AdminProductPage() {
               />
             </div>
             <div className="relative w-full sm:w-auto">
-              {/* Custom Dropdown */}
               <div className="relative category-dropdown">
                 <button
                   type="button"
@@ -410,17 +409,50 @@ export default function AdminProductPage() {
             </div>
           )}
 
-          {/* Pagination */}
+          {/* Clean Modern Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 mt-6 mb-4">
-              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider border border-[#CBD5E1] text-[#64748B]/70 rounded-lg hover:border-[#0F172A] hover:text-[#333333] transition-all disabled:opacity-30 disabled:cursor-not-allowed">
-                ← Prev
+            <div className="flex items-center justify-center gap-1 mt-6 mb-4">
+              {/* Previous Button */}
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
+                  page === 1 
+                    ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' 
+                    : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                }`}
+              >
+                ←
               </button>
-              <span className="font-mono text-xs text-[#333333] px-3">{page} / {totalPages}</span>
-              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider border border-[#CBD5E1] text-[#64748B]/70 rounded-lg hover:border-[#0F172A] hover:text-[#333333] transition-all disabled:opacity-30 disabled:cursor-not-allowed">
-                Next →
+
+              {/* Page Numbers */}
+              <div className="flex items-center gap-1">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setPage(i + 1)}
+                    className={`w-10 h-10 rounded-lg font-mono text-sm transition-all duration-200 ${
+                      page === i + 1
+                        ? 'bg-[#0F172A] text-white font-semibold'
+                        : 'bg-[#FFFFFF] text-[#64748B] hover:bg-[#C5A059] hover:text-white'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
+                  page === totalPages 
+                    ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' 
+                    : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                }`}
+              >
+                →
               </button>
             </div>
           )}

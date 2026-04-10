@@ -60,7 +60,8 @@
   .opacity-0-start {
     opacity: 0;
   }
-}
+
+  }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }

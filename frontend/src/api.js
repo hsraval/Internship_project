@@ -46,3 +46,13 @@ export const resetPassword = (token, password) =>
   api.post(`/auth/reset-password/${token}`, { password })
 
 export const getMe = () => api.get('/auth/me')
+
+// Product API functions
+export const getProducts = (params = {}) => 
+  api.get('/products/active', { params })
+
+export const getFabrics = (params = {}) => 
+  api.get('/products/fabrics', { params })
+
+export const getProductById = (id) => 
+  api.get(`/products/${id}`)
