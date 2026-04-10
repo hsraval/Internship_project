@@ -324,25 +324,36 @@ exports.getSingleBill = async (req, res, next) => {
 // ================= Final Code for download Bill
 exports.downloadBillPDF = async (req, res, next) => {
     try {
+        console.log('=== BILL DOWNLOAD DEBUG ===');
+        console.log('User:', req.user);
+        console.log('Cookies:', req.cookies);
+        console.log('Headers:', req.headers);
+        
         const { id } = req.params;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({
                 success: false,
-                message: "Invalid Bill ID"
+                message: "Invalid Order ID"
             });
         }
 
+        console.log(`Looking for bill with order ID: ${id}`);
+        
         const bill = await Bill.findOne({order:id})
             .populate('user', 'name email')
+            .populate('order')
             .lean();
 
         if (!bill) {
+            console.log(`No bill found for order ID: ${id}`);
             return res.status(404).json({
                 success: false,
-                message: "Bill not found"
+                message: "Invoice not available for this order. Please contact support if you believe this is an error."
             });
         }
+
+        console.log(`Bill found: ${bill.invoiceNumber}`);
 
         const doc = new PDFDocument({
             margin: 50,

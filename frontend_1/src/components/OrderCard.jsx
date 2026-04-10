@@ -35,8 +35,15 @@ export default function OrderCard({ order, onViewDetail }) {
       a.download = `invoice-${order._id}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
-    } catch {
-      alert("Could not download invoice. Try again later.");
+    } catch (error) {
+      console.error('Download error:', error);
+      if (error.response?.status === 404) {
+        alert("Invoice not available for this order. Please contact support if you believe this is an error.");
+      } else if (error.response?.status === 400) {
+        alert("Invalid order ID. Please try again.");
+      } else {
+        alert("Could not download invoice. Please check your internet connection and try again.");
+      }
     }
   };
 
