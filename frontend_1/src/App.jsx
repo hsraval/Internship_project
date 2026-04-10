@@ -32,12 +32,12 @@ export default function App() {
           <Toaster
             position="top-right"
             toastOptions={{
-              duration: 4000,
+              duration: 2000,
               style: {
                 fontFamily: "'DM Sans', system-ui, sans-serif",
                 fontSize: '13px',
                 background: '#E8E0D0',
-                color: '#6B5F50',
+                color: 'black',
                 border: '1px solid #6B5F50',
                 borderRadius: '10px',
                 padding: '12px 16px',

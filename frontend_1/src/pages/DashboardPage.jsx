@@ -689,24 +689,6 @@ function AdminDashboard({ user, navigate }) {
         )}
       </div>
 
-      {/* ── 4. Order Status Summary ── */}
-      {orderStatusStats.length > 0 && (
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-[#64748B] mb-4">Order Status Summary</p>
-          <div className="flex flex-wrap gap-2">
-            {orderStatusStats.map((s) => (
-              <div key={s.status || s._id}
-                className="bg-[#FFFFFF] border border-[#CBD5E1] rounded-xl px-4 py-3 flex items-center gap-3 hover:border-[#C5A059] transition-colors">
-                <span className={`text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full ${STATUS_COLORS[s.status || s._id] || 'bg-gray-100 text-gray-600'}`}>
-                  {s.status || s._id}
-                </span>
-                <span className="font-serif text-base font-semibold text-[#0F172A]">{s.count}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* ── 5. Recent Orders ── */}
       <div className="bg-[#FFFFFF] border border-[#CBD5E1] rounded-xl overflow-hidden">
         <div className="px-4 sm:px-6 py-4 border-b border-[#CBD5E1] flex items-center justify-between">
