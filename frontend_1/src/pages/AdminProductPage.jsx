@@ -295,21 +295,21 @@ export default function AdminProductPage() {
             <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
-                  <thead className="bg-[#F8FAFC] border-b border-[#E2E8F0] hidden lg:table-header-group">
+                  <thead className="bg-gradient-to-r from-[#C5A059] to-[#B8944A] border-b-2 border-[#C5A059]/30 hidden lg:table-header-group shadow-lg">
                     <tr>
-                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-xs font-mono font-semibold text-[#64748B] uppercase tracking-wider">Product Details</th>
-                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-xs font-mono font-semibold text-[#64748B] uppercase tracking-wider">Category</th>
-                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-xs font-mono font-semibold text-[#64748B] uppercase tracking-wider">Price / Meter</th>
-                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-xs font-mono font-semibold text-[#64748B] uppercase tracking-wider">Status</th>
-                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-right text-xs font-mono font-semibold text-[#64748B] uppercase tracking-wider">Actions</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Product Details</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Category</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Price / Meter</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Status</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-right text-xs font-mono font-bold text-white uppercase tracking-widest">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#F1F5F9]">
+                  <tbody className="divide-y divide-[#E2E8F0] bg-white">
                     {products.map((p) => (
-                      <tr key={p._id} className="group hover:bg-[#F8FAFC] transition-colors">
+                      <tr key={p._id} className="group hover:bg-gradient-to-r hover:from-[#F8FAFC] hover:to-[#F1F5F9] transition-all duration-200 border-b border-[#E2E8F0]/50">
                         
                         {/* Mobile Stacked Layout */}
-                        <td className="p-3 sm:p-4 lg:table-cell block lg:py-5 lg:px-6 align-top">
+                        <td className="p-3 sm:p-4 lg:table-cell block lg:py-5 lg:px-6 align-top bg-gradient-to-b from-white to-[#FAFAFA] lg:bg-transparent">
                           <div className="flex gap-3 sm:gap-4">
                             <div className="flex-shrink-0">
                               <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#F1F5F9] border border-[#E2E8F0] overflow-hidden">
@@ -323,7 +323,7 @@ export default function AdminProductPage() {
                               </div>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-start justify-between">
+                              <div className="flex items-start justify-between bg-gradient-to-r from-[#F8FAFC] to-transparent p-3 rounded-lg -m-3 mb-2">
                                 <h3 className="text-sm sm:text-base font-bold text-[#0F172A] font-serif truncate pr-2">{p.name}</h3>
                                 {/* Mobile Status */}
                                 <div className="lg:hidden">
@@ -332,14 +332,21 @@ export default function AdminProductPage() {
                               </div>
                               
                               {/* Mobile Details Stack */}
-                              <div className="mt-3 space-y-2 lg:hidden">
-                                <div className="flex justify-between items-center border-b border-[#F1F5F9] pb-2">
-                                  <span className="text-[9px] sm:text-[10px] uppercase text-[#94A3B8] font-mono tracking-wider">Category</span>
-                                  <span className="text-xs font-medium text-[#475569]">{p.category?.name ?? '—'}</span>
+                              <div className="mt-3 space-y-3 lg:hidden">
+                                <div className="flex justify-between items-center bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] p-3 rounded-lg border border-[#E2E8F0]/50">
+                                  <span className="text-[10px] uppercase text-[#64748B] font-mono font-bold tracking-wider">Category</span>
+                                  <div className="inline-flex items-center px-2 py-1 rounded-md text-xs font-semibold bg-white text-[#334155] border border-[#CBD5E1]/50 shadow-sm">
+                                    {p.category?.name ?? '—'}
+                                  </div>
                                 </div>
-                                <div className="flex justify-between items-center border-b border-[#F1F5F9] pb-2">
-                                  <span className="text-[9px] sm:text-[10px] uppercase text-[#94A3B8] font-mono tracking-wider">Price</span>
-                                  <span className="text-sm font-mono text-[#0F172A]">₹{Number(p.pricePerMeter).toLocaleString()}</span>
+                                <div className="flex justify-between items-center bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] p-3 rounded-lg border border-[#E2E8F0]/50">
+                                  <span className="text-[10px] uppercase text-[#64748B] font-mono font-bold tracking-wider">Price</span>
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-base font-bold text-[#C5A059]">₹</span>
+                                    <span className="text-sm font-mono font-bold text-[#0F172A] bg-white px-2 py-1 rounded-md border border-[#E2E8F0] shadow-sm">
+                                      {Number(p.pricePerMeter).toLocaleString()}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                               
@@ -351,22 +358,29 @@ export default function AdminProductPage() {
                         </td>
 
                         {/* Desktop Columns */}
-                        <td className="hidden lg:table-cell px-4 sm:px-6 py-3 sm:py-5 align-middle">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-[#F1F5F9] text-[#475569]">
+                        <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle">
+                          <div className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#F1F5F9] to-[#E2E8F0] text-[#334155] border border-[#CBD5E1]/50 shadow-sm">
                             {p.category?.name ?? '—'}
-                          </span>
+                          </div>
                         </td>
 
-                        <td className="hidden lg:table-cell px-4 sm:px-6 py-3 sm:py-5 align-middle">
-                          <span className="text-sm font-mono text-[#0F172A]">₹{Number(p.pricePerMeter).toLocaleString()}</span>
+                        <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle">
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg font-bold text-[#C5A059]">₹</span>
+                            <span className="text-sm font-mono font-bold text-[#0F172A] bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] px-3 py-1.5 rounded-lg border border-[#E2E8F0]">
+                              {Number(p.pricePerMeter).toLocaleString()}
+                            </span>
+                          </div>
                         </td>
 
-                        <td className="hidden lg:table-cell px-4 sm:px-6 py-3 sm:py-5 align-middle">
-                          <StatusBadge deleted={p.isDeleted || p.deletedAt} />
+                        <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle">
+                          <div className="flex items-center">
+                            <StatusBadge deleted={p.isDeleted || p.deletedAt} />
+                          </div>
                         </td>
 
                         {/* Actions - Stacked on Mobile, Right on Desktop */}
-                        <td className="p-3 sm:p-4 lg:table-cell lg:py-5 lg:px-6 align-middle text-right">
+                        <td className="p-3 sm:p-4 lg:table-cell lg:py-6 lg:px-6 align-middle text-right bg-gradient-to-l from-[#F8FAFC] to-transparent">
                           <div className="flex items-center gap-2 sm:gap-3 lg:justify-end justify-start mt-3 lg:mt-0">
                             
                             {/* Edit Button - Icon Only */}

@@ -1062,8 +1062,8 @@ function UserMenu({ isAuthenticated, navigate, onLogout }) {
 const NAV_LINKS = [
   { label: 'Home', id: 'hero' },
   { label: 'About Us', id: 'about' },
-  { label: 'Products', id: 'products' },
   { label: 'fabrics', id: 'fabrics' },
+  { label: 'Products', id: 'products' },
 ]
 
 export default function HomePage() {

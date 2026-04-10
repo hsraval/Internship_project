@@ -130,4 +130,8 @@ export const addToWishlist      = (productId)      => api.post('/wishlist', { pr
 export const removeFromWishlist = (productId)      => api.delete(`/wishlist/${productId}`)
 export const getWishlist        = (params = {})    => api.get('/wishlist', { params })
  
+export const getDashboardStats    = ()             => api.get('/admin/dashboard')
+export const getMonthlyRevenue    = (month, year)  => api.get(`/admin/revenue?month=${month}&year=${year}`)
+export const downloadRevenueReport= (month, year)  => api.get(`/admin/revenue/download?month=${month}&year=${year}`, { responseType: 'blob' })
+
 export default api
