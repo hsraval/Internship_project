@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getOrderById, getBillById, updateOrderStatus, cancelOrder } from "../api/api";
 import BillCard from "../components/BillCard";
+import LayoutWrapper from "../components/LayoutWrapper";
 
 const STATUS_STYLES = {
   pending:   "bg-[#F59E0B]/15 text-[#F59E0B] border-[#F59E0B]/30",
@@ -145,8 +146,9 @@ export default function OrderDetailPage() {
   const measurements = formatMeasurements(order?.measurements);
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] px-4 py-10">
-      <div className="max-w-2xl mx-auto space-y-5">
+    <LayoutWrapper>
+      <div className="px-4 py-10">
+        <div className="max-w-2xl mx-auto space-y-5">
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
@@ -331,5 +333,6 @@ export default function OrderDetailPage() {
 
       </div>
     </div>
+    </LayoutWrapper>
   );
 }

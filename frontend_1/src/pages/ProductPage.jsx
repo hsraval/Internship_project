@@ -6,6 +6,7 @@
 // import toast from 'react-hot-toast'
 // import OrderForm from '../components/OrderForm'
 // import WishlistButton from '../components/WishlistButton'
+import LayoutWrapper from '../components/LayoutWrapper'
 
 // // ─── Product Detail Modal ─────────────────────────────────────────────────────
 
@@ -719,61 +720,15 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#0F172A] flex">
-      
-      {isSidebarOpen && (
-        <div className="fixed inset-0 bg-black/60 z-40 md:hidden" onClick={() => setIsSidebarOpen(false)} />
-      )}
-
-      {/* Sidebar */}
-      <aside className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-[#FFFFFF] border-r border-[#CBD5E1] flex flex-col 
-        transform transition-transform duration-300 ease-in-out
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:translate-x-0 md:static md:inset-auto 
-      `}>
-        <div className="px-6 py-5 border-b border-[#0F172A]/40 flex justify-between items-center">
-          <Link to="/" className="font-serif text-base font-semibold text-[#0F172A]">
-            Larkings<span className="text-[#C5A059]">MensWear</span>
-          </Link>
-          <button className="md:hidden text-[#64748B]/70" onClick={() => setIsSidebarOpen(false)}>
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-          </button>
-        </div>
-        <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
-          <Link to="/dashboard" onClick={() => setIsSidebarOpen(false)}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider text-[#64748B]/70 hover:bg-[#F8F9FA]/20 hover:text-[#333333] transition-all"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            Dashboard
-          </Link>
-          <Link to="/products" onClick={() => setIsSidebarOpen(false)}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-mono uppercase tracking-wider bg-[#C5A059] text-[#FFFFFF] transition-all"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-            </svg>
-            Products
-          </Link>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    <>
+      <LayoutWrapper>
         
         <div className="p-4 md:p-8 flex-shrink-0">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
             <div className="flex items-center gap-3">
-              <button onClick={() => setIsSidebarOpen(true)} className="md:hidden p-1 text-[#6B5F50] border border-[#6B5F50] rounded">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-              </button>
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-[#64748B]/70 mb-1">Collection</p>
-                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#333333]">Browse Fabrics</h1>
-              </div>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-[#64748B]/70 mb-1">Collection</p>
+              <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#333333]">Browse Fabrics</h1>
             </div>
           </div>
 
@@ -934,11 +889,7 @@ export default function ProductPage() {
             </div>
           )}
         </div>
-      </main>
-
-      {selected && (
-        <ProductModal product={selected} onClose={() => setSelected(null)} onOrder={handleOrder} />
-      )}
-    </div>
+      </LayoutWrapper>
+    </>
   )
 }

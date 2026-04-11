@@ -725,6 +725,8 @@ import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getDashboardStats, getMonthlyRevenue, downloadRevenueReport } from '../api/api'
 import toast from 'react-hot-toast'
+import LayoutWrapper from '../components/LayoutWrapper'
+import UserSidebar from '../components/UserSidebar'
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
@@ -1433,7 +1435,6 @@ export default function DashboardPage() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [loggingOut, setLoggingOut] = useState(false)
-  const [collapsed,  setCollapsed]  = useState(false)
   const isAdmin = user?.role === 'admin'
 
   const handleLogout = async () => {
@@ -1450,39 +1451,29 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex overflow-hidden">
-      <Sidebar
-        onLogout={handleLogout}
-        loggingOut={loggingOut}
-        user={user}
-        collapsed={collapsed}
-        setCollapsed={setCollapsed}
-      />
-
-      <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-        {/* Header */}
-        <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-slate-50 border-b border-slate-100">
-          <div className="flex items-center gap-3">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-1">
-                {isAdmin ? 'Admin Panel' : getGreeting()}
-              </p>
-              <h1 className="font-serif text-2xl md:text-3xl font-bold text-slate-900">
-                {isAdmin ? `Welcome back, ${user?.name || 'Admin'}` : (user?.name || user?.email || 'Welcome')}
-              </h1>
-            </div>
+    <LayoutWrapper>
+      {/* Header */}
+      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-slate-50 border-b border-slate-100">
+        <div className="flex items-center gap-3">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-1">
+              {isAdmin ? 'Admin Panel' : getGreeting()}
+            </p>
+            <h1 className="font-serif text-2xl md:text-3xl font-bold text-slate-900">
+              {isAdmin ? `Welcome back, ${user?.name || 'Admin'}` : (user?.name || user?.email || 'Welcome')}
+            </h1>
           </div>
         </div>
+      </div>
 
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6">
-          {isAdmin ? (
-            <AdminDashboard user={user} navigate={navigate} />
-          ) : (
-            <UserDashboard user={user} />
-          )}
-        </div>
-      </main>
-    </div>
+      {/* Scrollable Content */}
+      <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6">
+        {isAdmin ? (
+          <AdminDashboard user={user} navigate={navigate} />
+        ) : (
+          <UserDashboard user={user} />
+        )}
+      </div>
+    </LayoutWrapper>
   )
 }

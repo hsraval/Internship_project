@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getWishlist, removeFromWishlist } from '../api/api'
 import toast from 'react-hot-toast'
-import Navbar from '../components/Navbar'
+import LayoutWrapper from '../components/LayoutWrapper'
 
 const LIMIT = 8
 
@@ -71,9 +71,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-700">
-      <Navbar />
-
+    <LayoutWrapper>
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
@@ -226,6 +224,6 @@ export default function WishlistPage() {
         )}
         </div>
       </main>
-    </div>
+    </LayoutWrapper>
   )
 }
