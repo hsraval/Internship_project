@@ -4,18 +4,33 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getWishlist, removeFromWishlist } from '../api/api'
 import toast from 'react-hot-toast'
+import Navbar from '../components/Navbar'
 
 const LIMIT = 8
 
 export default function WishlistPage() {
-  const { isAuthenticated } = useAuth()
+  const { user, logout } = useAuth()
   const navigate = useNavigate()
 
+  const [loggingOut, setLoggingOut] = useState(false)
   const [items,    setItems]    = useState([])
   const [loading,  setLoading]  = useState(true)
   const [error,    setError]    = useState('')
   const [page,     setPage]     = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+
+  const handleLogout = async () => {
+    setLoggingOut(true)
+    try {
+      await logout()
+      toast.success('Signed out successfully')
+      navigate('/')
+    } catch {
+      toast.error('Failed to sign out')
+    } finally {
+      setLoggingOut(false)
+    }
+  }
 
   const fetchWishlist = useCallback(async (p = 1) => {
     setLoading(true)
@@ -48,7 +63,7 @@ export default function WishlistPage() {
   }
 
   const handleOrder = (productId) => {
-    if (!isAuthenticated) {
+    if (!user) {
       navigate('/login')
     } else {
       navigate(`/order?product=${productId}`)
@@ -56,46 +71,42 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#333333]">
+    <div className="min-h-screen bg-slate-50 text-slate-700">
+      <Navbar />
 
-      {/* ── Header ── */}
-      <div className="bg-[#FFFFFF] border-b border-[#CBD5E1]">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="min-w-0 flex-1">
-            <p className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[#64748B] mb-1">Your Collection</p>
-            <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-semibold text-[#0F172A] break-words">Wishlist</h1>
+      {/* Main Content */}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+        {/* Header */}
+        <header className="bg-white border-b border-slate-100 px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 sticky top-0 z-30 shadow-sm">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-0.5">User Dashboard</p>
+            <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-serif">Wishlist</h1>
           </div>
-          <Link
-            to="/dashboard"
-            className="text-xs font-mono uppercase tracking-widest text-[#64748B] hover:text-[#0F172A] flex items-center gap-1.5 transition-colors whitespace-nowrap flex-shrink-0"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            <span className="hidden sm:inline">Dashboard</span>
-            <span className="sm:hidden">Back</span>
-          </Link>
-        </div>
-      </div>
+          {items.length > 0 && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#C5A059]/10 text-[#C5A059] text-xs font-bold rounded-full border border-[#C5A059]/20">
+              {items.length} items
+            </span>
+          )}
+        </header>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
-
-        {/* Loading */}
-        {loading && (
-          <div className="flex items-center justify-center py-20 sm:py-32">
-            <div className="relative w-8 h-8 sm:w-10 sm:h-10">
-              <div className="absolute inset-0 border-2 border-[#CBD5E1]/20 rounded-full" />
-              <div className="absolute inset-0 border-2 border-t-[#C5A059] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin" />
+        {/* Content */}
+        <div className="mt-6">
+          {/* Loading */}
+          {loading && (
+            <div className="flex items-center justify-center py-20 sm:py-32">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10">
+                <div className="absolute inset-0 border-2 border-[#CBD5E1]/20 rounded-full" />
+                <div className="absolute inset-0 border-2 border-t-[#C5A059] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin" />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Error */}
-        {!loading && error && (
-          <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl font-mono text-center">
-            {error}
-          </div>
-        )}
+          {/* Error */}
+          {!loading && error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl font-mono text-center">
+              {error}
+            </div>
+          )}
 
         {/* Empty state */}
         {!loading && !error && items.length === 0 && (
@@ -213,7 +224,8 @@ export default function WishlistPage() {
             )}
           </>
         )}
-      </div>
+        </div>
+      </main>
     </div>
   )
 }
