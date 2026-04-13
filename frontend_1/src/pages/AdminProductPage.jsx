@@ -1689,6 +1689,7 @@ import { useAuth } from '../context/AuthContext'
 import { getAllProductsAdmin, deleteProduct, restoreProduct, getCategories } from '../api/api'
 import ProductForm from './ProductForm'
 import toast from 'react-hot-toast'
+import LayoutWrapper from '../components/LayoutWrapper'
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
@@ -2123,49 +2124,38 @@ export default function AdminProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex overflow-hidden">
-      <Sidebar
-        onLogout={handleLogout}
-        loggingOut={loggingOut}
-        user={user}
-        collapsed={collapsed}
-        setCollapsed={setCollapsed}
-      />
-
-      {/* Main Content - Adjusted padding to match Dashboard structure */}
-      <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-        
-        {/* Header */}
-        <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-slate-50 border-b border-slate-100">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              {/* Mobile spacer so title clears the floating hamburger */}
-              <div className="md:hidden w-9 flex-shrink-0" />
-              
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-1">Admin Panel</p>
-                <h1 className="font-serif text-2xl md:text-3xl font-bold text-slate-900">Manage Products</h1>
-              </div>
+    <LayoutWrapper>
+      {/* Header */}
+      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-slate-50 border-b border-slate-100">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-1">Admin Panel</p>
+              <h1 className="font-serif text-2xl md:text-3xl font-bold text-slate-900">Manage Products</h1>
             </div>
-            <button
-              onClick={openCreate}
-              className="group relative inline-flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-slate-900 text-white shadow-lg transition-all hover:bg-[#C5A059] hover:shadow-[#C5A059]/40 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#C5A059] focus:ring-offset-2"
-            >
-              <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
-              <svg className="w-6 h-6 relative transition-transform duration-300 group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-            </button>
           </div>
+          <button
+            onClick={openCreate}
+            className="group relative inline-flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-slate-900 text-white shadow-lg transition-all hover:bg-[#C5A059] hover:shadow-[#C5A059]/40 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#C5A059] focus:ring-offset-2"
+          >
+            <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+            <svg className="w-6 h-6 relative transition-transform duration-300 group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
         </div>
+      </div>
 
-        {/* Controls & Filter Bar */}
-        <div className="px-4 md:px-8 py-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
-          <div className="md:col-span-8 relative group">
-            <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
-              <svg className="h-4 w-4 sm:h-5 sm:w-5 text-[#94A3B8] group-focus-within:text-[#C5A059] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      {/* Controls & Filter Bar */}
+      <div className="px-4 md:px-8 py-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+        <div className="md:col-span-8 relative group">
+          <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
+            <svg className="h-4 w-4 sm:h-5 sm:w-5 text-[#94A3B8] group-focus-within:text-[#C5A059] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+              {/* <svg className="h-4 w-4 sm:h-5 sm:w-5 text-[#94A3B8] group-focus-within:text-[#C5A059] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              </svg> */}
             </div>
             <input
               type="text"
@@ -2405,7 +2395,6 @@ export default function AdminProductPage() {
             </div>
           )}
         </div>
-      </main>
 
       {/* Modals */}
       {showForm && (
@@ -2431,6 +2420,6 @@ export default function AdminProductPage() {
           onCancel={() => setConfirm(null)}
         />
       )}
-    </div>
+    </LayoutWrapper>
   )
 }

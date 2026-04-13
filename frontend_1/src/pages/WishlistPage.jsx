@@ -140,7 +140,7 @@ export default function WishlistPage() {
                     className="group bg-[#FFFFFF] border border-[#CBD5E1]/30 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(197,160,89,0.2)] hover:-translate-y-0.5"
                   >
                     {/* Image */}
-                    <div className="relative h-40 sm:h-48 lg:h-52 overflow-hidden bg-[#F8F9FA]">
+                    <div className="relative h-52 sm:h-60 lg:h-72 overflow-hidden bg-[#F8F9FA]">
                       {image ? (
                         <img
                           src={image}

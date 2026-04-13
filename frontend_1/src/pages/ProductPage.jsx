@@ -890,6 +890,10 @@ export default function ProductPage() {
           )}
         </div>
       </LayoutWrapper>
+
+      {selected && (
+        <ProductModal product={selected} onClose={() => setSelected(null)} onOrder={handleOrder} />
+      )}
     </>
   )
 }
