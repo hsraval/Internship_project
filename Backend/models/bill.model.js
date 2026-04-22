@@ -62,4 +62,19 @@ const billSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
+// Single indexes
+billSchema.index({ user: 1 });                  // user bills
+billSchema.index({ paymentStatus: 1 });         // filter paid/pending
+billSchema.index({ createdAt: -1 });            // sorting latest
+billSchema.index({ invoiceNumber: 1 }, { unique: true }); // fast lookup
+
+// Dashboard + revenue queries
+billSchema.index({ paymentStatus: 1, createdAt: -1 });
+
+// Monthly revenue queries
+billSchema.index({ createdAt: -1, paymentStatus: 1 });
+
+// User + recent bills
+billSchema.index({ user: 1, createdAt: -1 });
+
 module.exports = mongoose.model('Bill', billSchema);

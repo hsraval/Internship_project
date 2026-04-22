@@ -55,4 +55,15 @@ const categorySchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+categorySchema.index({ name: "text" });
+
+categorySchema.index({ createdAt: -1 });
+
+categorySchema.index({
+  isDeleted: 1,
+  isActive: 1,
+  name: 1
+});
+
+
 module.exports = mongoose.model("category", categorySchema);

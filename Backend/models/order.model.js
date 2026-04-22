@@ -49,4 +49,19 @@ const orderSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
+// Single indexes (for simple queries)
+orderSchema.index({ userId: 1 });          // get user orders
+orderSchema.index({ status: 1 });          // filter by status
+orderSchema.index({ createdAt: -1 });      // sorting latest
+orderSchema.index({ isDeleted: 1 });       // soft delete filter
+
+// User orders sorted by latest
+orderSchema.index({ userId: 1, createdAt: -1 });
+
+// Admin filtering by status + latest
+orderSchema.index({ status: 1, createdAt: -1 });
+
+// Main admin query (VERY IMPORTANT)
+orderSchema.index({ isDeleted: 1, status: 1, createdAt: -1 });
+
 module.exports = mongoose.model('order',orderSchema);
