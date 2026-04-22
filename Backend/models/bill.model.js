@@ -66,7 +66,6 @@ const billSchema = new mongoose.Schema({
 billSchema.index({ user: 1 });                  // user bills
 billSchema.index({ paymentStatus: 1 });         // filter paid/pending
 billSchema.index({ createdAt: -1 });            // sorting latest
-billSchema.index({ invoiceNumber: 1 }, { unique: true }); // fast lookup
 
 // Dashboard + revenue queries
 billSchema.index({ paymentStatus: 1, createdAt: -1 });
