@@ -17,9 +17,9 @@ export default function OrderPage() {
             <div className="flex items-center justify-between mb-4">
               <button
                 onClick={() => navigate("/dashboard")}
-                className="text-[#64748B] hover:text-[#333333] text-sm flex items-center gap-2 transition-colors"
+                className="group relative overflow-hidden bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white text-sm font-medium flex items-center gap-2 px-4 py-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-out"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7 7" />
                 </svg>
                 Back to Dashboard

@@ -32,7 +32,13 @@ export default function LoginPage() {
       toast.success('Welcome back!')
       navigate(from, { replace: true })
     } catch (err) {
-      toast.error(err.userMessage || 'Invalid email or password')
+      const errorMessage = err.userMessage || err.message || 'Invalid email or password'
+      // Show proper error message for authentication failures
+      if (errorMessage.includes('Invalid') || errorMessage.includes('request failed') || errorMessage.includes('Request failed')) {
+        toast.error('Invalid credentials')
+      } else {
+        toast.error(errorMessage)
+      }
     } finally {
       setSubmitting(false)
     }

@@ -154,9 +154,9 @@ export default function OrderDetailPage() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
           <button
             onClick={() => navigate("/dashboard")}
-            className="text-[#64748B] hover:text-[#333333] text-xs sm:text-sm font-mono flex items-center gap-1.5 sm:gap-2 transition-colors p-2 rounded-lg hover:bg-[#94A3B8] w-full sm:w-auto justify-start sm:justify-center"
+            className="group relative overflow-hidden bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-md sm:shadow-lg hover:shadow-lg sm:hover:shadow-xl transform hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 ease-out w-full sm:w-auto justify-start sm:justify-center"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7 7" />
             </svg>
             <span className="hidden sm:inline">Back to Dashboard</span>
