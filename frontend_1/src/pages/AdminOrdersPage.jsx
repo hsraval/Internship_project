@@ -38,8 +38,12 @@ export default function AdminOrdersPage() {
         
         // Calculate totalPages based on actual response structure
         let calculatedPages = 1
-        if (r.pagination?.totalPages) {
+        if (r.data?.totalPage) {
+          calculatedPages = r.data.totalPage
+        } else if (r.pagination?.totalPages) {
           calculatedPages = r.pagination.totalPages
+        } else if (r.data?.totalOrders) {
+          calculatedPages = Math.ceil(r.data.totalOrders / 10)
         } else if (r.total) {
           calculatedPages = Math.ceil(r.total / 10)
         } else if (r.data?.total) {
