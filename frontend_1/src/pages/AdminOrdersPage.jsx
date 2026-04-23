@@ -37,16 +37,21 @@ export default function AdminOrdersPage() {
         setOrders(list)
         
         // Calculate totalPages based on actual response structure
+        let calculatedPages = 1
         if (r.pagination?.totalPages) {
-          setTotalPages(r.pagination.totalPages)
+          calculatedPages = r.pagination.totalPages
         } else if (r.total) {
-          setTotalPages(Math.ceil(r.total / 10))
+          calculatedPages = Math.ceil(r.total / 10)
         } else if (r.data?.total) {
-          setTotalPages(Math.ceil(r.data.total / 10))
+          calculatedPages = Math.ceil(r.data.total / 10)
         } else {
           // If no pagination info from backend, calculate based on returned data
-          setTotalPages(Math.ceil(list.length / 10))
+          calculatedPages = Math.ceil(list.length / 10)
         }
+        
+        console.log('Orders list length:', list.length)
+        console.log('Calculated totalPages:', calculatedPages)
+        setTotalPages(calculatedPages)
       })
       .catch(() => setError('Failed to load orders.'))
       .finally(() => setLoading(false))
