@@ -50,7 +50,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <Link to="/" className="font-display text-2xl font-semibold text-[#0F172A] hover:text-[#333333] transition-colors">
-            Luminary
+            Larkinse
           </Link>
           <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mt-3">Sign in</p>
         </div>

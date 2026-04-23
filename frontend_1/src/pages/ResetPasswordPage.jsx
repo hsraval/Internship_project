@@ -67,7 +67,7 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md animate-fade-up">
         <div className="text-center mb-8">
           <Link to="/" className="font-display text-2xl font-semibold text-[#0F172A] hover:text-[#333333] transition-colors">
-            Luminary
+            Larkinse
           </Link>
           <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mt-3">
             Choose new password

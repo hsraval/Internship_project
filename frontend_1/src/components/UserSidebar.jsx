@@ -165,7 +165,7 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
         <div className="h-20 flex items-center px-8 border-b border-slate-50">
           <Link to="/" className="font-serif text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <span className="w-2 h-8 bg-[#C5A059] rounded-full"></span>
-            Larkings<span className="text-[#C5A059]">MensWear</span>
+            Larkinse<span className="text-[#C5A059]">MensWear</span>
           </Link>
           <button className="md:hidden ml-auto text-slate-400 hover:text-slate-600" onClick={() => setIsSidebarOpen(false)}>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,7 +244,7 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
             <>
               <Link to="/" className="font-serif text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
                 <span className="w-2 h-8 bg-[#C5A059] rounded-full"></span>
-                Larkings<span className="text-[#C5A059]">MensWear</span>
+                Larkinse<span className="text-[#C5A059]">MensWear</span>
               </Link>
               <button 
                 onClick={() => setCollapsed(true)} 
