@@ -32,10 +32,21 @@ export default function AdminOrdersPage() {
     const params = { page, limit: 10 }
     getAllOrders(params)
       .then((r) => {
-        const list = r.data?.data || []
+        console.log('API Response:', r) // Debug log
+        const list = r.data?.data || r.data || []
         setOrders(list)
-        if (r.pagination?.totalPages) setTotalPages(r.pagination.totalPages)
-        else if (r.total) setTotalPages(Math.ceil(r.total / 10))
+        
+        // Calculate totalPages based on actual response structure
+        if (r.pagination?.totalPages) {
+          setTotalPages(r.pagination.totalPages)
+        } else if (r.total) {
+          setTotalPages(Math.ceil(r.total / 10))
+        } else if (r.data?.total) {
+          setTotalPages(Math.ceil(r.data.total / 10))
+        } else {
+          // If no pagination info from backend, calculate based on returned data
+          setTotalPages(Math.ceil(list.length / 10))
+        }
       })
       .catch(() => setError('Failed to load orders.'))
       .finally(() => setLoading(false))
