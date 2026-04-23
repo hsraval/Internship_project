@@ -116,7 +116,7 @@ export const getAllProductsAdmin = (params = {}) =>
 // ─── ORDER (new) ──────────────────────────────────────────────────────────────
 export const createOrder      = (data)         => api.post("/order", data);
 export const getMyOrders      = ()             => api.get("/order/user");
-export const getAllOrders      = ()             => api.get("/order");
+export const getAllOrders      = (params = {})  => api.get("/order", { params });
 export const getOrderById     = (id)           => api.get(`/order/${id}`);
 export const updateOrderStatus = (id, status)  => api.patch(`/order/${id}/status`, { status });
 export const cancelOrder      = (id)           => api.post(`/order/${id}`);
