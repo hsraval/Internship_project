@@ -44,6 +44,7 @@ export default function AdminOrdersPage() {
 
   useEffect(() => {
     const params = { page, limit: 5 } // Changed limit to 5
+    if (filter !== 'all') params.status = filter // Add filter parameter
     getAllOrders(params)
       .then((r) => {
         console.log('API Response:', r) // Debug log
@@ -77,9 +78,10 @@ export default function AdminOrdersPage() {
       })
       .catch(() => setError('Failed to load orders.'))
       .finally(() => setLoading(false))
-  }, [page])
+  }, [page, filter])
 
-  const filtered = filter === 'all' ? orders : orders.filter((o) => o.status === filter)
+  // No client-side filtering needed - backend handles it
+  const filtered = orders
 
   // Reset page when filter changes
   const handleFilterChange = (newFilter) => {
