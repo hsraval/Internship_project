@@ -81,6 +81,12 @@ export default function AdminOrdersPage() {
 
   const filtered = filter === 'all' ? orders : orders.filter((o) => o.status === filter)
 
+  // Reset page when filter changes
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter)
+    setPage(1) // Reset to first page when filter changes
+  }
+
   return (
     <LayoutWrapper>
       {/* Header */}
@@ -122,7 +128,7 @@ export default function AdminOrdersPage() {
               <div className="py-1">
                 <button
                   type="button"
-                  onClick={() => { setFilter('all'); setIsDropdownOpen(false) }}
+                  onClick={() => { handleFilterChange('all'); setIsDropdownOpen(false) }}
                   className="w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[#334155] hover:bg-[#F8FAFC] hover:text-[#C5A059] transition-colors"
                 >
                   All Orders
@@ -131,7 +137,7 @@ export default function AdminOrdersPage() {
                   <button
                     key={s}
                     type="button"
-                    onClick={() => { setFilter(s); setIsDropdownOpen(false) }}
+                    onClick={() => { handleFilterChange(s); setIsDropdownOpen(false) }}
                     className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm transition-colors ${filter === s ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
                   >
                     {s.charAt(0).toUpperCase() + s.slice(1)}
@@ -146,7 +152,7 @@ export default function AdminOrdersPage() {
           {STATUSES.map((s) => (
             <button
               key={s}
-              onClick={() => setFilter(s)}
+              onClick={() => handleFilterChange(s)}
               className={`text-xs font-mono px-4 py-2 rounded-xl capitalize transition-all duration-200 border whitespace-nowrap ${
                 filter === s
                   ? 'bg-[#C5A059] text-white border-transparent shadow-md shadow-[#C5A059]/20 font-bold'
