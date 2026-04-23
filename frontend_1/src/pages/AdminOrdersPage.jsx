@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getAllOrders } from '../api/api'
@@ -28,6 +28,19 @@ export default function AdminOrdersPage() {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [totalItems, setTotalItems] = useState(0) // Added to show total orders count
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest('.status-dropdown')) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isDropdownOpen])
 
   useEffect(() => {
     const params = { page, limit: 5 } // Changed limit to 5
@@ -88,18 +101,45 @@ export default function AdminOrdersPage() {
       {/* Filter Tabs */}
       <div className="px-4 md:px-8 py-4 border-b border-slate-100 bg-white">
         {/* Mobile Dropdown */}
-        <div className="sm:hidden">
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl bg-slate-900 text-white font-mono text-sm font-semibold border-0 shadow appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/50"
+        <div className="sm:hidden relative status-dropdown" ref={dropdownRef}>
+          <button
+            type="button"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="relative w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-2.5 sm:py-3 text-left bg-white border border-[#E2E8F0] rounded-xl shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] sm:text-sm transition-all hover:border-[#CBD5E1]"
           >
-            {STATUSES.map((s) => (
-              <option key={s} value={s} className="bg-white text-slate-900">
-                {s === 'all' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1)}
-              </option>
-            ))}
-          </select>
+            <span className="block truncate text-[#334155]">
+              {filter === 'all' ? 'All Orders' : filter.charAt(0).toUpperCase() + filter.slice(1)}
+            </span>
+            <span className="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none">
+              <svg className="h-4 w-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </button>
+
+          {isDropdownOpen && (
+            <div className="absolute z-10 mt-2 w-full rounded-xl bg-white shadow-xl border border-[#E2E8F0] max-h-60 overflow-auto">
+              <div className="py-1">
+                <button
+                  type="button"
+                  onClick={() => { setFilter('all'); setIsDropdownOpen(false) }}
+                  className="w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[#334155] hover:bg-[#F8FAFC] hover:text-[#C5A059] transition-colors"
+                >
+                  All Orders
+                </button>
+                {STATUSES.filter(s => s !== 'all').map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => { setFilter(s); setIsDropdownOpen(false) }}
+                    className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm transition-colors ${filter === s ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                  >
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         {/* Desktop Tabs */}
         <div className="hidden sm:flex gap-2 flex-wrap">
