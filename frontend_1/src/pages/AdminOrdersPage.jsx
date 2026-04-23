@@ -27,35 +27,36 @@ export default function AdminOrdersPage() {
   const [filter, setFilter] = useState('all')
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [totalItems, setTotalItems] = useState(0) // Added to show total orders count
 
   useEffect(() => {
-    const params = { page, limit: 10 }
+    const params = { page, limit: 5 } // Changed limit to 5
     getAllOrders(params)
       .then((r) => {
         console.log('API Response:', r) // Debug log
         const list = r.data?.data || r.data || []
         setOrders(list)
         
-        // Calculate totalPages based on actual response structure
+        // Calculate totalPages based on actual response structure with limit 5
         let calculatedPages = 1
-        if (r.data?.totalPage) {
-          calculatedPages = r.data.totalPage
-        } else if (r.pagination?.totalPages) {
+        if (r.pagination?.totalPages) {
           calculatedPages = r.pagination.totalPages
-        } else if (r.data?.totalOrders) {
-          calculatedPages = Math.ceil(r.data.totalOrders / 10)
         } else if (r.total) {
-          calculatedPages = Math.ceil(r.total / 10)
+          calculatedPages = Math.ceil(r.total / 5)
         } else if (r.data?.total) {
-          calculatedPages = Math.ceil(r.data.total / 10)
+          calculatedPages = Math.ceil(r.data.total / 5)
         } else {
           // If no pagination info from backend, calculate based on returned data
-          calculatedPages = Math.ceil(list.length / 10)
+          calculatedPages = Math.ceil(list.length / 5)
         }
         
         console.log('Orders list length:', list.length)
         console.log('Calculated totalPages:', calculatedPages)
         setTotalPages(calculatedPages)
+
+        // Store total items for display
+        const total = r.total || r.data?.total || list.length
+        setTotalItems(total)
       })
       .catch(() => setError('Failed to load orders.'))
       .finally(() => setLoading(false))
@@ -72,9 +73,9 @@ export default function AdminOrdersPage() {
             <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-0.5">Admin Dashboard</p>
             <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-serif">All Orders</h1>
           </div>
-          {orders.length > 0 && (
+          {totalItems > 0 && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#C5A059]/10 text-[#C5A059] text-xs font-bold rounded-full border border-[#C5A059]/20">
-              {orders.length} orders
+              {totalItems} orders
             </span>
           )}
         </div>
