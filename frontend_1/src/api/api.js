@@ -3,12 +3,11 @@ import axios from 'axios'
 // ─── Axios Instance ───────────────────────────────────────────────────────────
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL + '/api',
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000,
-})
-
+});
 // ─── Request Interceptor ──────────────────────────────────────────────────────
 
 api.interceptors.request.use(

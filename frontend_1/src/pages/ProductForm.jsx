@@ -20,6 +20,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
   const isEdit = Boolean(product)
   const fileInputRef = useRef(null)
   const categoryButtonRef = useRef(null)
+  const typeButtonRef = useRef(null)
 
   const [values, setValues] = useState({
     name: product?.name ?? '',
@@ -27,12 +28,19 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
     pricePerMeter: product?.pricePerMeter ?? '',
     category: product?.category?._id ?? product?.category ?? '',
   })
+  
+  // Safely handle backend sending either {url: "..."} or just a string
+  const [existingImages, setExistingImages] = useState(
+    product?.images?.map(img => img.url || img) ?? []
+  )
+  
+  const [productType, setProductType] = useState(product?.productType ?? 'product')
   const [errors, setErrors]         = useState({})
   const [imageFiles, setImageFiles] = useState([])     // new File objects
   const [imagePreviews, setImagePreviews] = useState([]) // new image preview URLs
-  const [existingImages, setExistingImages] = useState(product?.images ?? []) // existing URLs
   const [submitting, setSubmitting] = useState(false)
   const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+  const [isTypeOpen, setIsTypeOpen] = useState(false)
 
   // Keyboard close
   useEffect(() => {
@@ -41,16 +49,28 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
     return () => window.removeEventListener('keydown', h)
   }, [onClose])
 
+  // FIX: Clean up object URLs only when the modal completely unmounts to prevent browser cache bugs during edits
+  useEffect(() => {
+    return () => {
+      imagePreviews.forEach((url) => {
+        if (url) URL.revokeObjectURL(url)
+      })
+    }
+  }, []) // Empty dependency array ensures this only runs on unmount
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isCategoryOpen && !event.target.closest('.category-dropdown')) {
         setIsCategoryOpen(false)
       }
+      if (isTypeOpen && !event.target.closest('.type-dropdown')) {
+        setIsTypeOpen(false)
+      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isCategoryOpen])
+  }, [isCategoryOpen, isTypeOpen])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -64,9 +84,26 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
     setIsCategoryOpen(false)
   }
 
+  const handleTypeSelect = (type) => {
+    setProductType(type)
+    setIsTypeOpen(false)
+  }
+
   const getCategoryDropdownPosition = () => {
     if (!categoryButtonRef.current) return {}
     const rect = categoryButtonRef.current.getBoundingClientRect()
+    return {
+      position: 'fixed',
+      top: `${rect.bottom + 8}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      zIndex: 50
+    }
+  }
+
+  const getTypeDropdownPosition = () => {
+    if (!typeButtonRef.current) return {}
+    const rect = typeButtonRef.current.getBoundingClientRect()
     return {
       position: 'fixed',
       top: `${rect.bottom + 8}px`,
@@ -94,7 +131,8 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
   }
 
   const removeNewImage = (idx) => {
-    URL.revokeObjectURL(imagePreviews[idx])
+    // We no longer call URL.revokeObjectURL here to prevent edit state bugs.
+    // The cleanup useEffect handles it safely when the form closes.
     const files = imageFiles.filter((_, i) => i !== idx)
     const prevs = imagePreviews.filter((_, i) => i !== idx)
     setImageFiles(files)
@@ -115,11 +153,9 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
     fd.append('description', values.description.trim())
     fd.append('pricePerMeter', values.pricePerMeter)
     fd.append('category', values.category)
+    fd.append('productType', productType)
 
-    // Existing images to keep (tell backend which to preserve)
     existingImages.forEach((url) => fd.append('existingImages', url))
-
-    // New files
     imageFiles.forEach((f) => fd.append('uploadedImages', f))
 
     setSubmitting(true)
@@ -160,10 +196,10 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
             </div>
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-[#C5A059] font-semibold">
-                {isEdit ? 'Edit' : 'New'} Product
+                {isEdit ? 'Edit' : 'New'} Item
               </p>
               <h2 className="font-serif text-xl font-bold text-[#0F172A] mt-0.5">
-                {isEdit ? product.name : 'Add Fabric'}
+                {isEdit ? product.name : 'Add to Catalogue'}
               </h2>
             </div>
           </div>
@@ -260,6 +296,54 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
             </Field>
           </div>
 
+          {/* Product Type Dropdown */}
+          <Field label="Item Type" hint="Choose if this is a Fabric or a finished Product">
+            <div className="relative type-dropdown">
+              <button
+                ref={typeButtonRef}
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsTypeOpen(!isTypeOpen)
+                }}
+                className="relative w-full pl-3 pr-8 py-2.5 text-left bg-white border border-[#E2E8F0] rounded-lg shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] text-sm transition-all hover:border-[#CBD5E1]"
+              >
+                <span className="block truncate text-[#334155] flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${productType === 'fabric' ? 'bg-[#C5A059]' : 'bg-[#0F172A]'}`} />
+                  {productType === 'fabric' ? 'Fabric (Roll)' : 'Product (Finished)'}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="h-4 w-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </button>
+
+              {isTypeOpen && (
+                <div className="rounded-lg bg-white shadow-xl border border-[#E2E8F0] overflow-hidden" style={getTypeDropdownPosition()}>
+                  <div className="py-1">
+                    <button
+                      type="button"
+                      onClick={() => handleTypeSelect('product')}
+                      className={`w-full text-left px-3 py-2.5 text-sm transition-colors flex items-center gap-2 ${productType === 'product' ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                    >
+                      <span className="w-2 h-2 rounded-full bg-[#0F172A]" />
+                      Product (Finished)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleTypeSelect('fabric')}
+                      className={`w-full text-left px-3 py-2.5 text-sm transition-colors flex items-center gap-2 ${productType === 'fabric' ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                    >
+                      <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
+                      Fabric (Roll)
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </Field>
+
           {/* Images */}
           <Field
             label={`Images (${totalImages}/${MAX_IMAGES})`}
@@ -274,7 +358,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
                   {existingImages.map((img, i) => (
                     <div key={`existing-${i}`} className="relative group aspect-square">
                       <div className="w-full h-full rounded-xl overflow-hidden border-2 border-[#E2E8F0] shadow-sm hover:shadow-md transition-all duration-200">
-                        <img src={img.url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                        <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       <button
                         type="button"
