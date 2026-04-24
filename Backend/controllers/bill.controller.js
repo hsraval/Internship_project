@@ -264,7 +264,8 @@ exports.downloadBillPDF = async (req, res, next) => {
 
         // QR Code Right
         try {
-            const upiUrl = `upi://pay?pa=kashyapgaliya295@okhdfcbank@bank&pn=Your Store&am=${bill.totalAmount}&cu=INR&tn=${bill.invoiceNumber}`;
+            
+            const upiUrl = `upi://pay?pa=kashyapgaliya295@okhdfcbank&pn=Your Store&am=${bill.totalAmount}&cu=INR&tn=${bill.invoiceNumber}`;
             const qrImage = await QRCode.toDataURL(upiUrl);
             const qrBuffer = Buffer.from(qrImage.split(',')[1], 'base64');
 
