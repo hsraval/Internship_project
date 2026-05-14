@@ -73,19 +73,19 @@ export default function WishlistPage() {
   return (
     <LayoutWrapper>
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
-        <header className="bg-[#16537e] border-b border-[#124470] px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 sticky top-0 z-30 shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4 px-2">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-white/60 font-semibold mb-0.5">User Dashboard</p>
-            <h1 className="text-lg sm:text-xl font-bold text-white font-serif">Wishlist</h1>
+            <p className="font-sans text-[10px] uppercase tracking-widest text-[#80b3ba] font-bold mb-1">User Dashboard</p>
+            <h1 className="font-sans text-2xl md:text-3xl font-bold text-[#1e2a3a]">My Wishlist</h1>
           </div>
           {items.length > 0 && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/20 text-white text-xs font-bold rounded-full border border-white/30">
+            <span className="inline-flex items-center text-[10px] font-sans uppercase tracking-[0.15em] bg-[#16537e] text-white rounded-full px-4 py-2 shadow-sm font-bold w-fit">
               {items.length} items
             </span>
           )}
-        </header>
+        </div>
 
         {/* Content */}
         <div className="mt-6">
@@ -128,7 +128,7 @@ export default function WishlistPage() {
         {/* Grid */}
         {!loading && !error && items.length > 0 && (
           <>
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 px-2">
               {items.map((item) => {
                 // backend may return { product: {...} } or the product directly
                 const product = item?.product || item
@@ -137,10 +137,12 @@ export default function WishlistPage() {
                 return (
                   <div
                     key={product._id}
-                    className="group bg-white border border-[#b0d3e6]/40 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(22,83,126,0.18)] hover:-translate-y-0.5"
+                    className="bg-white border border-[#b0d3e6]/50 rounded-2xl overflow-hidden group hover:border-[#80b3ba] hover:shadow-xl hover:shadow-[#16537e]/15 transition-all duration-300 flex flex-col hover:-translate-y-1 relative"
                   >
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#16537e] via-[#80b3ba] to-[#d7e9f2] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+                    
                     {/* Image */}
-                    <div className="relative h-52 sm:h-60 lg:h-72 overflow-hidden bg-[#F8F9FA]">
+                    <div className="relative h-32 sm:h-48 bg-[#f4f9fb] flex items-center justify-center overflow-hidden">
                       {image ? (
                         <img
                           src={image}
@@ -148,49 +150,53 @@ export default function WishlistPage() {
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="flex items-center justify-center w-full h-full text-[#CBD5E1]">
-                          <svg className="w-12 h-12 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
+                        <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
                       )}
 
                       {/* Category badge */}
                       {product.category?.name && (
-                        <span className="absolute top-2 sm:top-3 left-2 sm:left-3 text-[8px] sm:text-[9px] font-mono uppercase tracking-[0.15em] sm:tracking-[0.2em] bg-[#16537e]/80 text-white rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1">
-                          {product.category.name}
-                        </span>
+                        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
+                          <span className="inline-flex items-center text-[8px] sm:text-[10px] font-sans uppercase tracking-[0.15em] bg-[#16537e]/95 text-white rounded-full px-2 py-1 sm:px-3 sm:py-1.5 shadow-sm font-bold backdrop-blur-sm">
+                            {product.category.name}
+                          </span>
+                        </div>
                       )}
 
                       {/* Remove from wishlist */}
                       <button
                         onClick={() => handleRemove(product._id)}
                         title="Remove from wishlist"
-                        className="absolute top-2 sm:top-3 right-2 sm:right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#16537e] text-white flex items-center justify-center hover:bg-[#124470] transition-colors shadow"
+                        className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/90 text-[#16537e] flex items-center justify-center hover:bg-[#16537e] hover:text-white transition-all shadow-sm backdrop-blur-sm group/btn"
                       >
-                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
+                        <div className="absolute inset-0 rounded-full border border-[#16537e] opacity-0 group-hover/btn:scale-110 group-hover/btn:opacity-100 transition-all duration-300" />
                       </button>
                     </div>
 
                     {/* Details */}
-                    <div className="p-3 sm:p-4 flex flex-col flex-1">
-                      <h3 className="font-serif font-semibold text-[#0F172A] text-sm sm:text-base leading-snug mb-1 line-clamp-2">
-                        {product.name}
-                      </h3>
-                      <p className="text-[#16537e] text-base sm:text-lg font-light mb-3 sm:mb-4">
-                        ₹{Number(product.pricePerMeter).toLocaleString()}
-                        <span className="text-xs text-[#16537e]/50 ml-1 font-normal">/ meter</span>
-                      </p>
+                    <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 flex-1 relative bg-white">
+                      <div className="flex flex-col flex-1 h-full">
+                        <h3 className="font-sans font-bold text-[#1e2a3a] text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-[#16537e] transition-colors">
+                          {product.name}
+                        </h3>
+                        <div className="flex items-center justify-between mt-2 mb-3">
+                          <p className="text-[#16537e] text-sm sm:text-base font-bold">
+                            ₹{Number(product.pricePerMeter).toLocaleString()}
+                          </p>
+                        </div>
 
-                      <div className="mt-auto">
-                        <button
-                          onClick={() => handleOrder(product._id)}
-                          className="w-full py-2 sm:py-2.5 bg-[#16537e] text-white font-mono text-xs uppercase tracking-widest rounded-lg hover:bg-[#124470] transition-all duration-300"
-                        >
-                          Order
-                        </button>
+                        <div className="flex mt-auto">
+                          <button
+                            onClick={() => handleOrder(product._id)}
+                            className="w-full py-1.5 sm:py-2 text-[10px] font-sans font-bold uppercase tracking-wider bg-[#16537e] text-white rounded-lg sm:rounded-xl hover:bg-[#124470] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                          >
+                            Order
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
