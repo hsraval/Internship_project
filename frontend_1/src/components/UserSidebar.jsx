@@ -126,8 +126,9 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
             {initial}
           </button>
           {profileOpen && (
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-56 bg-white rounded-2xl shadow-xl border border-[#b0d3e6] p-4 z-50">
-              <div className="flex flex-col items-center gap-2 text-center">
+            <div className="absolute bottom-0 left-12 w-56 bg-white rounded-2xl shadow-xl border border-[#b0d3e6] p-4 z-50">
+              <div className="absolute bottom-4 -left-2 w-4 h-4 bg-white border-b border-l border-[#b0d3e6] rotate-45 rounded-sm" />
+              <div className="flex flex-col items-center gap-2 text-center relative z-10">
                 <div className="w-12 h-12 rounded-full bg-[#16537e] flex items-center justify-center text-white font-serif font-bold text-lg">
                   {initial}
                 </div>

@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 import UserSidebar from './UserSidebar'
 
 export default function LayoutWrapper({ children }) {
   const { logout } = useAuth()
+  const navigate = useNavigate()
   const [loggingOut, setLoggingOut] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
@@ -11,8 +14,11 @@ export default function LayoutWrapper({ children }) {
     setLoggingOut(true)
     try {
       await logout()
+      toast.success('Signed out successfully')
+      navigate('/')
     } catch (error) {
       console.error('Logout error:', error)
+      toast.error('Failed to sign out')
     } finally {
       setLoggingOut(false)
     }
