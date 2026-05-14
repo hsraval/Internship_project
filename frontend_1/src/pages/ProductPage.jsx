@@ -130,39 +130,45 @@ function ProductCard({ product, onShowDetails, onOrder }) {
         )}
       </div>
       <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 flex-1 relative bg-white">
-        <div>
+        <div className="flex flex-col flex-1 h-full">
           <h3 className="font-sans font-bold text-[#1e2a3a] text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-[#16537e] transition-colors">{product.name}</h3>
-          <p className="text-[#16537e] text-sm sm:text-base font-bold mt-1">
-            ₹{Number(product.pricePerMeter).toLocaleString()}
-          </p>
-        </div>
-        <div className="flex gap-1.5 sm:gap-2 mt-auto pt-1">
-          <button
-            onClick={() => {
-              const wishlistBtn = document.querySelector(`[data-product-wishlist="${product._id}"] button`)
-              wishlistBtn?.click()
-            }}
-            className={`px-2 py-1.5 sm:px-3 sm:py-2 border text-[9px] sm:text-[10px] font-sans uppercase tracking-wider rounded-lg sm:rounded-xl transition-all flex items-center justify-center font-bold shadow-sm hover:shadow-md ${
-              wishlisted 
-                ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470] hover:-translate-y-0.5' 
-                : 'border-[#b0d3e6] text-[#16537e] hover:bg-[#f4f9fb] hover:border-[#16537e] hover:-translate-y-0.5'
-            }`}
-          >
-            <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-          <div data-product-wishlist={product._id} className="hidden">
-            <WishlistButton productId={product._id} />
+          
+          <div className="flex items-center justify-between mt-2 mb-3">
+            <p className="text-[#16537e] text-sm sm:text-base font-bold">
+              ₹{Number(product.pricePerMeter).toLocaleString()}
+            </p>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => {
+                  const wishlistBtn = document.querySelector(`[data-product-wishlist="${product._id}"] button`)
+                  wishlistBtn?.click()
+                }}
+                className={`p-1.5 sm:p-2 border rounded-lg sm:rounded-xl transition-all flex items-center justify-center font-bold shadow-sm hover:shadow-md ${
+                  wishlisted 
+                    ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470] hover:-translate-y-0.5' 
+                    : 'border-[#b0d3e6] text-[#16537e] hover:bg-[#f4f9fb] hover:border-[#16537e] hover:-translate-y-0.5'
+                }`}
+              >
+                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </button>
+              <div data-product-wishlist={product._id} className="hidden">
+                <WishlistButton productId={product._id} />
+              </div>
+            </div>
           </div>
-          <button onClick={() => onShowDetails(product)}
-            className="flex-1 py-1.5 sm:py-2 text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-wider border border-[#b0d3e6] text-[#16537e] bg-white rounded-lg sm:rounded-xl hover:border-[#16537e] hover:bg-[#f4f9fb] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
-            Details
-          </button>
-          <button onClick={() => onOrder(product)}
-            className="flex-1 py-1.5 sm:py-2 text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-wider bg-[#16537e] text-white rounded-lg sm:rounded-xl hover:bg-[#124470] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
-            Order
-          </button>
+
+          <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 mt-auto">
+            <button onClick={() => onShowDetails(product)}
+              className="w-full py-1.5 sm:py-2 text-[10px] font-sans font-bold uppercase tracking-wider border border-[#b0d3e6] text-[#16537e] bg-white rounded-lg sm:rounded-xl hover:border-[#16537e] hover:bg-[#f4f9fb] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
+              Details
+            </button>
+            <button onClick={() => onOrder(product)}
+              className="w-full py-1.5 sm:py-2 text-[10px] font-sans font-bold uppercase tracking-wider bg-[#16537e] text-white rounded-lg sm:rounded-xl hover:bg-[#124470] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
+              Order
+            </button>
+          </div>
         </div>
       </div>
     </div>
