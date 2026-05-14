@@ -165,11 +165,10 @@ function ProductCard({ product, onShowDetails, onOrder }) {
               const wishlistBtn = document.querySelector(`[data-wishlist-btn="${product._id}"] button`)
               wishlistBtn?.click()
             }}
-            className={`px-3 py-2 border text-xs font-mono uppercase tracking-widest rounded-lg transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms] flex items-center justify-center ${
-              wishlisted
+            className={`px-3 py-2 border text-xs font-mono uppercase tracking-widest rounded-lg transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms] flex items-center justify-center ${wishlisted
                 ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470]'
                 : 'border-[#16537e] bg-white text-[#16537e] hover:bg-[#16537e] hover:text-white'
-            }`}
+              }`}
           >
             <svg className="w-3.5 h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -222,22 +221,22 @@ function InfiniteCarousel({ fabrics, onOrder }) {
     const scroll = () => {
       if (!isPaused) {
         scrollPosition += 1.5 // Increased speed for faster scrolling
-        
+
         // Get total width of one set of items
         const firstItem = carousel.querySelector('.carousel-item')
         if (firstItem) {
           const itemWidth = firstItem.offsetWidth + 20 // Include gap
           const totalWidth = itemWidth * fabrics.length
-          
+
           // Reset position when we've scrolled past one complete set
           if (scrollPosition >= totalWidth) {
             scrollPosition = 0
           }
-          
+
           carousel.style.transform = `translateX(-${scrollPosition}px)`
         }
       }
-      
+
       animationId = requestAnimationFrame(scroll)
     }
 
@@ -251,12 +250,12 @@ function InfiniteCarousel({ fabrics, onOrder }) {
   }, [fabrics, isPaused])
 
   return (
-    <div 
+    <div
       className="relative overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div 
+      <div
         ref={carouselRef}
         className="flex gap-5 transition-none"
         style={{ width: 'max-content' }}
@@ -323,7 +322,7 @@ function StatsStrip() {
     <div className="py-16 px-6 bg-[#16537e] border-y border-[#124470] relative overflow-hidden">
       {/* Subtle background gradient decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#80b3ba15_0%,_transparent_70%)]" />
-      
+
       <div className="relative max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
         {stats.map((stat, i) => (
           <div key={i} className="text-center group">
@@ -393,11 +392,10 @@ function UserMenu({ isAuthenticated, navigate, onLogout, user }) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Account menu"
-        className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#80b3ba]/50 ${
-          isAuthenticated
+        className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#80b3ba]/50 ${isAuthenticated
             ? 'bg-[#16537e] text-white hover:bg-[#124470] shadow-md shadow-[#16537e]/30'
             : 'bg-transparent border border-[#16537e]/30 text-[#16537e]/70 hover:border-[#16537e] hover:text-[#16537e]'
-        } ${isOpen ? 'ring-2 ring-[#80b3ba]/40' : ''}`}
+          } ${isOpen ? 'ring-2 ring-[#80b3ba]/40' : ''}`}
       >
         {isAuthenticated ? (
           <span className="font-mono text-xs font-semibold tracking-wider leading-none">
@@ -491,17 +489,17 @@ export default function HomePage() {
   const navigate = useNavigate()
   const isAdmin = isAuthenticated && user?.role === 'admin'
 
-  const heroRef     = useRef(null)
-  const aboutRef    = useRef(null)
+  const heroRef = useRef(null)
+  const aboutRef = useRef(null)
   const productsRef = useRef(null)
   const fabricsRef = useRef(null)
-  const sectionRefs = { hero: heroRef, about: aboutRef, products: productsRef ,fabrics: fabricsRef}
+  const sectionRefs = { hero: heroRef, about: aboutRef, products: productsRef, fabrics: fabricsRef }
 
-  const [products,        setProducts]        = useState([])
+  const [products, setProducts] = useState([])
   const [loadingProducts, setLoadingProducts] = useState(true)
-  const [fabrics,         setFabrics]         = useState([])   // ← NEW
+  const [fabrics, setFabrics] = useState([])   // ← NEW
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const [scrolled,        setScrolled]        = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10)
@@ -511,7 +509,7 @@ export default function HomePage() {
 
   // Fetch homepage products
   useEffect(() => {
-    getProducts({ limit: 8,productType:"product" })
+    getProducts({ limit: 8, productType: "product" })
       .then(({ data }) => setProducts(data.data ?? data.products ?? data ?? []))
       .catch(() => setProducts([]))
       .finally(() => setLoadingProducts(false))
@@ -521,7 +519,7 @@ export default function HomePage() {
   useEffect(() => {
     getFabricProducts()
       .then(({ data }) => setFabrics(data.data ?? []))
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   const scrollTo = (id) => sectionRefs[id]?.current?.scrollIntoView({ behavior: 'smooth' })
@@ -648,7 +646,7 @@ export default function HomePage() {
 
       {/* ── NEW: Fabric Highlights ── */}
       {fabrics.length > 0 && (
-        <section ref={fabricsRef} id="fabrics"  className="py-20 px-6 bg-[#d7e9f2]/20 border-t border-[#b0d3e6]">
+        <section ref={fabricsRef} id="fabrics" className="py-20 px-6 bg-[#d7e9f2]/20 border-t border-[#b0d3e6]">
           <div className="max-w-7xl mx-auto">
             {/* Section header */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
@@ -676,8 +674,8 @@ export default function HomePage() {
           </div>
         </section>
       )}
-      
-        <StatsStrip />
+
+      <StatsStrip />
 
       {/* ── Products ── */}
       <section ref={productsRef} id="products" className="py-28 px-6 bg-[#d7e9f2]/10 border-t border-[#b0d3e6]">
@@ -751,12 +749,12 @@ export default function HomePage() {
           <p className="text-[10px] text-[#64748B]/50 font-mono">2024 Larkings MensWear. All rights reserved.</p>
         </div>
       </footer> */}
-      
+
       {/* ── Footer ── */}
       <footer className="bg-[#1e2a3a] text-[#b0d3e6] border-t border-[#16537e]">
         <div className="max-w-7xl mx-auto px-6 pt-16 pb-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-            
+
             {/* Column 1: Brand & Description */}
             <div className="md:col-span-1">
               <span className="block font-serif text-xl font-semibold text-white tracking-tight mb-4">

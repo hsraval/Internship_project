@@ -299,14 +299,14 @@ function Sidebar({ onLogout, loggingOut, user, collapsed, setCollapsed }) {
 function ConfirmDialog({ message, onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onCancel}>
-      <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-sm transition-opacity" />
-      <div className="relative z-10 bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl p-6 max-w-sm w-full shadow-2xl transform transition-all scale-100" onClick={(e) => e.stopPropagation()}>
-        <p className="text-[#333333] font-serif text-base mb-6 leading-relaxed">{message}</p>
+      <div className="absolute inset-0 bg-[#1e2a3a]/60 backdrop-blur-sm transition-opacity" />
+      <div className="relative z-10 bg-white border border-[#b0d3e6] rounded-2xl p-6 max-w-sm w-full shadow-2xl transform transition-all scale-100" onClick={(e) => e.stopPropagation()}>
+        <p className="text-[#1e2a3a] font-sans text-base mb-6 leading-relaxed font-medium">{message}</p>
         <div className="flex gap-3 justify-end">
-          <button onClick={onCancel} className="px-6 py-2.5 text-xs font-mono uppercase tracking-wider border border-[#CBD5E1] text-[#64748B] rounded-lg hover:border-[#0F172A] hover:bg-[#0F172A] hover:text-white transition-all duration-300">
+          <button onClick={onCancel} className="px-6 py-2.5 text-xs font-sans font-semibold uppercase tracking-wider border border-[#b0d3e6] text-[#16537e]/70 rounded-lg hover:border-[#16537e] hover:bg-[#16537e] hover:text-white transition-all duration-300">
             Cancel
           </button>
-          <button onClick={onConfirm} className="px-6 py-2.5 text-xs font-mono uppercase tracking-wider bg-[#EF4444] text-[#FFFFFF] rounded-lg hover:bg-[#DC2626] hover:shadow-lg hover:shadow-red-500/30 transition-all duration-300">
+          <button onClick={onConfirm} className="px-6 py-2.5 text-xs font-sans font-semibold uppercase tracking-wider bg-[#EF4444] text-white rounded-lg hover:bg-[#DC2626] hover:shadow-lg hover:shadow-red-500/30 transition-all duration-300">
             Confirm
           </button>
         </div>
@@ -441,17 +441,17 @@ export default function AdminProductPage() {
   return (
     <LayoutWrapper>
       {/* Header */}
-      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-slate-50 border-b border-slate-100">
+      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-[#d7e9f2]/20 border-b border-[#b0d3e6]/50">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-1">Admin Panel</p>
-              <h1 className="font-serif text-2xl md:text-3xl font-bold text-slate-900">Manage Products</h1>
+              <p className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold mb-1">Admin Panel</p>
+              <h1 className="font-sans text-2xl md:text-3xl font-bold text-[#1e2a3a]">Manage Products</h1>
             </div>
           </div>
           <button
             onClick={openCreate}
-            className="group relative inline-flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-slate-900 text-white shadow-lg transition-all hover:bg-[#C5A059] hover:shadow-[#C5A059]/40 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#C5A059] focus:ring-offset-2"
+            className="group relative inline-flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-[#16537e] text-white shadow-lg transition-all hover:bg-[#124470] hover:shadow-[#16537e]/40 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#16537e] focus:ring-offset-2"
           >
             <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
             <svg className="w-6 h-6 relative transition-transform duration-300 group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -465,19 +465,16 @@ export default function AdminProductPage() {
       <div className="px-4 md:px-8 py-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
         <div className="md:col-span-8 relative group">
           <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
-            <svg className="h-4 w-4 sm:h-5 sm:w-5 text-[#94A3B8] group-focus-within:text-[#C5A059] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="h-4 w-4 sm:h-5 sm:w-5 text-[#80b3ba] group-focus-within:text-[#16537e] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-              {/* <svg className="h-4 w-4 sm:h-5 sm:w-5 text-[#94A3B8] group-focus-within:text-[#C5A059] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg> */}
             </div>
             <input
               type="text"
               placeholder="Search by name, SKU or category..."
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
-              className="block w-full pl-9 sm:pl-10 pr-3 py-2.5 sm:py-3 border border-[#E2E8F0] rounded-xl leading-5 bg-white placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] sm:text-sm transition-all shadow-sm"
+              className="block w-full pl-9 sm:pl-10 pr-3 py-2.5 sm:py-3 border border-[#b0d3e6]/50 rounded-xl leading-5 bg-white placeholder-[#80b3ba] focus:outline-none focus:ring-2 focus:ring-[#16537e]/20 focus:border-[#16537e] sm:text-sm transition-all shadow-sm font-sans"
             />
           </div>
 
@@ -485,25 +482,25 @@ export default function AdminProductPage() {
             <button
               type="button"
               onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-              className="relative w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-2.5 sm:py-3 text-left bg-white border border-[#E2E8F0] rounded-xl shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] sm:text-sm transition-all hover:border-[#CBD5E1]"
+              className="relative w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-2.5 sm:py-3 text-left bg-white border border-[#b0d3e6]/50 rounded-xl shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#16537e]/20 focus:border-[#16537e] sm:text-sm transition-all hover:border-[#16537e]/30 font-sans"
             >
-              <span className="block truncate text-[#334155]">
+              <span className="block truncate text-[#1e2a3a]">
                 {category ? categories.find(c => c._id === category)?.name || 'All Categories' : 'All Categories'}
               </span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none">
-                <svg className="h-4 w-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-4 w-4 text-[#80b3ba]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
             </button>
 
             {isCategoryOpen && (
-              <div className="absolute z-10 mt-2 w-full rounded-xl bg-white shadow-xl border border-[#E2E8F0] max-h-60 overflow-auto">
+              <div className="absolute z-10 mt-2 w-full rounded-xl bg-white shadow-xl border border-[#b0d3e6]/50 max-h-60 overflow-auto">
                 <div className="py-1">
                   <button
                     type="button"
                     onClick={() => { handleCategory(''); setIsCategoryOpen(false) }}
-                    className="w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[#334155] hover:bg-[#F8FAFC] hover:text-[#C5A059] transition-colors"
+                    className="w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[#1e2a3a] hover:bg-[#f4f9fb] hover:text-[#16537e] transition-colors font-sans"
                   >
                     All Categories
                   </button>
@@ -512,7 +509,7 @@ export default function AdminProductPage() {
                       key={c._id}
                       type="button"
                       onClick={() => { handleCategory(c._id); setIsCategoryOpen(false) }}
-                      className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm transition-colors ${category === c._id ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                      className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm transition-colors font-sans ${category === c._id ? 'bg-[#16537e]/10 text-[#16537e] font-medium' : 'text-[#1e2a3a] hover:bg-[#f4f9fb]'}`}
                     >
                       {c.name}
                     </button>
@@ -527,68 +524,68 @@ export default function AdminProductPage() {
         <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 sm:py-24">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 border-3 border-[#E2E8F0] border-t-[#C5A059] rounded-full animate-spin" />
-              <p className="mt-3 sm:mt-4 text-sm text-[#64748B] font-mono animate-pulse">Loading inventory...</p>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 border-3 border-[#d7e9f2] border-t-[#16537e] rounded-full animate-spin" />
+              <p className="mt-3 sm:mt-4 text-sm text-[#16537e]/70 font-sans font-medium animate-pulse">Loading inventory...</p>
             </div>
           ) : products.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 sm:py-24 bg-white rounded-2xl border border-dashed border-[#E2E8F0]">
-              <div className="p-3 sm:p-4 bg-[#F1F5F9] rounded-full mb-3 sm:mb-4">
-                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+            <div className="flex flex-col items-center justify-center py-20 sm:py-24 bg-white rounded-2xl border border-dashed border-[#b0d3e6]">
+              <div className="p-3 sm:p-4 bg-[#f4f9fb] rounded-full mb-3 sm:mb-4">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
               </div>
-              <p className="font-medium text-[#64748B] text-sm sm:text-base">No products found</p>
-              <p className="text-xs text-[#94A3B8] mt-1">Try adjusting your search or filters</p>
+              <p className="font-medium text-[#1e2a3a] text-sm sm:text-base font-sans">No products found</p>
+              <p className="text-xs text-[#16537e]/60 mt-1 font-sans">Try adjusting your search or filters</p>
             </div>
           ) : (
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm overflow-hidden">
+            <div className="bg-white rounded-2xl border border-[#b0d3e6]/50 shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
-                  <thead className="bg-gradient-to-r from-[#C5A059] to-[#B8944A] border-b-2 border-[#C5A059]/30 hidden lg:table-header-group shadow-lg">
+                  <thead className="bg-[#16537e] border-b-2 border-[#124470] hidden lg:table-header-group shadow-lg">
                     <tr>
-                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Product Details</th>
-                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Category</th>
-                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Price / Meter</th>
-                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-mono font-bold text-white uppercase tracking-widest border-r border-white/10">Status</th>
-                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-right text-xs font-mono font-bold text-white uppercase tracking-widest">Actions</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-sans font-semibold text-white uppercase tracking-widest border-r border-white/10">Product Details</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-sans font-semibold text-white uppercase tracking-widest border-r border-white/10">Category</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-sans font-semibold text-white uppercase tracking-widest border-r border-white/10">Price / Meter</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-xs font-sans font-semibold text-white uppercase tracking-widest border-r border-white/10">Status</th>
+                      <th className="px-4 sm:px-6 py-4 sm:py-5 text-right text-xs font-sans font-semibold text-white uppercase tracking-widest">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E2E8F0] bg-white">
+                  <tbody className="divide-y divide-[#b0d3e6]/30 bg-white">
                     {products.map((p) => (
-                      <tr key={p._id} className="group hover:bg-gradient-to-r hover:from-[#F8FAFC] hover:to-[#F1F5F9] transition-all duration-200 border-b border-[#E2E8F0]/50">
+                      <tr key={p._id} className="group hover:bg-[#f4f9fb] transition-all duration-200 border-b border-[#b0d3e6]/30">
                         
                         {/* Mobile Stacked Layout */}
-                        <td className="p-3 sm:p-4 lg:table-cell block lg:py-5 lg:px-6 align-top bg-gradient-to-b from-white to-[#FAFAFA] lg:bg-transparent">
+                        <td className="p-3 sm:p-4 lg:table-cell block lg:py-5 lg:px-6 align-top bg-gradient-to-b from-white to-[#f4f9fb] lg:bg-transparent">
                           <div className="flex gap-3 sm:gap-4">
                             <div className="flex-shrink-0">
-                              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#F1F5F9] border border-[#E2E8F0] overflow-hidden">
+                              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#d7e9f2]/30 border border-[#b0d3e6]/50 overflow-hidden">
                                 {p.images?.[0] ? (
                                   <img src={p.images[0]?.url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 ) : (
-                                  <div className="w-full h-full flex items-center justify-center text-[#CBD5E1]">
+                                  <div className="w-full h-full flex items-center justify-center text-[#80b3ba]">
                                     <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" /></svg>
                                   </div>
                                 )}
                               </div>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-start justify-between bg-gradient-to-r from-[#F8FAFC] to-transparent p-3 rounded-lg -m-3 mb-2">
-                                <h3 className="text-sm sm:text-base font-bold text-[#0F172A] font-serif truncate pr-2">{p.name}</h3>
+                              <div className="flex items-start justify-between bg-[#f4f9fb] lg:bg-transparent p-3 lg:p-0 rounded-lg -m-3 lg:m-0 mb-2">
+                                <h3 className="text-sm sm:text-base font-bold text-[#1e2a3a] font-sans truncate pr-2">{p.name}</h3>
                                 <div className="lg:hidden">
                                   <StatusBadge deleted={p.isDeleted || p.deletedAt} />
                                 </div>
                               </div>
                               
-                              <div className="mt-3 space-y-3 lg:hidden">
-                                <div className="flex justify-between items-center bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] p-3 rounded-lg border border-[#E2E8F0]/50">
-                                  <span className="text-[10px] uppercase text-[#64748B] font-mono font-bold tracking-wider">Category</span>
-                                  <div className="inline-flex items-center px-2 py-1 rounded-md text-xs font-semibold bg-white text-[#334155] border border-[#CBD5E1]/50 shadow-sm">
+                              <div className="mt-3 space-y-3 lg:hidden font-sans">
+                                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-[#b0d3e6]/50">
+                                  <span className="text-xs uppercase text-[#16537e]/60 font-semibold tracking-wider">Category</span>
+                                  <div className="inline-flex items-center px-2 py-1 rounded-md text-xs font-semibold bg-[#f4f9fb] text-[#1e2a3a] border border-[#b0d3e6]/50 shadow-sm">
                                     {p.category?.name ?? '—'}
                                   </div>
                                 </div>
-                                <div className="flex justify-between items-center bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] p-3 rounded-lg border border-[#E2E8F0]/50">
-                                  <span className="text-[10px] uppercase text-[#64748B] font-mono font-bold tracking-wider">Price</span>
+                                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-[#b0d3e6]/50">
+                                  <span className="text-xs uppercase text-[#16537e]/60 font-semibold tracking-wider">Price</span>
                                   <div className="flex items-center gap-1">
-                                    <span className="text-base font-bold text-[#C5A059]">₹</span>
-                                    <span className="text-sm font-mono font-bold text-[#0F172A] bg-white px-2 py-1 rounded-md border border-[#E2E8F0] shadow-sm">
+                                    <span className="text-base font-bold text-[#16537e]">₹</span>
+                                    <span className="text-sm font-semibold text-[#1e2a3a] bg-[#f4f9fb] px-2 py-1 rounded-md border border-[#b0d3e6]/50 shadow-sm">
                                       {Number(p.pricePerMeter).toLocaleString()}
                                     </span>
                                   </div>
@@ -596,22 +593,22 @@ export default function AdminProductPage() {
                               </div>
                               
                               {p.description && (
-                                <p className="hidden lg:block mt-1 text-xs text-[#64748B] line-clamp-2 max-w-md">{p.description}</p>
+                                <p className="hidden lg:block mt-1 text-xs text-[#16537e]/70 font-sans line-clamp-2 max-w-md">{p.description}</p>
                               )}
                             </div>
                           </div>
                         </td>
 
-                        <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle">
-                          <div className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#F1F5F9] to-[#E2E8F0] text-[#334155] border border-[#CBD5E1]/50 shadow-sm">
+                        <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle font-sans">
+                          <div className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#d7e9f2]/40 text-[#16537e] border border-[#b0d3e6]/50 shadow-sm">
                             {p.category?.name ?? '—'}
                           </div>
                         </td>
 
-                        <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle">
+                        <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle font-sans">
                           <div className="flex items-center gap-2">
-                            <span className="text-lg font-bold text-[#C5A059]">₹</span>
-                            <span className="text-sm font-mono font-bold text-[#0F172A] bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] px-3 py-1.5 rounded-lg border border-[#E2E8F0]">
+                            <span className="text-lg font-bold text-[#80b3ba]">₹</span>
+                            <span className="text-sm font-semibold text-[#1e2a3a] bg-[#f4f9fb] px-3 py-1.5 rounded-lg border border-[#b0d3e6]/50">
                               {Number(p.pricePerMeter).toLocaleString()}
                             </span>
                           </div>
@@ -623,7 +620,7 @@ export default function AdminProductPage() {
                           </div>
                         </td>
 
-                        <td className="p-3 sm:p-4 lg:table-cell lg:py-6 lg:px-6 align-middle text-right bg-gradient-to-l from-[#F8FAFC] to-transparent">
+                        <td className="p-3 sm:p-4 lg:table-cell lg:py-6 lg:px-6 align-middle text-right bg-gradient-to-l from-[#f4f9fb] to-transparent lg:bg-none">
                           <div className="flex items-center gap-2 sm:gap-3 lg:justify-end justify-start mt-3 lg:mt-0">
                             
                             <button
@@ -632,8 +629,8 @@ export default function AdminProductPage() {
                               title="Edit Product"
                               className={`group relative p-2 sm:p-2.5 rounded-lg transition-all duration-300
                                 ${!(p.isDeleted || p.deletedAt) 
-                                  ? 'bg-[#F1F5F9] text-[#64748B] hover:bg-[#C5A059] hover:text-white hover:shadow-lg hover:shadow-[#C5A059]/30 hover:-translate-y-0.5' 
-                                  : 'opacity-50 cursor-not-allowed bg-[#F1F5F9] text-[#94A3B8]'}
+                                  ? 'bg-[#d7e9f2]/50 text-[#16537e] hover:bg-[#16537e] hover:text-white hover:shadow-lg hover:shadow-[#16537e]/30 hover:-translate-y-0.5' 
+                                  : 'opacity-50 cursor-not-allowed bg-[#d7e9f2]/30 text-[#80b3ba]'}
                               `}
                             >
                               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -675,11 +672,11 @@ export default function AdminProductPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-1 sm:gap-2 mt-6 sm:mt-8 pb-4">
+            <div className="flex items-center justify-center gap-1 sm:gap-2 mt-6 sm:mt-8 pb-4 font-sans">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="p-2 rounded-lg border border-[#E2E8F0] bg-white text-[#64748B] hover:border-[#C5A059] hover:text-[#C5A059] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg border border-[#b0d3e6]/50 bg-white text-[#16537e]/60 hover:border-[#16537e] hover:text-[#16537e] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               </button>
@@ -689,10 +686,10 @@ export default function AdminProductPage() {
                   <button
                     key={i}
                     onClick={() => setPage(i + 1)}
-                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg text-sm font-medium transition-all ${
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg text-sm font-semibold transition-all ${
                       page === i + 1
-                        ? 'bg-[#0F172A] text-white shadow-md'
-                        : 'bg-white text-[#64748B] hover:bg-[#F1F5F9] border border-[#E2E8F0]'
+                        ? 'bg-[#16537e] text-white shadow-md'
+                        : 'bg-white text-[#16537e]/60 hover:bg-[#d7e9f2]/40 border border-[#b0d3e6]/50'
                     }`}
                   >
                     {i + 1}
@@ -703,7 +700,7 @@ export default function AdminProductPage() {
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="p-2 rounded-lg border border-[#E2E8F0] bg-white text-[#64748B] hover:border-[#C5A059] hover:text-[#C5A059] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg border border-[#b0d3e6]/50 bg-white text-[#16537e]/60 hover:border-[#16537e] hover:text-[#16537e] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </button>
