@@ -97,12 +97,12 @@ function ProductModal({ product, onClose }) {
 
         <div className="md:w-2/5 p-6 sm:p-8 flex flex-col justify-center bg-white">
           {product.category?.name && (
-            <span className="inline-block text-[10px] font-mono uppercase tracking-[0.2em] text-[#16537e] border border-[#16537e]/30 bg-[#16537e]/5 rounded-full px-3 py-1 w-fit mb-6">
+            <span className="inline-block text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#16537e] border border-[#16537e]/30 bg-[#16537e]/5 rounded-full px-3 py-1 w-fit mb-6">
               {product.category.name}
             </span>
           )}
           <div className="flex items-start justify-between gap-3 mb-2">
-            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-[#1e2a3a] leading-tight">
+            <h2 className="font-sans text-3xl md:text-4xl font-bold text-[#1e2a3a] leading-tight">
               {product.name}
             </h2>
             <WishlistButton productId={product._id} className="flex-shrink-0 mt-1" />
@@ -118,7 +118,7 @@ function ProductModal({ product, onClose }) {
           )}
           <div className="mt-auto pt-8">
             <button
-              className="w-full py-4 bg-[#16537e] text-white font-mono text-xs uppercase tracking-widest rounded-lg hover:bg-[#124470] transition-all duration-300 shadow-lg shadow-[#16537e]/20"
+              className="w-full py-4 bg-[#16537e] text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-[#124470] transition-all duration-300 shadow-lg shadow-[#16537e]/20 hover:-translate-y-0.5"
               onClick={() => onClose()}
             >
               Close Details
@@ -154,7 +154,7 @@ function ProductCard({ product, onShowDetails, onOrder }) {
         )}
         {product.category?.name && (
           <div className="absolute top-3 left-3 z-10">
-            <span className="inline-flex items-center text-[10px] font-mono uppercase tracking-[0.15em] bg-[#16537e]/90 text-white rounded-full px-3 py-1.5 shadow-lg backdrop-blur-sm">
+            <span className="inline-flex items-center text-[10px] font-sans font-bold uppercase tracking-[0.15em] bg-[#16537e]/90 text-white rounded-full px-3 py-1.5 shadow-lg backdrop-blur-sm">
               {product.category.name}
             </span>
           </div>
@@ -165,7 +165,7 @@ function ProductCard({ product, onShowDetails, onOrder }) {
               const wishlistBtn = document.querySelector(`[data-wishlist-btn="${product._id}"] button`)
               wishlistBtn?.click()
             }}
-            className={`px-3 py-2 border text-xs font-mono uppercase tracking-widest rounded-lg transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms] flex items-center justify-center ${wishlisted
+            className={`px-3 py-2 border text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms] flex items-center justify-center ${wishlisted
                 ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470]'
                 : 'border-[#16537e] bg-white text-[#16537e] hover:bg-[#16537e] hover:text-white'
               }`}
@@ -178,11 +178,11 @@ function ProductCard({ product, onShowDetails, onOrder }) {
             <WishlistButton productId={product._id} />
           </div>
           <button onClick={() => onShowDetails(product)}
-            className="px-3 py-2 bg-white border border-white text-[#1e2a3a] text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#d7e9f2] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75">
+            className="px-3 py-2 bg-white border border-white text-[#1e2a3a] text-xs font-sans font-bold uppercase tracking-widest rounded-xl hover:bg-[#d7e9f2] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75">
             View
           </button>
           <button onClick={() => onOrder(product)}
-            className="px-3 py-2 border border-[#80b3ba] bg-[#80b3ba] text-white text-xs font-mono uppercase tracking-widest rounded-lg hover:bg-[#6c989e] hover:border-[#6c989e] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100">
+            className="px-3 py-2 border border-[#16537e] bg-[#16537e] text-white text-xs font-sans font-bold uppercase tracking-widest rounded-xl hover:bg-[#124470] hover:border-[#124470] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100">
             Order
           </button>
         </div>
@@ -190,7 +190,7 @@ function ProductCard({ product, onShowDetails, onOrder }) {
 
       <div className="p-6 flex flex-col flex-1 relative bg-white border-t border-[#b0d3e6]/30 z-10">
         <div className="mb-auto">
-          <h3 className="font-serif font-semibold text-[#1e2a3a] text-lg leading-tight mb-3 line-clamp-2 group-hover:text-[#16537e] transition-colors duration-300">
+          <h3 className="font-sans font-bold text-[#1e2a3a] text-lg leading-tight mb-3 line-clamp-2 group-hover:text-[#16537e] transition-colors duration-300">
             {product.name}
           </h3>
           <div className="flex items-center justify-between gap-3">
@@ -284,21 +284,21 @@ function InfiniteCarousel({ fabrics, onOrder }) {
                   </div>
                 )}
                 {fabric.category?.name && (
-                  <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-[0.2em] bg-[#16537e]/90 text-white rounded-full px-2.5 py-1 backdrop-blur-sm">
+                  <span className="absolute top-3 left-3 text-[9px] font-sans font-bold uppercase tracking-[0.2em] bg-[#16537e]/90 text-white rounded-full px-2.5 py-1 backdrop-blur-sm">
                     {fabric.category.name}
                   </span>
                 )}
               </div>
               <div className="p-4">
-                <h3 className="font-serif font-semibold text-[#1e2a3a] text-sm leading-snug line-clamp-1 mb-1 group-hover:text-[#16537e] transition-colors">
+                <h3 className="font-sans font-bold text-[#1e2a3a] text-sm leading-snug line-clamp-1 mb-1 group-hover:text-[#16537e] transition-colors">
                   {fabric.name}
                 </h3>
-                <p className="text-[#16537e] text-base font-light mb-3">
+                <p className="text-[#16537e] text-base font-bold mb-3">
                   ₹{Number(fabric.pricePerMeter).toLocaleString()}
                 </p>
                 <button
                   onClick={() => onOrder(fabric)}
-                  className="w-full py-2 bg-[#16537e] text-white font-mono text-[10px] uppercase tracking-widest rounded-lg hover:bg-[#124470] transition-all duration-300"
+                  className="w-full py-2 bg-[#16537e] text-white font-sans font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-[#124470] transition-all duration-300 shadow-sm hover:-translate-y-0.5"
                 >
                   Order
                 </button>

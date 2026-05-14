@@ -23,14 +23,14 @@ function ProductModal({ product, onClose, onOrder }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-[#0F172A]/20 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-[#16537e]/20 backdrop-blur-md" />
       <div
-        className="relative z-10 w-full max-w-2xl bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+        className="relative z-10 w-full max-w-2xl bg-white border border-[#b0d3e6]/50 rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-[#0F172A]/60 text-[#FFFFFF] hover:bg-[#333333] md:top-4 md:right-4"
+          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-[#16537e]/60 text-white hover:bg-[#124470] md:top-4 md:right-4 transition-colors"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -39,12 +39,12 @@ function ProductModal({ product, onClose, onOrder }) {
         
         <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
           {/* Image Section */}
-          <div className="md:w-1/2 bg-[#F8F9FA]/10 flex flex-col min-h-0">
+          <div className="md:w-1/2 bg-[#f4f9fb] flex flex-col min-h-0">
             <div className="relative h-48 sm:h-56 md:h-72 flex items-center justify-center overflow-hidden">
               {images.length > 0 ? (
                 <img src={images[imgIdx]?.url ?? images[imgIdx]} alt={product.name} className="w-full h-full object-cover" />
               ) : (
-                <div className="text-[#64748B]/40">
+                <div className="text-[#80b3ba]">
                   <svg className="w-12 h-12 sm:w-16 sm:h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -52,10 +52,10 @@ function ProductModal({ product, onClose, onOrder }) {
               )}
             </div>
             {images.length > 1 && (
-              <div className="flex gap-2 p-2 sm:p-3 overflow-x-auto bg-[#F8F9FA]/10">
+              <div className="flex gap-2 p-2 sm:p-3 overflow-x-auto bg-[#f4f9fb]">
                 {images.map((img, i) => (
                   <button key={i} onClick={() => setImgIdx(i)}
-                    className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-colors ${i === imgIdx ? 'border-[#C5A059]' : 'border-transparent opacity-50'}`}>
+                    className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 transition-colors ${i === imgIdx ? 'border-[#16537e]' : 'border-transparent opacity-50'}`}>
                     <img src={img?.url ?? img} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -67,23 +67,23 @@ function ProductModal({ product, onClose, onOrder }) {
           <div className="md:w-1/2 p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 overflow-y-auto flex-1">
             {product.category?.name && (
               <div className="inline-flex items-center">
-                <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.15em] bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white rounded-full px-3 sm:px-4 py-1 sm:py-1.5 shadow-lg shadow-[#C5A059]/25 backdrop-blur-sm font-semibold">
+                <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.15em] bg-[#16537e] text-white rounded-full px-3 sm:px-4 py-1 sm:py-1.5 shadow-sm font-bold">
                   {product.category.name}
                 </span>
               </div>
             )}
-            <h2 className="font-serif text-xl sm:text-2xl font-semibold text-[#0F172A] leading-tight">{product.name}</h2>
-            <p className="text-[#C5A059] text-xl sm:text-2xl font-light">
+            <h2 className="font-sans text-xl sm:text-2xl font-bold text-[#1e2a3a] leading-tight">{product.name}</h2>
+            <p className="text-[#16537e] text-xl sm:text-2xl font-bold">
               ₹{Number(product.pricePerMeter).toLocaleString()}
             </p>
             {product.description && (
-              <p className="text-[#64748B]/70 text-sm leading-relaxed border-t border-[#CBD5E1] pt-3 sm:pt-4">
+              <p className="text-[#1e2a3a]/80 text-sm leading-relaxed border-t border-[#b0d3e6]/50 pt-3 sm:pt-4 font-sans">
                 {product.description}
               </p>
             )}
             <button
               onClick={() => { onOrder(product); onClose() }}
-              className="mt-auto py-2.5 sm:py-3 bg-[#C5A059] text-[#FFFFFF] rounded-lg font-mono text-xs sm:text-sm uppercase tracking-widest hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all font-semibold"
+              className="mt-auto py-2.5 sm:py-3 bg-[#16537e] text-white rounded-xl font-sans text-xs sm:text-sm uppercase tracking-widest hover:bg-[#124470] transition-all font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               Order
             </button>
@@ -102,26 +102,26 @@ function ProductCard({ product, onShowDetails, onOrder }) {
   const wishlisted = isInWishlist(product._id)
   
   return (
-    <div className="bg-[#FFFFFF] border border-[#CBD5E1]/50 rounded-xl overflow-hidden group hover:border-[#C5A059] hover:shadow-[0_8px_32px_rgba(197,165,2,0.1)] transition-all duration-300 flex flex-col">
-      <div className="relative h-48 bg-[#F8F9FA]/10 flex items-center justify-center overflow-hidden">
+    <div className="bg-white border border-[#b0d3e6]/50 rounded-2xl overflow-hidden group hover:border-[#80b3ba] hover:shadow-lg hover:shadow-[#16537e]/10 transition-all duration-300 flex flex-col hover:-translate-y-1">
+      <div className="relative h-48 bg-[#f4f9fb] flex items-center justify-center overflow-hidden">
         {image ? (
           <img src={image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
-          <svg className="w-10 h-10 text-[#64748B]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-10 h-10 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
         )}
         {product.category?.name && (
           <div className="absolute top-3 left-3 z-10">
-            <span className="inline-flex items-center text-[10px] font-mono uppercase tracking-[0.15em] bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white rounded-full px-3 py-1.5 shadow-lg shadow-[#C5A059]/25 backdrop-blur-sm font-semibold">
+            <span className="inline-flex items-center text-[10px] font-sans uppercase tracking-[0.15em] bg-[#16537e] text-white rounded-full px-3 py-1.5 shadow-sm font-bold">
               {product.category.name}
             </span>
           </div>
         )}
-        {/* productType badge — shows "Fabric" tag if type is fabric */}
+        {/* productType badge */}
         {product.productType === 'fabric' && (
           <div className="absolute top-3 right-3 z-10">
-            <span className="text-[9px] font-mono uppercase tracking-widest bg-[#0F172A]/70 text-[#C5A059] rounded-full px-2 py-1">
+            <span className="text-[9px] font-sans uppercase tracking-widest bg-[#d7e9f2] text-[#16537e] rounded-full px-2 py-1 font-bold">
               Fabric
             </span>
           </div>
@@ -129,8 +129,8 @@ function ProductCard({ product, onShowDetails, onOrder }) {
       </div>
       <div className="p-4 flex flex-col gap-3 flex-1">
         <div>
-          <h3 className="font-serif font-semibold text-[#0F172A] text-sm leading-snug line-clamp-2">{product.name}</h3>
-          <p className="text-[#C5A059] text-base font-light mt-1">
+          <h3 className="font-sans font-bold text-[#1e2a3a] text-sm leading-snug line-clamp-2">{product.name}</h3>
+          <p className="text-[#16537e] text-base font-bold mt-1">
             ₹{Number(product.pricePerMeter).toLocaleString()}
           </p>
         </div>
@@ -140,10 +140,10 @@ function ProductCard({ product, onShowDetails, onOrder }) {
               const wishlistBtn = document.querySelector(`[data-product-wishlist="${product._id}"] button`)
               wishlistBtn?.click()
             }}
-            className={`px-3 py-2 border text-[10px] font-mono uppercase tracking-wider rounded-lg transition-all flex items-center justify-center ${
+            className={`px-3 py-2 border text-[10px] font-sans uppercase tracking-wider rounded-xl transition-all flex items-center justify-center font-bold ${
               wishlisted 
-                ? 'border-[#C5A059] bg-[#C5A059] text-white hover:bg-[#b08d47]' 
-                : 'border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-[#FFFFFF]'
+                ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470]' 
+                : 'border-[#b0d3e6] text-[#16537e] hover:bg-[#f4f9fb] hover:border-[#16537e]'
             }`}
           >
             <svg className="w-3.5 h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -154,11 +154,11 @@ function ProductCard({ product, onShowDetails, onOrder }) {
             <WishlistButton productId={product._id} />
           </div>
           <button onClick={() => onShowDetails(product)}
-            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider border border-[#C5A059] text-[#C5A059] bg-[#FFFFFF] rounded-lg hover:border-[#0F172A] hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all">
+            className="flex-1 py-2 text-[10px] font-sans font-bold uppercase tracking-wider border border-[#b0d3e6] text-[#16537e] bg-white rounded-xl hover:border-[#16537e] hover:bg-[#f4f9fb] transition-all">
             Details
           </button>
           <button onClick={() => onOrder(product)}
-            className="flex-1 py-2 text-[10px] font-mono uppercase tracking-wider bg-[#C5A059] text-[#FFFFFF] rounded-lg hover:bg-[#0F172A] hover:text-[#FFFFFF] transition-all">
+            className="flex-1 py-2 text-[10px] font-sans font-bold uppercase tracking-wider bg-[#16537e] text-white rounded-xl hover:bg-[#124470] transition-all shadow-sm hover:shadow">
             Order
           </button>
         </div>
@@ -254,8 +254,8 @@ export default function ProductPage() {
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
             <div className="flex items-center gap-3">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-[#64748B]/70 mb-1">Collection</p>
-              <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#333333]">Browse Fabrics</h1>
+              <p className="font-sans text-[10px] uppercase tracking-widest text-[#80b3ba] font-bold mb-1">Collection</p>
+              <h1 className="font-sans text-2xl md:text-3xl font-bold text-[#1e2a3a]">Browse Fabrics</h1>
             </div>
           </div>
 
@@ -264,7 +264,7 @@ export default function ProductPage() {
 
             {/* Search */}
             <div className="relative flex-1 min-w-0 w-full">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B5F50]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
@@ -272,7 +272,7 @@ export default function ProductPage() {
                 placeholder="Search fabrics…"
                 value={search}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg text-[#333333] text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#C5A059] transition-colors font-mono"
+                className="w-full pl-9 pr-4 py-2.5 bg-[#f4f9fb] border border-[#b0d3e6]/50 rounded-xl text-[#1e2a3a] text-sm placeholder-[#80b3ba] focus:outline-none focus:bg-white focus:border-[#16537e] focus:ring-2 focus:ring-[#16537e]/20 transition-all font-sans font-medium shadow-sm hover:border-[#80b3ba]"
               />
             </div>
 
@@ -282,23 +282,23 @@ export default function ProductPage() {
                 <button
                   type="button"
                   onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                  className="w-full px-4 pr-10 py-2.5 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg text-sm text-[#64748B]/70 focus:outline-none focus:border-[#C5A059] transition-colors font-mono appearance-none cursor-pointer text-left flex items-center justify-between"
+                  className="w-full px-4 pr-10 py-2.5 bg-[#f4f9fb] border border-[#b0d3e6]/50 rounded-xl text-sm text-[#1e2a3a] focus:outline-none focus:bg-white focus:border-[#16537e] focus:ring-2 focus:ring-[#16537e]/20 transition-all font-sans font-medium appearance-none cursor-pointer text-left flex items-center justify-between shadow-sm hover:border-[#80b3ba]"
                 >
                   <span className="truncate">{category ? categories.find(c => c._id === category)?.name || 'All Categories' : 'All Categories'}</span>
                 </button>
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-[#6B5F50]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  <svg className="w-4 h-4 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </div>
                 {isCategoryOpen && (
-                  <div className="absolute z-50 w-full mt-1 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-[#b0d3e6]/50 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                     <div className="py-1">
                       <button type="button" onClick={() => { handleCategory(''); setIsCategoryOpen(false) }}
-                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${!category ? 'text-[#333333]' : 'text-[#64748B]/70'}`}>
+                        className={`w-full px-4 py-2 text-sm text-left font-sans hover:bg-[#f4f9fb] transition-colors truncate ${!category ? 'text-[#16537e] font-bold' : 'text-[#1e2a3a]'}`}>
                         All Categories
                       </button>
                       {categories.map((c) => (
                         <button key={c._id} type="button" onClick={() => { handleCategory(c._id); setIsCategoryOpen(false) }}
-                          className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${category === c._id ? 'text-[#333333]' : 'text-[#64748B]/70'}`}>
+                          className={`w-full px-4 py-2 text-sm text-left font-sans hover:bg-[#f4f9fb] transition-colors truncate ${category === c._id ? 'text-[#16537e] font-bold' : 'text-[#1e2a3a]'}`}>
                           {c.name}
                         </button>
                       ))}
@@ -314,36 +314,36 @@ export default function ProductPage() {
                 <button
                   type="button"
                   onClick={() => setIsProductTypeOpen(!isProductTypeOpen)}
-                  className="w-full px-4 pr-10 py-2.5 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg text-sm text-[#64748B]/70 focus:outline-none focus:border-[#C5A059] transition-colors font-mono appearance-none cursor-pointer text-left flex items-center justify-between"
+                  className="w-full px-4 pr-10 py-2.5 bg-[#f4f9fb] border border-[#b0d3e6]/50 rounded-xl text-sm text-[#1e2a3a] focus:outline-none focus:bg-white focus:border-[#16537e] focus:ring-2 focus:ring-[#16537e]/20 transition-all font-sans font-medium appearance-none cursor-pointer text-left flex items-center justify-between shadow-sm hover:border-[#80b3ba]"
                 >
                   <span className="truncate">{productType === 'product' ? 'Products' : productType === 'fabric' ? 'Fabrics' : 'All Types'}</span>
                 </button>
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-[#6B5F50]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  <svg className="w-4 h-4 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </div>
                 
                 {/* Dropdown Options */}
                 {isProductTypeOpen && (
-                  <div className="absolute z-50 w-full mt-1 bg-[#F8F9FA] border border-[#CBD5E1] rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-[#b0d3e6]/50 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                     <div className="py-1">
                       <button
                         type="button"
                         onClick={() => { handleProductType(''); setIsProductTypeOpen(false) }}
-                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${!productType ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
+                        className={`w-full px-4 py-2 text-sm text-left font-sans hover:bg-[#f4f9fb] transition-colors truncate ${!productType ? 'text-[#16537e] font-bold' : 'text-[#1e2a3a]'}`}
                       >
                         All Types
                       </button>
                       <button
                         type="button"
                         onClick={() => { handleProductType('product'); setIsProductTypeOpen(false) }}
-                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${productType === 'product' ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
+                        className={`w-full px-4 py-2 text-sm text-left font-sans hover:bg-[#f4f9fb] transition-colors truncate ${productType === 'product' ? 'text-[#16537e] font-bold' : 'text-[#1e2a3a]'}`}
                       >
                         Products
                       </button>
                       <button
                         type="button"
                         onClick={() => { handleProductType('fabric'); setIsProductTypeOpen(false) }}
-                        className={`w-full px-4 py-2 text-sm text-left font-mono hover:bg-[#F8F9FA]/20 transition-colors truncate ${productType === 'fabric' ? 'text-[#333333]' : 'text-[#64748B]/70'}`}
+                        className={`w-full px-4 py-2 text-sm text-left font-sans hover:bg-[#f4f9fb] transition-colors truncate ${productType === 'fabric' ? 'text-[#16537e] font-bold' : 'text-[#1e2a3a]'}`}
                       >
                         Fabrics
                       </button>
@@ -360,22 +360,22 @@ export default function ProductPage() {
         <div className="flex-1 overflow-y-auto px-4 md:px-8 pb-4 relative">
           
           {isTransitioning && (
-            <div className="absolute inset-0 bg-[#F8F9FA]/80 backdrop-blur-sm z-10 flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-[#C5A059]/30 border-t-[#C5A059] rounded-full animate-spin" />
+            <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center">
+              <div className="w-8 h-8 border-2 border-[#d7e9f2] border-t-[#16537e] rounded-full animate-spin" />
             </div>
           )}
 
           <div className={`transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
             {loading ? (
               <div className="flex items-center justify-center py-24">
-                <div className="w-8 h-8 border-2 border-[#E5E5E5] border-t-[#C5A059] rounded-full animate-spin" />
+                <div className="w-8 h-8 border-2 border-[#d7e9f2] border-t-[#16537e] rounded-full animate-spin" />
               </div>
             ) : products.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-24 text-[#333333]/50">
-                <svg className="w-12 h-12 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex flex-col items-center justify-center py-24 text-[#80b3ba]">
+                <svg className="w-12 h-12 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 002 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                 </svg>
-                <p className="font-mono text-sm uppercase tracking-widest text-[#64748B]/70">No products found</p>
+                <p className="font-sans text-sm uppercase tracking-widest text-[#80b3ba] font-bold">No products found</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -392,15 +392,15 @@ export default function ProductPage() {
               <button
                 onClick={() => handlePageChange(Math.max(1, page - 1))}
                 disabled={page === 1}
-                className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
-                  page === 1 ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                className={`px-4 py-2 rounded-xl font-sans text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                  page === 1 ? 'bg-[#f4f9fb] text-[#80b3ba]/50 cursor-not-allowed' : 'bg-[#16537e] text-white hover:bg-[#124470] shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-95'
                 }`}
               >←</button>
               <div className="flex items-center gap-1">
                 {Array.from({ length: totalPages }, (_, i) => (
                   <button key={i} onClick={() => handlePageChange(i + 1)}
-                    className={`w-10 h-10 rounded-lg font-mono text-sm transition-all duration-200 ${
-                      page === i + 1 ? 'bg-[#0F172A] text-white font-semibold' : 'bg-[#FFFFFF] text-[#64748B] hover:bg-[#C5A059] hover:text-white'
+                    className={`w-10 h-10 rounded-xl font-sans font-bold text-sm transition-all duration-300 ${
+                      page === i + 1 ? 'bg-[#16537e] text-white shadow-md' : 'bg-[#f4f9fb] text-[#16537e] hover:bg-[#d7e9f2]'
                     }`}>
                     {i + 1}
                   </button>
@@ -409,8 +409,8 @@ export default function ProductPage() {
               <button
                 onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
                 disabled={page === totalPages}
-                className={`px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
-                  page === totalPages ? 'bg-[#F8F9FA] text-[#CBD5E1]/30 cursor-not-allowed' : 'bg-[#C5A059] text-white hover:bg-[#0F172A] active:scale-95'
+                className={`px-4 py-2 rounded-xl font-sans text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                  page === totalPages ? 'bg-[#f4f9fb] text-[#80b3ba]/50 cursor-not-allowed' : 'bg-[#16537e] text-white hover:bg-[#124470] shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-95'
                 }`}
               >→</button>
             </div>
