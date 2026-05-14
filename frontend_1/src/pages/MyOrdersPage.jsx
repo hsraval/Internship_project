@@ -23,7 +23,7 @@ export default function MyOrdersPage() {
   return (
     <LayoutWrapper>
       <div className="px-4 py-10">
-        <div className="max-w-3xl mx-auto w-full">
+        <div className="max-w-5xl mx-auto w-full">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
             <div className="flex items-center gap-3 mb-2 sm:mb-0">
@@ -71,7 +71,7 @@ export default function MyOrdersPage() {
             </div>
           )}
 
-          <div className="grid gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             {orders.map((order) => (
               <OrderCard
                 key={order._id}
