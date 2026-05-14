@@ -575,17 +575,17 @@ export default function AdminProductPage() {
                               </div>
                               
                               <div className="mt-3 space-y-3 lg:hidden font-sans">
-                                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-[#b0d3e6]/50">
+                                <div className="flex justify-between items-center py-1">
                                   <span className="text-xs uppercase text-[#16537e]/60 font-semibold tracking-wider">Category</span>
-                                  <div className="inline-flex items-center px-2 py-1 rounded-md text-xs font-semibold bg-[#f4f9fb] text-[#1e2a3a] border border-[#b0d3e6]/50 shadow-sm">
+                                  <span className="text-sm font-semibold text-[#1e2a3a]">
                                     {p.category?.name ?? '—'}
-                                  </div>
+                                  </span>
                                 </div>
-                                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-[#b0d3e6]/50">
+                                <div className="flex justify-between items-center py-1">
                                   <span className="text-xs uppercase text-[#16537e]/60 font-semibold tracking-wider">Price</span>
                                   <div className="flex items-center gap-1">
                                     <span className="text-base font-bold text-[#16537e]">₹</span>
-                                    <span className="text-sm font-semibold text-[#1e2a3a] bg-[#f4f9fb] px-2 py-1 rounded-md border border-[#b0d3e6]/50 shadow-sm">
+                                    <span className="text-sm font-semibold text-[#1e2a3a]">
                                       {Number(p.pricePerMeter).toLocaleString()}
                                     </span>
                                   </div>
@@ -600,15 +600,15 @@ export default function AdminProductPage() {
                         </td>
 
                         <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle font-sans">
-                          <div className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#d7e9f2]/40 text-[#16537e] border border-[#b0d3e6]/50 shadow-sm">
+                          <span className="text-sm font-semibold text-[#1e2a3a]">
                             {p.category?.name ?? '—'}
-                          </div>
+                          </span>
                         </td>
 
                         <td className="hidden lg:table-cell px-4 sm:px-6 py-4 sm:py-6 align-middle font-sans">
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg font-bold text-[#80b3ba]">₹</span>
-                            <span className="text-sm font-semibold text-[#1e2a3a] bg-[#f4f9fb] px-3 py-1.5 rounded-lg border border-[#b0d3e6]/50">
+                          <div className="flex items-center gap-1">
+                            <span className="text-base font-bold text-[#16537e]">₹</span>
+                            <span className="text-sm font-semibold text-[#1e2a3a]">
                               {Number(p.pricePerMeter).toLocaleString()}
                             </span>
                           </div>

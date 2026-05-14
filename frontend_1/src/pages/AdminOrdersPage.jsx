@@ -95,8 +95,8 @@ export default function AdminOrdersPage() {
       <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-[#d7e9f2] border-b border-[#b0d3e6]">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold mb-0.5">Admin Dashboard</p>
-            <h1 className="text-lg sm:text-xl font-bold text-[#1e2a3a] font-serif">All Orders</h1>
+            <p className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold mb-0.5">Admin Dashboard</p>
+            <h1 className="text-lg sm:text-xl font-bold text-[#1e2a3a] font-sans">All Orders</h1>
           </div>
           {totalItems > 0 && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#16537e]/10 text-[#16537e] text-xs font-bold rounded-full border border-[#16537e]/20">
@@ -155,9 +155,9 @@ export default function AdminOrdersPage() {
             <button
               key={s}
               onClick={() => handleFilterChange(s)}
-              className={`text-xs font-mono px-4 py-2 rounded-xl capitalize transition-all duration-200 border whitespace-nowrap ${
+              className={`text-xs font-sans font-semibold px-4 py-2 rounded-xl capitalize transition-all duration-200 border whitespace-nowrap ${
                 filter === s
-                  ? 'bg-[#16537e] text-white border-transparent shadow-md font-bold'
+                  ? 'bg-[#16537e] text-white border-transparent shadow-md'
                   : 'bg-white border-[#b0d3e6] text-[#16537e]/60 hover:border-[#80b3ba] hover:text-[#16537e] hover:bg-[#d7e9f2]'
               }`}
             >
@@ -219,36 +219,41 @@ export default function AdminOrdersPage() {
                 >
                   <div className="flex items-start justify-between gap-3 mb-4">
                     <div>
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Order ID</p>
-                      <p className="text-[#1e2a3a] font-mono text-sm font-semibold">#{order._id?.slice(-8)}</p>
+                      <p className="text-[10px] font-sans font-semibold uppercase tracking-widest text-[#16537e]/60 mb-1">Order ID</p>
+                      <p className="text-[#1e2a3a] font-sans text-sm font-semibold">#{order._id?.slice(-8)}</p>
                     </div>
-                    <span className={`text-[10px] font-mono font-semibold px-3 py-1.5 rounded-full border uppercase tracking-wide ${badgeClass} whitespace-nowrap`}>
+                    <span className={`text-[10px] font-sans font-bold px-3 py-1.5 rounded-full border uppercase tracking-wide ${badgeClass} whitespace-nowrap`}>
                       {status}
                     </span>
                   </div>
 
-                  <div className="h-px bg-slate-50 mb-4" />
+                  <div className="h-px bg-[#b0d3e6]/30 mb-4" />
 
-                  <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="grid grid-cols-2 gap-3 text-sm font-sans">
                     <div className="col-span-2">
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Product</p>
+                      <p className="text-[10px] font-sans font-semibold uppercase tracking-widest text-[#16537e]/60 mb-1">Product</p>
                       <p className="font-semibold text-[#1e2a3a]">
                         {firstItem?.name || '—'}
                         {itemCount > 1 && (
-                          <span className="inline-flex items-center px-2 py-0.5 bg-[#16537e]/10 text-[#16537e] text-xs rounded-full ml-2">+{itemCount - 1}</span>
+                          <span className="inline-flex items-center px-2 py-0.5 bg-[#d7e9f2]/50 text-[#16537e] text-xs rounded-full ml-2">+{itemCount - 1}</span>
                         )}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Total</p>
-                      <p className="font-bold text-[#16537e] text-base">₹{total}</p>
+                      <p className="text-[10px] font-sans font-semibold uppercase tracking-widest text-[#16537e]/60 mb-1">Total</p>
+                      <div className="flex items-center gap-1">
+                        <span className="text-base font-bold text-[#16537e]">₹</span>
+                        <span className="text-sm font-semibold text-[#1e2a3a]">
+                          {Number(total).toLocaleString()}
+                        </span>
+                      </div>
                     </div>
                     <div>
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mb-1">Stitching</p>
-                      <p className={`font-semibold text-xs px-2 py-1 rounded-lg inline-block ${stitching === 'Yes' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-50 text-slate-500'}`}>{stitching}</p>
+                      <p className="text-[10px] font-sans font-semibold uppercase tracking-widest text-[#16537e]/60 mb-1">Stitching</p>
+                      <p className={`font-semibold text-xs px-2 py-1 rounded-lg inline-block border ${stitching === 'Yes' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-[#f4f9fb] text-[#1e2a3a] border-[#b0d3e6]/50'}`}>{stitching}</p>
                     </div>
                     <div className="col-span-2">
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Date</p>
+                      <p className="text-[10px] font-sans font-semibold uppercase tracking-widest text-[#16537e]/60 mb-1">Date</p>
                       <p className="font-semibold text-[#1e2a3a]">
                         {order?.createdAt
                           ? new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
