@@ -27,12 +27,12 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 bg-cream/80 backdrop-blur-md border-b border-ink-100">
+    <header className="fixed top-0 inset-x-0 z-40 bg-[#16537e] border-b border-[#124470] shadow-sm">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/"
-          className="font-display text-xl font-semibold text-ink-900 tracking-tight hover:text-ink-600 transition-colors"
+          className="font-display text-xl font-semibold text-white tracking-tight hover:text-[#80b3ba] transition-colors"
         >
           Luminary
         </Link>
@@ -45,24 +45,24 @@ export default function Navbar() {
                 to="/dashboard"
                 className={`px-4 py-2 rounded-lg text-sm font-body transition-colors ${
                   isActive('/dashboard')
-                    ? 'bg-ink-100 text-ink-900'
-                    : 'text-ink-600 hover:text-ink-900 hover:bg-ink-50'
+                    ? 'bg-white/20 text-white'
+                    : 'text-white/80 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Dashboard
               </Link>
 
-              <div className="w-px h-5 bg-ink-200 mx-2" />
+              <div className="w-px h-5 bg-white/20 mx-2" />
 
               <div className="flex items-center gap-3">
                 <div className="text-right hidden lg:block">
-                  <p className="text-xs font-mono text-ink-400 uppercase tracking-widest">Signed in as</p>
-                  <p className="text-sm font-body font-medium text-ink-800 leading-none mt-0.5">
+                  <p className="text-xs font-mono text-white/50 uppercase tracking-widest">Signed in as</p>
+                  <p className="text-sm font-body font-medium text-white leading-none mt-0.5">
                     {user?.name || user?.email || 'User'}
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-ink-900 flex items-center justify-center flex-shrink-0">
-                  <span className="text-cream text-xs font-mono font-medium uppercase">
+                <div className="w-8 h-8 rounded-full bg-[#80b3ba] flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#16537e] text-xs font-mono font-semibold uppercase">
                     {(user?.name || user?.email || 'U').charAt(0)}
                   </span>
                 </div>
@@ -71,7 +71,7 @@ export default function Navbar() {
               <button
                 onClick={handleLogout}
                 disabled={loggingOut}
-                className="btn-ghost ml-2 !py-2 !px-4 text-xs"
+                className="ml-2 px-4 py-2 text-xs font-body text-white/80 hover:text-white border border-white/20 hover:border-white/40 rounded-lg transition-all duration-200 hover:bg-white/10 disabled:opacity-50"
               >
                 {loggingOut ? 'Signing out…' : 'Sign out'}
               </button>
@@ -80,11 +80,11 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="px-4 py-2 text-sm font-body text-ink-600 hover:text-ink-900 transition-colors rounded-lg hover:bg-ink-50"
+                className="px-4 py-2 text-sm font-body text-white/80 hover:text-white transition-colors rounded-lg hover:bg-white/10"
               >
                 Sign in
               </Link>
-              <Link to="/register" className="btn-primary !py-2 !px-5 text-sm">
+              <Link to="/register" className="btn-primary !py-2 !px-5 text-sm !bg-white !text-[#16537e] hover:!bg-[#d7e9f2]">
                 Get started
               </Link>
             </>
@@ -93,7 +93,7 @@ export default function Navbar() {
 
         {/* Mobile burger */}
         <button
-          className="md:hidden p-2 text-ink-600 hover:text-ink-900 rounded-lg hover:bg-ink-50 transition-colors"
+          className="md:hidden p-2 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
@@ -110,26 +110,26 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-cream border-t border-ink-100 px-4 pb-4 pt-2 animate-fade-in">
+        <div className="md:hidden bg-[#16537e] border-t border-white/10 px-4 pb-4 pt-2 animate-fade-in">
           {isAuthenticated ? (
             <div className="flex flex-col gap-1">
               <div className="px-3 py-2 mb-1">
-                <p className="text-xs font-mono text-ink-400 uppercase tracking-widest">Signed in as</p>
-                <p className="text-sm font-body font-medium text-ink-800">
+                <p className="text-xs font-mono text-white/50 uppercase tracking-widest">Signed in as</p>
+                <p className="text-sm font-body font-medium text-white">
                   {user?.name || user?.email || 'User'}
                 </p>
               </div>
               <Link
                 to="/dashboard"
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-2.5 rounded-lg text-sm text-ink-700 hover:bg-ink-50 font-body"
+                className="px-3 py-2.5 rounded-lg text-sm text-white/80 hover:bg-white/10 hover:text-white font-body"
               >
                 Dashboard
               </Link>
               <button
                 onClick={handleLogout}
                 disabled={loggingOut}
-                className="px-3 py-2.5 rounded-lg text-sm text-left text-ink-700 hover:bg-ink-50 font-body disabled:opacity-50"
+                className="px-3 py-2.5 rounded-lg text-sm text-left text-white/80 hover:bg-white/10 hover:text-white font-body disabled:opacity-50"
               >
                 {loggingOut ? 'Signing out…' : 'Sign out'}
               </button>
@@ -139,14 +139,14 @@ export default function Navbar() {
               <Link
                 to="/login"
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-2.5 rounded-lg text-sm text-ink-700 hover:bg-ink-50 font-body"
+                className="px-3 py-2.5 rounded-lg text-sm text-white/80 hover:bg-white/10 hover:text-white font-body"
               >
                 Sign in
               </Link>
               <Link
                 to="/register"
                 onClick={() => setMenuOpen(false)}
-                className="btn-primary w-full justify-center mt-2"
+                className="mt-2 px-3 py-2.5 rounded-lg text-sm text-center bg-white text-[#16537e] font-medium hover:bg-[#d7e9f2] transition-colors"
               >
                 Get started
               </Link>

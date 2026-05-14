@@ -343,13 +343,13 @@ const YEARS        = [currentYear - 2, currentYear - 1, currentYear]
 
 function StatCard({ label, value, icon, accent }) {
   return (
-    <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-slate-200 transition-all duration-300 group">
-      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 ${accent || 'bg-slate-50'} group-hover:scale-105 transition-transform duration-300`}>
+    <div className="bg-white border border-[#b0d3e6] rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-[#80b3ba] transition-all duration-300 group">
+      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 ${accent || 'bg-[#d7e9f2]'} group-hover:scale-105 transition-transform duration-300`}>
         <span className="text-2xl">{icon}</span>
       </div>
       <div className="min-w-0">
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">{label}</p>
-        <p className="font-serif text-2xl font-bold text-slate-800 truncate">{value ?? '—'}</p>
+        <p className="text-xs font-semibold text-[#16537e]/60 uppercase tracking-wider mb-1">{label}</p>
+        <p className="font-serif text-2xl font-bold text-[#1e2a3a] truncate">{value ?? '—'}</p>
       </div>
     </div>
   )
@@ -360,10 +360,10 @@ function StatCard({ label, value, icon, accent }) {
 function RevenueCard({ label, value, highlight }) {
   return (
     <div className={`rounded-2xl p-6 border shadow-sm transition-all duration-300 ${highlight
-      ? 'bg-[#C5A059] border-[#C5A059] text-white shadow-[#C5A059]/20'
-      : 'bg-white border-slate-100 text-slate-800 hover:shadow-md'}`}>
-      <p className={`text-xs font-semibold uppercase tracking-wider mb-2 ${highlight ? 'text-white/80' : 'text-slate-400'}`}>{label}</p>
-      <p className={`font-serif text-3xl font-bold ${highlight ? 'text-white' : 'text-slate-900'}`}>
+      ? 'bg-[#16537e] border-[#16537e] text-white'
+      : 'bg-white border-[#b0d3e6] text-[#1e2a3a] hover:shadow-md'}`}>
+      <p className={`text-xs font-semibold uppercase tracking-wider mb-2 ${highlight ? 'text-white/70' : 'text-[#16537e]/60'}`}>{label}</p>
+      <p className={`font-serif text-3xl font-bold ${highlight ? 'text-white' : 'text-[#1e2a3a]'}`}>
         ₹{Number(value ?? 0).toLocaleString()}
       </p>
     </div>
@@ -416,14 +416,14 @@ function AdminDashboard({ user, navigate }) {
     }
   }
 
-  const SELECT_CLS = "w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-600 font-medium focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] transition-all cursor-pointer appearance-none pr-10"
+  const SELECT_CLS = "w-full sm:w-auto px-4 py-2.5 bg-white border border-[#b0d3e6] rounded-xl text-sm text-[#1e2a3a] font-medium focus:outline-none focus:ring-2 focus:ring-[#80b3ba]/30 focus:border-[#16537e] transition-all cursor-pointer appearance-none pr-10"
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-32">
         <div className="relative">
           <div className="w-12 h-12 border-4 border-slate-100 rounded-full" />
-          <div className="absolute top-0 left-0 w-12 h-12 border-4 border-[#C5A059] rounded-full border-t-transparent animate-spin" />
+          <div className="absolute top-0 left-0 w-12 h-12 border-4 border-[#16537e] rounded-full border-t-transparent animate-spin" />
         </div>
       </div>
     )
@@ -447,9 +447,9 @@ function AdminDashboard({ user, navigate }) {
 
   return (
     <div className="space-y-8 pb-8">
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/20">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse" />
-        <span className="font-mono text-xs font-semibold uppercase tracking-widest text-[#C5A059]">Administrator</span>
+      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#16537e]/10 border border-[#16537e]/20">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#16537e] animate-pulse" />
+        <span className="font-mono text-xs font-semibold uppercase tracking-widest text-[#16537e]">Administrator</span>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -470,7 +470,7 @@ function AdminDashboard({ user, navigate }) {
         </div>
       </div>
 
-      <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-[#b0d3e6] rounded-2xl shadow-sm overflow-hidden">
         <div className="p-6 border-b border-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="font-serif text-lg font-bold text-slate-800">Monthly Analytics</h2>
@@ -496,7 +496,7 @@ function AdminDashboard({ user, navigate }) {
             <button
               onClick={handleDownload}
               disabled={downloading}
-              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900 text-white font-medium text-sm rounded-xl hover:bg-[#C5A059] hover:shadow-lg hover:shadow-[#C5A059]/20 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#16537e] text-white font-medium text-sm rounded-xl hover:bg-[#124470] hover:shadow-lg transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -509,7 +509,7 @@ function AdminDashboard({ user, navigate }) {
         <div className="p-6 bg-slate-50/50">
           {mLoading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="w-8 h-8 border-2 border-slate-200 border-t-[#C5A059] rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-[#b0d3e6] border-t-[#16537e] rounded-full animate-spin" />
             </div>
           ) : monthlyData ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -542,7 +542,7 @@ function AdminDashboard({ user, navigate }) {
                     <div key={m.month} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
                       <div className="relative w-full flex items-end justify-center h-full px-1">
                         <div
-                          className="w-full max-w-[40px] bg-slate-100 rounded-t-lg group-hover:bg-[#C5A059] transition-all duration-500 ease-out relative"
+                          className="w-full max-w-[40px] bg-[#b0d3e6]/40 rounded-t-lg group-hover:bg-[#16537e] transition-all duration-500 ease-out relative"
                           style={{ height: `${pct}%` }}
                         >
                           <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] font-mono py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none shadow-lg">
@@ -550,7 +550,7 @@ function AdminDashboard({ user, navigate }) {
                           </div>
                         </div>
                       </div>
-                      <span className="font-mono text-[10px] text-slate-400 uppercase font-semibold group-hover:text-[#C5A059] transition-colors">{m.month?.slice(0, 3)}</span>
+                      <span className="font-mono text-[10px] text-[#16537e]/50 uppercase font-semibold group-hover:text-[#16537e] transition-colors">{m.month?.slice(0, 3)}</span>
                     </div>
                   )
                 })}
@@ -560,8 +560,8 @@ function AdminDashboard({ user, navigate }) {
         </div>
       </div>
 
-      <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-slate-50 flex items-center justify-between">
+      <div className="bg-white border border-[#b0d3e6] rounded-2xl shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-[#d7e9f2] flex items-center justify-between">
           <div>
             <h2 className="font-serif text-lg font-bold text-slate-800">Recent Orders</h2>
             <p className="text-slate-500 text-sm mt-1">Latest transactions across the platform.</p>
@@ -603,7 +603,7 @@ function AdminDashboard({ user, navigate }) {
                           {o.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 font-bold text-[#C5A059]">₹{Number(o.totalAmount ?? 0).toLocaleString()}</td>
+                      <td className="px-6 py-4 font-bold text-[#16537e]">₹{Number(o.totalAmount ?? 0).toLocaleString()}</td>
                       <td className="px-6 py-4 text-slate-500 text-xs font-mono">
                         {o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
                       </td>
@@ -622,7 +622,7 @@ function AdminDashboard({ user, navigate }) {
                     <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${STATUS_COLORS[o.status] || 'bg-slate-50 text-slate-600 border-slate-100'}`}>{o.status}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-[#C5A059] font-bold text-sm">₹{Number(o.totalAmount ?? 0).toLocaleString()}</p>
+                    <p className="text-[#16537e] font-bold text-sm">₹{Number(o.totalAmount ?? 0).toLocaleString()}</p>
                     <p className="text-slate-400 font-mono text-xs">
                       {o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '—'}
                     </p>
@@ -638,16 +638,16 @@ function AdminDashboard({ user, navigate }) {
         <p className="font-serif text-lg font-bold text-slate-800 mb-4">Quick Actions</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Link to="/admin/products"
-            className="block bg-white border border-slate-100 rounded-2xl p-6 hover:border-[#C5A059] hover:shadow-lg hover:shadow-[#C5A059]/10 transition-all duration-300 group">
+            className="block bg-white border border-[#b0d3e6] rounded-2xl p-6 hover:border-[#16537e] hover:shadow-lg hover:shadow-[#16537e]/10 transition-all duration-300 group">
             <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">◈</div>
-            <h3 className="font-serif font-bold text-slate-900 text-base mb-1">Manage Products</h3>
-            <p className="text-slate-500 text-xs leading-relaxed">Add, edit, delete, and restore fabric listings.</p>
+            <h3 className="font-serif font-bold text-[#1e2a3a] text-base mb-1">Manage Products</h3>
+            <p className="text-[#16537e]/60 text-xs leading-relaxed">Add, edit, delete, and restore fabric listings.</p>
           </Link>
           <Link to="/admin/orders"
-            className="block bg-white border border-slate-100 rounded-2xl p-6 hover:border-[#C5A059] hover:shadow-lg hover:shadow-[#C5A059]/10 transition-all duration-300 group">
+            className="block bg-white border border-[#b0d3e6] rounded-2xl p-6 hover:border-[#16537e] hover:shadow-lg hover:shadow-[#16537e]/10 transition-all duration-300 group">
             <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">◎</div>
-            <h3 className="font-serif font-bold text-slate-900 text-base mb-1">Manage Orders</h3>
-            <p className="text-slate-500 text-xs leading-relaxed">View all orders, update status, and download invoices.</p>
+            <h3 className="font-serif font-bold text-[#1e2a3a] text-base mb-1">Manage Orders</h3>
+            <p className="text-[#16537e]/60 text-xs leading-relaxed">View all orders, update status, and download invoices.</p>
           </Link>
         </div>
       </div>
@@ -660,31 +660,31 @@ function AdminDashboard({ user, navigate }) {
 function UserDashboard({ user }) {
   return (
     <div>
-      <div className="inline-flex items-center gap-2 bg-white border border-emerald-100 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 shadow-sm">
+      <div className="inline-flex items-center gap-2 bg-white border border-[#b0d3e6] rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 shadow-sm">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-600 font-semibold">Active Session</span>
+        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#16537e] font-semibold">Active Session</span>
       </div>
 
-      <p className="text-slate-500 text-sm mb-6 sm:mb-8">Explore our collection of premium fabrics.</p>
+      <p className="text-[#16537e]/60 text-sm mb-6 sm:mb-8">Explore our collection of premium fabrics.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <Link to="/products"
-          className="block bg-[#FBF8F3] border border-[#E8DFD0] rounded-2xl p-6 hover:border-[#C5A059] hover:shadow-lg hover:shadow-[#C5A059]/10 transition-all duration-300 group">
+          className="block bg-[#d7e9f2] border border-[#b0d3e6] rounded-2xl p-6 hover:border-[#16537e] hover:shadow-lg hover:shadow-[#16537e]/10 transition-all duration-300 group">
           <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">◎</div>
-          <h3 className="font-serif font-bold text-slate-900 text-base mb-1">Browse Products</h3>
-          <p className="text-slate-500 text-xs leading-relaxed">Explore our full catalogue of fabrics with search and category filters.</p>
+          <h3 className="font-serif font-bold text-[#1e2a3a] text-base mb-1">Browse Products</h3>
+          <p className="text-[#16537e]/60 text-xs leading-relaxed">Explore our full catalogue of fabrics with search and category filters.</p>
         </Link>
         <Link to="/orders"
-          className="block bg-white border border-slate-100 rounded-2xl p-6 hover:border-[#C5A059] hover:shadow-lg hover:shadow-[#C5A059]/10 transition-all duration-300 group">
+          className="block bg-white border border-[#b0d3e6] rounded-2xl p-6 hover:border-[#16537e] hover:shadow-lg hover:shadow-[#16537e]/10 transition-all duration-300 group">
           <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-200 inline-block">⬡</div>
-          <h3 className="font-serif font-bold text-slate-900 text-base mb-1">My Orders</h3>
-          <p className="text-slate-500 text-xs leading-relaxed">View your order history and download invoices.</p>
+          <h3 className="font-serif font-bold text-[#1e2a3a] text-base mb-1">My Orders</h3>
+          <p className="text-[#16537e]/60 text-xs leading-relaxed">View your order history and download invoices.</p>
         </Link>
       </div>
 
-      <div className="mt-6 sm:mt-8 bg-white border border-slate-100 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Account Details</h3>
-        <div className="flex flex-col gap-3 divide-y divide-slate-50">
+      <div className="mt-6 sm:mt-8 bg-white border border-[#b0d3e6] rounded-2xl p-6 shadow-sm">
+        <h3 className="text-xs font-bold text-[#16537e]/60 uppercase tracking-wider mb-4">Account Details</h3>
+        <div className="flex flex-col gap-3 divide-y divide-[#d7e9f2]">
           {user?.name  && <Detail label="Name"  value={user.name} />}
           {user?.email && <Detail label="Email" value={user.email} />}
           <Detail label="Auth" value="HTTP-only cookie · Secure" mono />
@@ -697,8 +697,8 @@ function UserDashboard({ user }) {
 function Detail({ label, value, mono }) {
   return (
     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pt-3 first:pt-0 gap-1 sm:gap-0">
-      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{label}</span>
-      <span className={`text-sm break-words ${mono ? 'font-mono text-slate-600' : 'text-slate-600'}`}>{value}</span>
+      <span className="text-xs font-bold text-[#16537e]/50 uppercase tracking-wider">{label}</span>
+      <span className={`text-sm break-words ${mono ? 'font-mono text-[#16537e]/70' : 'text-[#1e2a3a]'}`}>{value}</span>
     </div>
   )
 }
@@ -734,13 +734,13 @@ export default function DashboardPage() {
   return (
     <LayoutWrapper>
       {/* Header */}
-      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-slate-50 border-b border-slate-100">
+      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-[#d7e9f2] border-b border-[#b0d3e6]">
         <div className="flex items-center gap-3">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-1">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold mb-1">
               {isAdmin ? 'Admin Panel' : getGreeting()}
             </p>
-            <h1 className="font-serif text-2xl md:text-3xl font-bold text-slate-900">
+            <h1 className="font-serif text-2xl md:text-3xl font-bold text-[#1e2a3a]">
               {isAdmin ? `Welcome back, ${user?.name || 'Admin'}` : (user?.name || user?.email || 'Welcome')}
             </h1>
           </div>

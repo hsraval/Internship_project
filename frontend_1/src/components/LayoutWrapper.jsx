@@ -23,7 +23,7 @@ export default function LayoutWrapper({ children }) {
   }
 
   return (
-    <div className="flex h-screen bg-[#F8F9FA] overflow-hidden">
+    <div className="flex h-screen bg-[#d7e9f2] overflow-hidden">
       <UserSidebar 
         onLogout={handleLogout} 
         loggingOut={loggingOut} 

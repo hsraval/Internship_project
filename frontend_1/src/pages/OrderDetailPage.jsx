@@ -43,8 +43,8 @@ const formatMeasurements = (m) => {
   return filled;
 };
 
-const FIELD_LABEL = "text-[10px] font-mono uppercase tracking-widest text-[#6B5F50]/50 mb-1";
-const FIELD_VALUE = "text-[#6B5F50] font-medium text-sm";
+const FIELD_LABEL = "text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1";
+const FIELD_VALUE = "text-[#1e2a3a] font-medium text-sm";
 
 export default function OrderDetailPage() {
   const { id }   = useParams();
@@ -118,8 +118,8 @@ export default function OrderDetailPage() {
   // Loading
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
-        <p className="text-[#64748B]/50 text-sm font-mono animate-pulse">Loading orderâ¦</p>
+      <div className="min-h-screen bg-[#d7e9f2] flex items-center justify-center">
+        <p className="text-[#16537e]/40 text-sm font-mono animate-pulse">Loading order…</p>
       </div>
     );
   }
@@ -127,13 +127,13 @@ export default function OrderDetailPage() {
   // Error
   if (error) {
     return (
-      <div className="min-h-screen bg-[#F8F9FA] flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-[#d7e9f2] flex flex-col items-center justify-center gap-4">
         <p className="text-[#EF4444] text-sm font-mono">{error}</p>
         <button
           onClick={() => navigate(isAdmin ? "/admin/orders" : "/orders")}
-          className="text-[#64748B] underline text-sm"
+          className="text-[#16537e] underline text-sm"
         >
-          â Back to Orders
+          ← Back to Orders
         </button>
       </div>
     );
@@ -154,34 +154,28 @@ export default function OrderDetailPage() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
           <button
             onClick={() => navigate("/dashboard")}
-            className="group relative overflow-hidden bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-md sm:shadow-lg hover:shadow-lg sm:hover:shadow-xl transform hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 ease-out w-full sm:w-auto justify-start sm:justify-center"
+            className="group relative overflow-hidden bg-[#16537e] text-white text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-md hover:bg-[#124470] hover:shadow-lg transform hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 ease-out w-full sm:w-auto justify-start sm:justify-center"
           >
             <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7 7" />
             </svg>
             <span className="hidden sm:inline">Back to Dashboard</span>
-            {/* <span className="sm:hidden">Dashboard</span> */}
           </button>
           
           <div className="flex items-center gap-2 text-xs sm:text-sm">
             <button
               onClick={() => navigate(isAdmin ? "/admin/orders" : "/orders")}
-              className="text-[#6B5F50]/50 hover:text-[#6B5F50] font-mono flex items-center gap-1 transition-colors"
+              className="text-[#16537e]/50 hover:text-[#16537e] font-mono flex items-center gap-1 transition-colors"
             >
               {isAdmin ? "All Orders" : "My Orders"}
             </button>
-            <span className="text-[#6B5F50]/30">/</span>
-            {/* <span className="text-[#6B5F50] font-mono">#{id?.slice(-8)}</span> */}
+            <span className="text-[#16537e]/30">/</span>
           </div>
         </div>
 
         {/* Order Header Card */}
-        <div className="bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#CBD5E1] flex items-center justify-between">
-            {/* <div>
-              <p className={FIELD_LABEL}>Order ID</p>
-              <p className="font-mono text-[#333333] text-sm">{order?._id}</p>
-            </div> */}
+        <div className="bg-white border border-[#b0d3e6] rounded-2xl overflow-hidden">
+          <div className="px-6 py-4 border-b border-[#b0d3e6] flex items-center justify-between">
             <span className={`text-[10px] font-mono font-semibold px-3 py-1 rounded-full border uppercase tracking-wide ${badgeClass}`}>
               {status}
             </span>
@@ -189,35 +183,35 @@ export default function OrderDetailPage() {
 
           <div className="p-6 grid grid-cols-2 gap-5">
 
-            {/* Product â from items[0].name */}
+            {/* Product – from items[0].name */}
             <div>
               <p className={FIELD_LABEL}>Product</p>
-              <p className={FIELD_VALUE}>{firstItem?.name || "â"}
+              <p className={FIELD_VALUE}>{firstItem?.name || "—"}
                 {itemCount > 1 && (
                   <span className="text-[#0F172A]/40 text-xs ml-1">+{itemCount - 1} more</span>
                 )}
               </p>
             </div>
 
-            {/* Quantity â from items[0].quantity */}
+            {/* Quantity – from items[0].quantity */}
             <div>
               <p className={FIELD_LABEL}>Quantity</p>
-              <p className={FIELD_VALUE}>{firstItem?.quantity ?? "â"}</p>
+              <p className={FIELD_VALUE}>{firstItem?.quantity ?? "—"}</p>
             </div>
 
-            {/* Price per unit â from items[0].price */}
+            {/* Price per unit – from items[0].price */}
             <div>
               <p className={FIELD_LABEL}>Unit Price</p>
-              <p className={FIELD_VALUE}>₹{firstItem?.price ?? "â"}</p>
+              <p className={FIELD_VALUE}>₹{firstItem?.price ?? "—"}</p>
             </div>
 
-            {/* Total â from totalAmount */}
+            {/* Total – from totalAmount */}
             <div>
               <p className={FIELD_LABEL}>Total Amount</p>
-              <p className="text-[#C5A059] font-bold text-lg">₹{order?.totalAmount ?? "â"}</p>
+              <p className="text-[#16537e] font-bold text-lg">₹{order?.totalAmount ?? "—"}</p>
             </div>
 
-            {/* Stitching â { type: Boolean, instructions: String } */}
+            {/* Stitching – { type: Boolean, instructions: String } */}
             <div>
               <p className={FIELD_LABEL}>Stitching</p>
               <p className={FIELD_VALUE}>{order?.stitching?.type ? "Yes" : "No"}</p>
@@ -239,7 +233,7 @@ export default function OrderDetailPage() {
             {order?.stitching?.type && order?.stitching?.instructions && (
               <div className="col-span-2">
                 <p className={FIELD_LABEL}>Stitching Instructions</p>
-                <p className="text-[#64748B]/70 bg-[#94A3B8] rounded-lg px-3 py-2 text-sm border border-[#CBD5E1]">
+                <p className="text-[#1e2a3a]/70 bg-[#d7e9f2] rounded-lg px-3 py-2 text-sm border border-[#b0d3e6]">
                   {order.stitching.instructions}
                 </p>
               </div>
@@ -251,9 +245,9 @@ export default function OrderDetailPage() {
                 <p className={FIELD_LABEL}>Measurements (inches)</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-1">
                   {measurements.map(({ key, label }) => (
-                    <div key={key} className="bg-[#6B5F50]/5 border border-[#6B5F50]/10 rounded-lg px-3 py-2 text-center">
-                      <p className="text-[9px] font-mono uppercase tracking-widest text-[#6B5F50]/50">{label}</p>
-                      <p className="text-[#6B5F50] font-semibold text-sm">{order.measurements[key]}"</p>
+                    <div key={key} className="bg-[#16537e]/5 border border-[#16537e]/10 rounded-lg px-3 py-2 text-center">
+                      <p className="text-[9px] font-mono uppercase tracking-widest text-[#16537e]/50">{label}</p>
+                      <p className="text-[#16537e] font-semibold text-sm">{order.measurements[key]}"</p>
                     </div>
                   ))}
                 </div>
@@ -264,7 +258,7 @@ export default function OrderDetailPage() {
             {order?.address && (
               <div className="col-span-2">
                 <p className={FIELD_LABEL}>Delivery Address</p>
-                <p className="text-[#64748B]/70 bg-[#94A3B8] rounded-lg px-3 py-2 text-sm border border-[#CBD5E1]">
+                <p className="text-[#1e2a3a]/70 bg-[#d7e9f2] rounded-lg px-3 py-2 text-sm border border-[#b0d3e6]">
                   {formatAddress(order.address)}
                 </p>
               </div>
@@ -274,13 +268,13 @@ export default function OrderDetailPage() {
 
         {/* Admin: Status Update */}
         {isAdmin && (
-          <div className="bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl p-4 sm:p-6">
+          <div className="bg-white border border-[#b0d3e6] rounded-2xl p-4 sm:p-6">
             <p className={`${FIELD_LABEL} mb-3`}>Update Order Status</p>
             <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center flex-wrap">
               <select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value)}
-                className="w-full sm:w-auto bg-[#F8F9FA] border border-[#CBD5E1] text-[#333333] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#C5A059] transition-colors font-mono"
+                className="w-full sm:w-auto bg-[#d7e9f2] border border-[#b0d3e6] text-[#1e2a3a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#16537e] transition-colors font-mono"
               >
                 {ORDER_STATUSES.map((s) => (
                   <option key={s} value={s}>
@@ -292,7 +286,7 @@ export default function OrderDetailPage() {
                 <button
                   onClick={handleStatusUpdate}
                   disabled={updating || newStatus === order?.status}
-                  className="flex-1 sm:w-auto bg-[#C5A059] hover:bg-[#0F172A] disabled:opacity-40 text-[#FFFFFF] text-xs font-mono font-bold px-3 sm:px-5 py-2 rounded-lg transition-colors uppercase tracking-widest"
+                  className="flex-1 sm:w-auto bg-[#16537e] hover:bg-[#124470] disabled:opacity-40 text-white text-xs font-mono font-bold px-3 sm:px-5 py-2 rounded-lg transition-colors uppercase tracking-widest"
                 >
                   {updating ? "Saving" : "Update Status"}
                 </button>
@@ -318,7 +312,7 @@ export default function OrderDetailPage() {
 
         {/* Hint about bill */}
         {!bill && status !== "delivered" && (
-          <p className="text-[#64748B]/40 text-xs font-mono mt-3">
+          <p className="text-[#16537e]/40 text-xs font-mono mt-3">
             Bill is auto-generated when status is set to "Delivered".
           </p>
         )}

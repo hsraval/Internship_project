@@ -36,18 +36,18 @@ export default function App() {
               style: {
                 fontFamily: "'DM Sans', system-ui, sans-serif",
                 fontSize: '13px',
-                background: '#E8E0D0',
-                color: 'black',
-                border: '1px solid #6B5F50',
+                background: '#ffffff',
+                color: '#1e2a3a',
+                border: '1px solid #80b3ba',
                 borderRadius: '10px',
                 padding: '12px 16px',
-                boxShadow: '0 8px 32px rgba(107,95,80,0.2)',
+                boxShadow: '0 8px 32px rgba(22,83,126,0.15)',
               },
               success: {
-                iconTheme: { primary: '#6B5F50', secondary: '#E8E0D0' },
+                iconTheme: { primary: '#16a34a', secondary: '#ffffff' },
               },
               error: {
-                iconTheme: { primary: '#6B5F50', secondary: '#E8E0D0' },
+                iconTheme: { primary: '#dc2626', secondary: '#ffffff' },
               },
             }}
           />

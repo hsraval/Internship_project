@@ -92,14 +92,14 @@ export default function AdminOrdersPage() {
   return (
     <LayoutWrapper>
       {/* Header */}
-      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-slate-50 border-b border-slate-100">
+      <div className="px-4 md:px-8 py-4 md:py-6 flex-shrink-0 bg-[#d7e9f2] border-b border-[#b0d3e6]">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-0.5">Admin Dashboard</p>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-serif">All Orders</h1>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold mb-0.5">Admin Dashboard</p>
+            <h1 className="text-lg sm:text-xl font-bold text-[#1e2a3a] font-serif">All Orders</h1>
           </div>
           {totalItems > 0 && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#C5A059]/10 text-[#C5A059] text-xs font-bold rounded-full border border-[#C5A059]/20">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#16537e]/10 text-[#16537e] text-xs font-bold rounded-full border border-[#16537e]/20">
               {totalItems} orders
             </span>
           )}
@@ -107,31 +107,31 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="px-4 md:px-8 py-4 border-b border-slate-100 bg-white">
+      <div className="px-4 md:px-8 py-4 border-b border-[#b0d3e6] bg-white">
         {/* Mobile Dropdown */}
         <div className="sm:hidden relative status-dropdown" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="relative w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-2.5 sm:py-3 text-left bg-white border border-[#E2E8F0] rounded-xl shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] sm:text-sm transition-all hover:border-[#CBD5E1]"
+            className="relative w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-2.5 sm:py-3 text-left bg-white border border-[#b0d3e6] rounded-xl shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#80b3ba]/30 focus:border-[#16537e] sm:text-sm transition-all hover:border-[#80b3ba]"
           >
-            <span className="block truncate text-[#334155]">
+            <span className="block truncate text-[#1e2a3a]">
               {filter === 'all' ? 'All Orders' : filter.charAt(0).toUpperCase() + filter.slice(1)}
             </span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none">
-              <svg className="h-4 w-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-4 w-4 text-[#16537e]/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </span>
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute z-10 mt-2 w-full rounded-xl bg-white shadow-xl border border-[#E2E8F0] max-h-60 overflow-auto">
+            <div className="absolute z-10 mt-2 w-full rounded-xl bg-white shadow-xl border border-[#b0d3e6] max-h-60 overflow-auto">
               <div className="py-1">
                 <button
                   type="button"
                   onClick={() => { handleFilterChange('all'); setIsDropdownOpen(false) }}
-                  className="w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[#334155] hover:bg-[#F8FAFC] hover:text-[#C5A059] transition-colors"
+                  className="w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[#1e2a3a] hover:bg-[#d7e9f2] hover:text-[#16537e] transition-colors"
                 >
                   All Orders
                 </button>
@@ -140,7 +140,7 @@ export default function AdminOrdersPage() {
                     key={s}
                     type="button"
                     onClick={() => { handleFilterChange(s); setIsDropdownOpen(false) }}
-                    className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm transition-colors ${filter === s ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                    className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 text-sm transition-colors ${filter === s ? 'bg-[#16537e]/10 text-[#16537e] font-medium' : 'text-[#1e2a3a] hover:bg-[#d7e9f2]'}`}
                   >
                     {s.charAt(0).toUpperCase() + s.slice(1)}
                   </button>
@@ -157,8 +157,8 @@ export default function AdminOrdersPage() {
               onClick={() => handleFilterChange(s)}
               className={`text-xs font-mono px-4 py-2 rounded-xl capitalize transition-all duration-200 border whitespace-nowrap ${
                 filter === s
-                  ? 'bg-[#C5A059] text-white border-transparent shadow-md shadow-[#C5A059]/20 font-bold'
-                  : 'bg-white border-slate-200 text-slate-500 hover:border-[#C5A059]/40 hover:text-[#C5A059] hover:bg-slate-50'
+                  ? 'bg-[#16537e] text-white border-transparent shadow-md font-bold'
+                  : 'bg-white border-[#b0d3e6] text-[#16537e]/60 hover:border-[#80b3ba] hover:text-[#16537e] hover:bg-[#d7e9f2]'
               }`}
             >
               {s === 'all' ? 'All Orders' : s}
@@ -190,13 +190,13 @@ export default function AdminOrdersPage() {
 
         {/* Empty state */}
         {!loading && !error && filtered.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-24 bg-white rounded-2xl border border-dashed border-slate-200">
-            <div className="p-4 bg-slate-50 rounded-full mb-4">
-              <svg className="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex flex-col items-center justify-center py-24 bg-white rounded-2xl border border-dashed border-[#b0d3e6]">
+            <div className="p-4 bg-[#d7e9f2] rounded-full mb-4">
+              <svg className="w-8 h-8 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
               </svg>
             </div>
-            <p className="font-semibold text-slate-500">No orders found{filter !== 'all' ? ` for "${filter}"` : ''}</p>
+            <p className="font-semibold text-[#16537e]/60">No orders found{filter !== 'all' ? ` for "${filter}"` : ''}</p>
           </div>
         )}
 
@@ -215,12 +215,12 @@ export default function AdminOrdersPage() {
                 <div
                   key={order._id}
                   onClick={() => navigate(`/admin/orders/${order._id}`)}
-                  className="bg-white border border-slate-100 rounded-2xl p-5 hover:border-[#C5A059]/40 hover:shadow-lg hover:shadow-[#C5A059]/10 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer shadow-sm"
+                  className="bg-white border border-[#b0d3e6] rounded-2xl p-5 hover:border-[#80b3ba] hover:shadow-lg hover:shadow-[#16537e]/10 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer shadow-sm"
                 >
                   <div className="flex items-start justify-between gap-3 mb-4">
                     <div>
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mb-1">Order ID</p>
-                      <p className="text-slate-900 font-mono text-sm font-semibold">#{order._id?.slice(-8)}</p>
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Order ID</p>
+                      <p className="text-[#1e2a3a] font-mono text-sm font-semibold">#{order._id?.slice(-8)}</p>
                     </div>
                     <span className={`text-[10px] font-mono font-semibold px-3 py-1.5 rounded-full border uppercase tracking-wide ${badgeClass} whitespace-nowrap`}>
                       {status}
@@ -231,25 +231,25 @@ export default function AdminOrdersPage() {
 
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="col-span-2">
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mb-1">Product</p>
-                      <p className="font-semibold text-slate-800">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Product</p>
+                      <p className="font-semibold text-[#1e2a3a]">
                         {firstItem?.name || '—'}
                         {itemCount > 1 && (
-                          <span className="inline-flex items-center px-2 py-0.5 bg-[#C5A059]/10 text-[#C5A059] text-xs rounded-full ml-2">+{itemCount - 1}</span>
+                          <span className="inline-flex items-center px-2 py-0.5 bg-[#16537e]/10 text-[#16537e] text-xs rounded-full ml-2">+{itemCount - 1}</span>
                         )}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mb-1">Total</p>
-                      <p className="font-bold text-[#C5A059] text-base">₹{total}</p>
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Total</p>
+                      <p className="font-bold text-[#16537e] text-base">₹{total}</p>
                     </div>
                     <div>
                       <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mb-1">Stitching</p>
                       <p className={`font-semibold text-xs px-2 py-1 rounded-lg inline-block ${stitching === 'Yes' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-50 text-slate-500'}`}>{stitching}</p>
                     </div>
                     <div className="col-span-2">
-                      <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mb-1">Date</p>
-                      <p className="font-semibold text-slate-700">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-[#16537e]/50 mb-1">Date</p>
+                      <p className="font-semibold text-[#1e2a3a]">
                         {order?.createdAt
                           ? new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
                           : '—'}
@@ -275,7 +275,7 @@ export default function AdminOrdersPage() {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="p-2 rounded-lg border border-[#E2E8F0] bg-white text-[#64748B] hover:border-[#C5A059] hover:text-[#C5A059] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              className="p-2 rounded-lg border border-[#b0d3e6] bg-white text-[#16537e]/60 hover:border-[#16537e] hover:text-[#16537e] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -289,8 +289,8 @@ export default function AdminOrdersPage() {
                   onClick={() => setPage(i + 1)}
                   className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg text-sm font-medium transition-all ${
                     page === i + 1
-                      ? 'bg-[#0F172A] text-white shadow-md'
-                      : 'bg-white text-[#64748B] hover:bg-[#F1F5F9] border border-[#E2E8F0]'
+                      ? 'bg-[#16537e] text-white shadow-md'
+                      : 'bg-white text-[#16537e]/60 hover:bg-[#d7e9f2] border border-[#b0d3e6]'
                   }`}
                 >
                   {i + 1}
@@ -301,7 +301,7 @@ export default function AdminOrdersPage() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="p-2 rounded-lg border border-[#E2E8F0] bg-white text-[#64748B] hover:border-[#C5A059] hover:text-[#C5A059] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              className="p-2 rounded-lg border border-[#b0d3e6] bg-white text-[#16537e]/60 hover:border-[#16537e] hover:text-[#16537e] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

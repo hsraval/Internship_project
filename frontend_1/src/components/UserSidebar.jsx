@@ -80,17 +80,17 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
       {/* Mobile Backdrop */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-50 transition-opacity md:hidden"
+          className="fixed inset-0 bg-[#16537e]/20 backdrop-blur-sm z-50 transition-opacity md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Mobile Icon Rail */}
-      <div className="md:hidden fixed inset-y-0 left-0 z-30 w-16 bg-white border-r border-slate-100 flex flex-col items-center py-4 gap-2">
+      <div className="md:hidden fixed inset-y-0 left-0 z-30 w-16 bg-[#16537e] border-r border-[#124470] flex flex-col items-center py-4 gap-2">
         {/* Hamburger */}
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-all mb-2"
+          className="w-10 h-10 flex items-center justify-center rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition-all mb-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -107,7 +107,7 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
                 to={l.href}
                 onClick={() => setIsSidebarOpen(false)}
                 className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-200 ${
-                  active ? 'bg-[#C5A059] text-white shadow-md shadow-[#C5A059]/20' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700'
+                  active ? 'bg-white text-[#16537e] shadow-md' : 'text-white/60 hover:bg-white/10 hover:text-white'
                 }`}
                 title={l.label}
               >
@@ -121,20 +121,20 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
         <div className="relative mt-auto" ref={profileRef}>
           <button
             onClick={() => setProfileOpen((p) => !p)}
-            className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C5A059] to-[#E0C796] flex items-center justify-center text-white font-serif font-bold text-base shadow-sm hover:shadow-md transition-all"
+            className="w-10 h-10 rounded-full bg-[#80b3ba] flex items-center justify-center text-[#16537e] font-serif font-bold text-base shadow-sm hover:shadow-md transition-all"
           >
             {initial}
           </button>
           {profileOpen && (
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-50">
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-56 bg-white rounded-2xl shadow-xl border border-[#b0d3e6] p-4 z-50">
               <div className="flex flex-col items-center gap-2 text-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C5A059] to-[#E0C796] flex items-center justify-center text-white font-serif font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-[#16537e] flex items-center justify-center text-white font-serif font-bold text-lg">
                   {initial}
                 </div>
-                <p className="font-semibold text-slate-900 text-sm leading-tight">{user?.name || 'User'}</p>
-                {user?.email && <p className="text-xs text-slate-500 break-all">{user.email}</p>}
-                <span className="mt-1 inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#C5A059]/10 text-[#C5A059] text-[10px] font-bold uppercase tracking-widest rounded-full border border-[#C5A059]/20">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+                <p className="font-semibold text-[#1e2a3a] text-sm leading-tight">{user?.name || 'User'}</p>
+                {user?.email && <p className="text-xs text-[#16537e]/60 break-all">{user.email}</p>}
+                <span className="mt-1 inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#16537e]/10 text-[#16537e] text-[10px] font-bold uppercase tracking-widest rounded-full border border-[#16537e]/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#16537e]" />
                   {user?.role || 'member'}
                 </span>
               </div>
@@ -146,7 +146,7 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
         <button
           onClick={onLogout}
           disabled={loggingOut}
-          className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all mt-1 disabled:opacity-50"
+          className="w-10 h-10 flex items-center justify-center rounded-xl text-white/60 hover:bg-red-500/20 hover:text-red-300 transition-all mt-1 disabled:opacity-50"
           title="Logout"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,19 +155,19 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
         </button>
       </div>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile Sidebar (full drawer) */}
       <aside className={`
-        md:hidden fixed inset-y-0 left-0 z-[60] w-72 bg-white border-r border-slate-100 shadow-2xl flex flex-col 
+        md:hidden fixed inset-y-0 left-0 z-[60] w-72 bg-[#16537e] border-r border-[#124470] shadow-2xl flex flex-col 
         transform transition-transform duration-300 ease-in-out
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Mobile Brand Header */}
-        <div className="h-20 flex items-center px-8 border-b border-slate-50">
-          <Link to="/" className="font-serif text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-            <span className="w-2 h-8 bg-[#C5A059] rounded-full"></span>
-            Larkinse<span className="text-[#C5A059]">MensWear</span>
+        <div className="h-20 flex items-center px-8 border-b border-white/10">
+          <Link to="/" className="font-serif text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <span className="w-2 h-8 bg-[#80b3ba] rounded-full"></span>
+            Larkinse<span className="text-[#80b3ba]">MensWear</span>
           </Link>
-          <button className="md:hidden ml-auto text-slate-400 hover:text-slate-600" onClick={() => setIsSidebarOpen(false)}>
+          <button className="md:hidden ml-auto text-white/60 hover:text-white" onClick={() => setIsSidebarOpen(false)}>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -187,35 +187,35 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
                   group flex items-center rounded-xl text-sm font-medium transition-all duration-200
                   gap-3 px-4 py-3.5
                   ${active
-                    ? 'bg-[#C5A059] text-white shadow-md shadow-[#C5A059]/20'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-white text-[#16537e] shadow-sm'
+                    : 'text-white/70 hover:bg-white/10 hover:text-white'
                   }
                 `}
               >
-                <span className={active ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}>
+                <span className={active ? 'text-[#16537e]' : 'text-white/50 group-hover:text-white'}>
                   {l.icon}
                 </span>
                 {l.label}
-                {active && <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full" />}
+                {active && <span className="ml-auto w-1.5 h-1.5 bg-[#16537e] rounded-full" />}
               </Link>
             )
           })}
         </nav>
 
         {/* Mobile Profile Section */}
-        <div className="p-4 border-t border-slate-50">
+        <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C5A059] to-[#E0C796] flex items-center justify-center text-white font-serif font-bold text-base">
+            <div className="w-10 h-10 rounded-full bg-[#80b3ba] flex items-center justify-center text-[#16537e] font-serif font-bold text-base">
               {initial}
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-slate-900 text-sm truncate">{user?.name || 'User'}</p>
-              <p className="text-xs text-slate-500 truncate">{user?.email || ''}</p>
+              <p className="font-semibold text-white text-sm truncate">{user?.name || 'User'}</p>
+              <p className="text-xs text-white/50 truncate">{user?.email || ''}</p>
             </div>
             <button
               onClick={onLogout}
               disabled={loggingOut}
-              className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all disabled:opacity-50"
+              className="w-10 h-10 flex items-center justify-center rounded-xl text-white/60 hover:bg-red-500/20 hover:text-red-300 transition-all disabled:opacity-50"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -227,28 +227,28 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
 
       {/* Desktop Sidebar */}
       <aside className={`
-        hidden md:flex flex-col h-screen bg-white border-r border-slate-100
+        hidden md:flex flex-col h-screen bg-[#16537e] border-r border-[#124470]
         transition-all duration-300 ease-in-out flex-shrink-0 relative
         ${collapsed ? 'w-[68px]' : 'w-72'}
       `}>
 
         {/* Desktop Brand + Collapse Button */}
-        <div className={`h-20 flex items-center border-b border-slate-50 flex-shrink-0 ${collapsed ? 'justify-center px-0' : 'px-4'}`}>
+        <div className={`h-20 flex items-center border-b border-white/10 flex-shrink-0 ${collapsed ? 'justify-center px-0' : 'px-4'}`}>
           {collapsed ? (
-            <button onClick={() => setCollapsed(false)} className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-all" title="Expand sidebar">
+            <button onClick={() => setCollapsed(false)} className="w-10 h-10 flex items-center justify-center rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition-all" title="Expand sidebar">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           ) : (
             <>
-              <Link to="/" className="font-serif text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-                <span className="w-2 h-8 bg-[#C5A059] rounded-full"></span>
-                Larkinse<span className="text-[#C5A059]">MensWear</span>
+              <Link to="/" className="font-serif text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                <span className="w-2 h-8 bg-[#80b3ba] rounded-full"></span>
+                Larkinse<span className="text-[#80b3ba]">MensWear</span>
               </Link>
               <button 
                 onClick={() => setCollapsed(true)} 
-                className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-all flex-shrink-0"
+                className="w-9 h-9 flex items-center justify-center rounded-xl text-white/40 hover:bg-white/10 hover:text-white transition-all flex-shrink-0"
                 title="Collapse sidebar"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,18 +273,18 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
                   group flex items-center rounded-xl text-sm font-medium transition-all duration-200
                   ${collapsed ? 'justify-center w-10 h-10 mx-auto' : 'gap-3 px-4 py-3.5'}
                   ${active
-                    ? 'bg-[#C5A059] text-white shadow-md shadow-[#C5A059]/20'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-white text-[#16537e] shadow-sm'
+                    : 'text-white/70 hover:bg-white/10 hover:text-white'
                   }
                 `}
               >
-                <span className={active ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}>
+                <span className={active ? 'text-[#16537e]' : 'text-white/50 group-hover:text-white'}>
                   {l.icon}
                 </span>
                 {!collapsed && (
                   <>
                     {l.label}
-                    {active && <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full" />}
+                    {active && <span className="ml-auto w-1.5 h-1.5 bg-[#16537e] rounded-full" />}
                   </>
                 )}
               </Link>
@@ -293,40 +293,40 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
         </nav>
 
         {/* Bottom: Profile Avatar + Logout */}
-        <div className={`p-4 border-t border-slate-50 ${collapsed ? 'flex flex-col items-center gap-2' : 'flex items-center gap-3'}`}>
+        <div className={`p-4 border-t border-white/10 ${collapsed ? 'flex flex-col items-center gap-2' : 'flex items-center gap-3'}`}>
           {/* Profile Avatar with Popover */}
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setProfileOpen((p) => !p)}
-              className="relative w-10 h-10 rounded-full bg-gradient-to-br from-[#C5A059] to-[#E0C796] flex items-center justify-center text-white font-serif font-bold text-base shadow-sm hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-[#C5A059]/40"
+              className="relative w-10 h-10 rounded-full bg-[#80b3ba] flex items-center justify-center text-[#16537e] font-serif font-bold text-base shadow-sm hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-white/40"
               title="Profile"
             >
               {initial}
               {/* Online dot */}
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border-2 border-white rounded-full" />
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border-2 border-[#16537e] rounded-full" />
             </button>
 
             {/* Profile Popover */}
             {profileOpen && (
-              <div className="absolute bottom-14 left-0 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-5 z-50 animate-in">
+              <div className="absolute bottom-14 left-0 w-64 bg-white rounded-2xl shadow-xl border border-[#b0d3e6] p-5 z-50 animate-in">
                 {/* Arrow */}
-                <div className="absolute -bottom-2 left-5 w-4 h-4 bg-white border-b border-r border-slate-100 rotate-45 rounded-sm" />
+                <div className="absolute -bottom-2 left-5 w-4 h-4 bg-white border-b border-r border-[#b0d3e6] rotate-45 rounded-sm" />
 
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C5A059] to-[#E0C796] flex items-center justify-center text-white font-serif font-bold text-lg flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-[#16537e] flex items-center justify-center text-white font-serif font-bold text-lg flex-shrink-0">
                     {initial}
                   </div>
                   <div className="overflow-hidden">
-                    <p className="font-semibold text-slate-900 text-sm truncate">{user?.name || 'User'}</p>
+                    <p className="font-semibold text-[#1e2a3a] text-sm truncate">{user?.name || 'User'}</p>
                     {user?.email && (
-                      <p className="text-xs text-slate-500 truncate mt-0.5">{user.email}</p>
+                      <p className="text-xs text-[#16537e]/60 truncate mt-0.5">{user.email}</p>
                     )}
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-50">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#C5A059]/10 text-[#C5A059] text-[10px] font-bold uppercase tracking-widest rounded-full border border-[#C5A059]/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse" />
+                <div className="pt-3 border-t border-[#d7e9f2]">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#16537e]/10 text-[#16537e] text-[10px] font-bold uppercase tracking-widest rounded-full border border-[#16537e]/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#16537e] animate-pulse" />
                     {user?.role || 'member'}
                   </span>
                 </div>
@@ -339,7 +339,7 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
             <button
               onClick={onLogout}
               disabled={loggingOut}
-              className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all disabled:opacity-50"
+              className="w-10 h-10 flex items-center justify-center rounded-xl text-white/60 hover:bg-red-500/20 hover:text-red-300 transition-all disabled:opacity-50"
               title="Logout"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -350,7 +350,7 @@ export default function UserSidebar({ onLogout, loggingOut, onCollapsedChange })
             <button
               onClick={onLogout}
               disabled={loggingOut}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-red-300 hover:bg-red-500/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

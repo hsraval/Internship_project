@@ -55,8 +55,8 @@ export default function WishlistButton({ productId, initialWishlisted = false, c
         w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center
         border transition-all duration-200 disabled:opacity-50
         ${wishlisted
-          ? 'bg-[#C5A059] border-[#C5A059] text-white hover:bg-[#b08d47]'
-          : 'bg-white/80 border-[#CBD5E1] text-[#64748B] hover:border-[#C5A059] hover:text-[#C5A059]'
+          ? 'bg-[#16537e] border-[#16537e] text-white hover:bg-[#124470]'
+          : 'bg-white/80 border-[#b0d3e6] text-[#80b3ba] hover:border-[#16537e] hover:text-[#16537e]'
         }
         ${className}
       `}

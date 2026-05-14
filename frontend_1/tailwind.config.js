@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       screens: {
@@ -15,6 +16,21 @@ export default {
         mono: ['"DM Mono"', 'monospace'],
       },
       colors: {
+        // ─── New Brand Palette ───────────────────────────────
+        brand: {
+          50:  '#eef5fa',
+          100: '#d7e9f2',   // soft background
+          200: '#b0d3e6',
+          300: '#80b3ba',   // soft accent blue
+          400: '#5a95a3',
+          500: '#3a7a8e',
+          600: '#16537e',   // primary dark blue
+          700: '#124470',
+          800: '#0e3560',
+          900: '#0a2650',
+          950: '#061a38',
+        },
+        // ─── Legacy ink tokens (kept for backward compat) ────
         ink: {
           50:  '#f5f3ef',
           100: '#e8e3d8',
@@ -27,11 +43,6 @@ export default {
           800: '#362d22',
           900: '#1e1912',
           950: '#110e09',
-        },
-        gold: {
-          400: '#d4a843',
-          500: '#c49a2e',
-          600: '#a07e20',
         },
         cream: '#faf7f2',
         parchment: '#f0ebe0',
@@ -56,9 +67,10 @@ export default {
         },
       },
       boxShadow: {
-        'card': '0 1px 3px rgba(30,25,18,0.08), 0 8px 32px rgba(30,25,18,0.06)',
-        'card-hover': '0 4px 12px rgba(30,25,18,0.12), 0 16px 48px rgba(30,25,18,0.10)',
-        'inset-top': 'inset 0 2px 4px rgba(30,25,18,0.06)',
+        'card': '0 1px 3px rgba(22,83,126,0.08), 0 8px 32px rgba(22,83,126,0.06)',
+        'card-hover': '0 4px 12px rgba(22,83,126,0.14), 0 16px 48px rgba(22,83,126,0.10)',
+        'inset-top': 'inset 0 2px 4px rgba(22,83,126,0.06)',
+        'brand-glow': '0 0 0 3px rgba(128,179,186,0.35)',
       },
     },
   },

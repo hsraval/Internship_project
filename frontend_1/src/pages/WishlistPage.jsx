@@ -75,13 +75,13 @@ export default function WishlistPage() {
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
-        <header className="bg-white border-b border-slate-100 px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 sticky top-0 z-30 shadow-sm">
+        <header className="bg-[#16537e] border-b border-[#124470] px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 sticky top-0 z-30 shadow-sm">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-0.5">User Dashboard</p>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-serif">Wishlist</h1>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-white/60 font-semibold mb-0.5">User Dashboard</p>
+            <h1 className="text-lg sm:text-xl font-bold text-white font-serif">Wishlist</h1>
           </div>
           {items.length > 0 && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#C5A059]/10 text-[#C5A059] text-xs font-bold rounded-full border border-[#C5A059]/20">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/20 text-white text-xs font-bold rounded-full border border-white/30">
               {items.length} items
             </span>
           )}
@@ -93,8 +93,8 @@ export default function WishlistPage() {
           {loading && (
             <div className="flex items-center justify-center py-20 sm:py-32">
               <div className="relative w-8 h-8 sm:w-10 sm:h-10">
-                <div className="absolute inset-0 border-2 border-[#CBD5E1]/20 rounded-full" />
-                <div className="absolute inset-0 border-2 border-t-[#C5A059] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin" />
+                <div className="absolute inset-0 border-2 border-[#b0d3e6]/20 rounded-full" />
+                <div className="absolute inset-0 border-2 border-t-[#16537e] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin" />
               </div>
             </div>
           )}
@@ -108,17 +108,17 @@ export default function WishlistPage() {
 
         {/* Empty state */}
         {!loading && !error && items.length === 0 && (
-          <div className="text-center py-16 sm:py-24 lg:py-32 border border-dashed border-[#CBD5E1] rounded-2xl bg-[#FFFFFF] mx-0">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full bg-[#F8F9FA] border border-[#CBD5E1] flex items-center justify-center mx-auto mb-4 sm:mb-5">
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-[#CBD5E1]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+          <div className="text-center py-16 sm:py-24 lg:py-32 border border-dashed border-[#b0d3e6] rounded-2xl bg-white mx-0">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full bg-[#d7e9f2] border border-[#b0d3e6] flex items-center justify-center mx-auto mb-4 sm:mb-5">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-[#80b3ba]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
             </div>
-            <p className="font-mono text-xs sm:text-sm uppercase tracking-widest text-[#64748B] mb-2 px-4">No items in wishlist</p>
-            <p className="text-[#64748B]/60 text-xs sm:text-sm mb-4 sm:mb-6 px-4 max-w-md mx-auto">Save fabrics you love to find them easily later.</p>
+            <p className="font-mono text-xs sm:text-sm uppercase tracking-widest text-[#16537e]/60 mb-2 px-4">No items in wishlist</p>
+            <p className="text-[#16537e]/50 text-xs sm:text-sm mb-4 sm:mb-6 px-4 max-w-md mx-auto">Save fabrics you love to find them easily later.</p>
             <Link
               to="/products"
-              className="inline-block px-4 sm:px-6 py-2 sm:py-2.5 bg-[#0F172A] text-[#FFFFFF] font-mono text-xs uppercase tracking-widest rounded-lg hover:bg-[#C5A059] transition-all duration-300"
+              className="inline-block px-4 sm:px-6 py-2 sm:py-2.5 bg-[#16537e] text-white font-mono text-xs uppercase tracking-widest rounded-lg hover:bg-[#124470] transition-all duration-300"
             >
               Browse Products
             </Link>
@@ -137,7 +137,7 @@ export default function WishlistPage() {
                 return (
                   <div
                     key={product._id}
-                    className="group bg-[#FFFFFF] border border-[#CBD5E1]/30 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(197,160,89,0.2)] hover:-translate-y-0.5"
+                    className="group bg-white border border-[#b0d3e6]/40 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(22,83,126,0.18)] hover:-translate-y-0.5"
                   >
                     {/* Image */}
                     <div className="relative h-52 sm:h-60 lg:h-72 overflow-hidden bg-[#F8F9FA]">
@@ -157,7 +157,7 @@ export default function WishlistPage() {
 
                       {/* Category badge */}
                       {product.category?.name && (
-                        <span className="absolute top-2 sm:top-3 left-2 sm:left-3 text-[8px] sm:text-[9px] font-mono uppercase tracking-[0.15em] sm:tracking-[0.2em] bg-[#0F172A]/70 text-white rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1">
+                        <span className="absolute top-2 sm:top-3 left-2 sm:left-3 text-[8px] sm:text-[9px] font-mono uppercase tracking-[0.15em] sm:tracking-[0.2em] bg-[#16537e]/80 text-white rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1">
                           {product.category.name}
                         </span>
                       )}
@@ -166,7 +166,7 @@ export default function WishlistPage() {
                       <button
                         onClick={() => handleRemove(product._id)}
                         title="Remove from wishlist"
-                        className="absolute top-2 sm:top-3 right-2 sm:right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#C5A059] text-white flex items-center justify-center hover:bg-[#b08d47] transition-colors shadow"
+                        className="absolute top-2 sm:top-3 right-2 sm:right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#16537e] text-white flex items-center justify-center hover:bg-[#124470] transition-colors shadow"
                       >
                         <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -179,15 +179,15 @@ export default function WishlistPage() {
                       <h3 className="font-serif font-semibold text-[#0F172A] text-sm sm:text-base leading-snug mb-1 line-clamp-2">
                         {product.name}
                       </h3>
-                      <p className="text-[#C5A059] text-base sm:text-lg font-light mb-3 sm:mb-4">
+                      <p className="text-[#16537e] text-base sm:text-lg font-light mb-3 sm:mb-4">
                         ₹{Number(product.pricePerMeter).toLocaleString()}
-                        <span className="text-xs text-[#64748B] ml-1 font-normal">/ meter</span>
+                        <span className="text-xs text-[#16537e]/50 ml-1 font-normal">/ meter</span>
                       </p>
 
                       <div className="mt-auto">
                         <button
                           onClick={() => handleOrder(product._id)}
-                          className="w-full py-2 sm:py-2.5 bg-[#0F172A] text-[#FFFFFF] font-mono text-xs uppercase tracking-widest rounded-lg hover:bg-[#C5A059] transition-all duration-300"
+                          className="w-full py-2 sm:py-2.5 bg-[#16537e] text-white font-mono text-xs uppercase tracking-widest rounded-lg hover:bg-[#124470] transition-all duration-300"
                         >
                           Order
                         </button>
@@ -204,17 +204,17 @@ export default function WishlistPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="w-full sm:w-auto px-4 sm:px-5 py-2 border border-[#CBD5E1] text-[#64748B] font-mono text-xs uppercase tracking-widest rounded-lg hover:border-[#C5A059] hover:text-[#C5A059] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  className="w-full sm:w-auto px-4 sm:px-5 py-2 border border-[#b0d3e6] text-[#16537e]/60 font-mono text-xs uppercase tracking-widest rounded-lg hover:border-[#16537e] hover:text-[#16537e] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 >
                   ← Prev
                 </button>
-                <span className="font-mono text-xs text-[#64748B] uppercase tracking-widest px-2">
+                <span className="font-mono text-xs text-[#16537e]/60 uppercase tracking-widest px-2">
                   {page} / {totalPages}
                 </span>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="w-full sm:w-auto px-4 sm:px-5 py-2 border border-[#CBD5E1] text-[#64748B] font-mono text-xs uppercase tracking-widest rounded-lg hover:border-[#C5A059] hover:text-[#C5A059] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  className="w-full sm:w-auto px-4 sm:px-5 py-2 border border-[#b0d3e6] text-[#16537e]/60 font-mono text-xs uppercase tracking-widest rounded-lg hover:border-[#16537e] hover:text-[#16537e] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 >
                   Next →
                 </button>

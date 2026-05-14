@@ -46,14 +46,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center px-4 py-24">
+    <div className="min-h-screen bg-[#d7e9f2] flex items-center justify-center px-4 py-24">
       <div className="w-full max-w-md animate-fade-up">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="font-display text-2xl font-semibold text-[#0F172A] hover:text-[#333333] transition-colors">
+          <Link to="/" className="font-display text-2xl font-semibold text-[#16537e] hover:text-[#124470] transition-colors">
             Larkinse
           </Link>
-          <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mt-3">Create Account</p>
+          <p className="font-mono text-xs text-[#80b3ba] uppercase tracking-widest mt-3">Create Account</p>
         </div>
 
         <div className="auth-card">
@@ -135,17 +135,17 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-ink-100 text-center">
-            <p className="text-sm font-body text-ink-500">
+          <div className="mt-6 pt-6 border-t border-[#b0d3e6] text-center">
+            <p className="text-sm font-body text-[#16537e]/70">
               Already have an account?{' '}
-              <Link to="/login" className="text-ink-900 font-medium hover:underline underline-offset-2">
+              <Link to="/login" className="text-[#16537e] font-medium hover:underline underline-offset-2">
                 Sign in
               </Link>
             </p>
           </div>
         </div>
 
-        <p className="text-center text-xs font-body text-ink-300 mt-6 px-4">
+        <p className="text-center text-xs font-body text-[#80b3ba] mt-6 px-4">
           By creating an account you agree to our Terms of Service and Privacy Policy.
         </p>
       </div>

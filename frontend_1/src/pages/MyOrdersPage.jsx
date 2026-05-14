@@ -29,7 +29,7 @@ export default function MyOrdersPage() {
             <div className="flex items-center gap-3 mb-2 sm:mb-0">
               <button
                 onClick={() => navigate("/dashboard")}
-                className="group relative overflow-hidden bg-gradient-to-r from-[#C5A059] to-[#0F172A] text-white text-sm font-medium flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-md sm:shadow-lg hover:shadow-lg sm:hover:shadow-xl transform hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 ease-out"
+                className="group relative overflow-hidden bg-[#16537e] text-white text-sm font-medium flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-md hover:bg-[#124470] hover:shadow-lg transform hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 ease-out"
               >
                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7 7" />
@@ -40,31 +40,31 @@ export default function MyOrdersPage() {
             </div>
             
             <div className="text-center sm:text-left">
-              <p className="text-xs uppercase tracking-widest text-[#C5A059] mb-1">My Orders</p>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#0F172A]">Order History</h1>
+              <p className="text-xs uppercase tracking-widest text-[#80b3ba] mb-1">My Orders</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#1e2a3a]">Order History</h1>
             </div>
           </div>
 
           {loading && (
             <div className="space-y-4">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="h-36 bg-[#94A3B8] rounded-xl animate-pulse" />
+                <div key={i} className="h-36 bg-[#b0d3e6]/40 rounded-xl animate-pulse" />
               ))}
             </div>
           )}
 
           {error && (
-            <div className="bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#EF4444] text-sm px-4 py-3 rounded-lg">
+            <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">
               {error}
             </div>
           )}
 
           {!loading && !error && orders.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-[#64748B] text-sm">No orders yet.</p>
+              <p className="text-[#16537e]/60 text-sm">No orders yet.</p>
               <button
                 onClick={() => navigate("/products")}
-                className="mt-4 text-[#C5A059] hover:text-[#0F172A] text-sm underline"
+                className="mt-4 text-[#16537e] hover:text-[#124470] text-sm underline"
               >
                 Browse Products →
               </button>
