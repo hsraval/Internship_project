@@ -12,6 +12,7 @@ const userRouter = require('./routes/user.router');
 const wishlistRouter=require('./routes/wishlist.router');
 const billRouter = require('./routes/bill.router')
 const adminRouter = require("./routes/dashboard.router");
+const paymentRouter = require("./routes/payment.router");
 
 connection()
 
@@ -34,6 +35,7 @@ app.use('/api/order',orderRouter);
 app.use('/api/wishlist',wishlistRouter);
 app.use('/api/bill',billRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/payment", paymentRouter);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });

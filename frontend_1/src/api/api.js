@@ -134,4 +134,13 @@ export const getDashboardStats    = ()             => api.get('/admin/dashboard'
 export const getMonthlyRevenue    = (month, year)  => api.get(`/admin/revenue?month=${month}&year=${year}`)
 export const downloadRevenueReport= (month, year)  => api.get(`/admin/revenue/download?month=${month}&year=${year}`, { responseType: 'blob' })
 
+// Creates a Razorpay order on the backend for the given bill
+export const createPaymentOrder = (billId) =>
+  api.post('/payment/create-order', { billId });
+ 
+// Verifies Razorpay payment signature on the backend
+// data = { razorpay_order_id, razorpay_payment_id, razorpay_signature, billId }
+export const verifyPayment = (data) =>
+  api.post('/payment/verify', data);
+
 export default api
