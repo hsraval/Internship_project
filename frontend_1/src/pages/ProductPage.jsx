@@ -103,51 +103,52 @@ function ProductCard({ product, onShowDetails, onOrder }) {
   const wishlisted = isInWishlist(product._id)
   
   return (
-    <div className="bg-white border border-[#b0d3e6]/50 rounded-2xl overflow-hidden group hover:border-[#80b3ba] hover:shadow-lg hover:shadow-[#16537e]/10 transition-all duration-300 flex flex-col hover:-translate-y-1">
-      <div className="relative h-48 bg-[#f4f9fb] flex items-center justify-center overflow-hidden">
+    <div className="bg-white border border-[#b0d3e6]/50 rounded-2xl overflow-hidden group hover:border-[#80b3ba] hover:shadow-xl hover:shadow-[#16537e]/15 transition-all duration-300 flex flex-col hover:-translate-y-1 relative">
+      <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#16537e] via-[#80b3ba] to-[#d7e9f2] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+      <div className="relative h-32 sm:h-48 bg-[#f4f9fb] flex items-center justify-center overflow-hidden">
         {image ? (
           <img src={image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
-          <svg className="w-10 h-10 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#80b3ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
         )}
         {product.category?.name && (
-          <div className="absolute top-3 left-3 z-10">
-            <span className="inline-flex items-center text-[10px] font-sans uppercase tracking-[0.15em] bg-[#16537e] text-white rounded-full px-3 py-1.5 shadow-sm font-bold">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
+            <span className="inline-flex items-center text-[8px] sm:text-[10px] font-sans uppercase tracking-[0.15em] bg-[#16537e]/95 text-white rounded-full px-2 py-1 sm:px-3 sm:py-1.5 shadow-sm font-bold backdrop-blur-sm">
               {product.category.name}
             </span>
           </div>
         )}
         {/* productType badge */}
         {product.productType === 'fabric' && (
-          <div className="absolute top-3 right-3 z-10">
-            <span className="text-[9px] font-sans uppercase tracking-widest bg-[#d7e9f2] text-[#16537e] rounded-full px-2 py-1 font-bold">
+          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10">
+            <span className="text-[8px] sm:text-[9px] font-sans uppercase tracking-widest bg-[#d7e9f2]/95 text-[#16537e] rounded-full px-2 py-1 font-bold shadow-sm backdrop-blur-sm">
               Fabric
             </span>
           </div>
         )}
       </div>
-      <div className="p-4 flex flex-col gap-3 flex-1">
+      <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 flex-1 relative bg-white">
         <div>
-          <h3 className="font-sans font-bold text-[#1e2a3a] text-sm leading-snug line-clamp-2">{product.name}</h3>
-          <p className="text-[#16537e] text-base font-bold mt-1">
+          <h3 className="font-sans font-bold text-[#1e2a3a] text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-[#16537e] transition-colors">{product.name}</h3>
+          <p className="text-[#16537e] text-sm sm:text-base font-bold mt-1">
             ₹{Number(product.pricePerMeter).toLocaleString()}
           </p>
         </div>
-        <div className="flex gap-2 mt-auto">
+        <div className="flex gap-1.5 sm:gap-2 mt-auto pt-1">
           <button
             onClick={() => {
               const wishlistBtn = document.querySelector(`[data-product-wishlist="${product._id}"] button`)
               wishlistBtn?.click()
             }}
-            className={`px-3 py-2 border text-[10px] font-sans uppercase tracking-wider rounded-xl transition-all flex items-center justify-center font-bold ${
+            className={`px-2 py-1.5 sm:px-3 sm:py-2 border text-[9px] sm:text-[10px] font-sans uppercase tracking-wider rounded-lg sm:rounded-xl transition-all flex items-center justify-center font-bold shadow-sm hover:shadow-md ${
               wishlisted 
-                ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470]' 
-                : 'border-[#b0d3e6] text-[#16537e] hover:bg-[#f4f9fb] hover:border-[#16537e]'
+                ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470] hover:-translate-y-0.5' 
+                : 'border-[#b0d3e6] text-[#16537e] hover:bg-[#f4f9fb] hover:border-[#16537e] hover:-translate-y-0.5'
             }`}
           >
-            <svg className="w-3.5 h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
           </button>
@@ -155,11 +156,11 @@ function ProductCard({ product, onShowDetails, onOrder }) {
             <WishlistButton productId={product._id} />
           </div>
           <button onClick={() => onShowDetails(product)}
-            className="flex-1 py-2 text-[10px] font-sans font-bold uppercase tracking-wider border border-[#b0d3e6] text-[#16537e] bg-white rounded-xl hover:border-[#16537e] hover:bg-[#f4f9fb] transition-all">
+            className="flex-1 py-1.5 sm:py-2 text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-wider border border-[#b0d3e6] text-[#16537e] bg-white rounded-lg sm:rounded-xl hover:border-[#16537e] hover:bg-[#f4f9fb] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
             Details
           </button>
           <button onClick={() => onOrder(product)}
-            className="flex-1 py-2 text-[10px] font-sans font-bold uppercase tracking-wider bg-[#16537e] text-white rounded-xl hover:bg-[#124470] transition-all shadow-sm hover:shadow">
+            className="flex-1 py-1.5 sm:py-2 text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-wider bg-[#16537e] text-white rounded-lg sm:rounded-xl hover:bg-[#124470] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
             Order
           </button>
         </div>
@@ -380,7 +381,7 @@ export default function ProductPage() {
                 <p className="font-sans text-sm uppercase tracking-widest text-[#80b3ba] font-bold">No products found</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5">
                 {products.map((p) => (
                   <ProductCard key={p._id} product={p} onShowDetails={setSelected} onOrder={handleOrder} />
                 ))}

@@ -140,7 +140,7 @@ function ProductCard({ product, onShowDetails, onOrder }) {
 
   return (
     <div className="group relative bg-white border border-[#b0d3e6]/50 backdrop-blur-sm rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:shadow-[0_25px_50px_-15px_rgba(22,83,126,0.15)] hover:-translate-y-1 hover:border-[#16537e]/30">
-      <div className="relative h-72 overflow-hidden bg-[#f4f9fb] rounded-xl">
+      <div className="relative h-40 sm:h-56 md:h-72 overflow-hidden bg-[#f4f9fb] rounded-xl">
         {image ? (
           <div className="relative w-full h-full">
             <img src={image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
@@ -154,48 +154,51 @@ function ProductCard({ product, onShowDetails, onOrder }) {
           </div>
         )}
         {product.category?.name && (
-          <div className="absolute top-3 left-3 z-10">
-            <span className="inline-flex items-center text-[10px] font-sans font-bold uppercase tracking-[0.15em] bg-[#16537e]/90 text-white rounded-full px-3 py-1.5 shadow-lg backdrop-blur-sm">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
+            <span className="inline-flex items-center text-[8px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.15em] bg-[#16537e]/90 text-white rounded-full px-2 py-1 sm:px-3 sm:py-1.5 shadow-lg backdrop-blur-sm">
               {product.category.name}
             </span>
           </div>
         )}
-        <div className="absolute inset-0 bg-[#1e2a3a]/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 px-3">
-          <button
-            onClick={() => {
-              const wishlistBtn = document.querySelector(`[data-wishlist-btn="${product._id}"] button`)
-              wishlistBtn?.click()
-            }}
-            className={`px-3 py-2 border text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms] flex items-center justify-center ${wishlisted
-                ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470]'
-                : 'border-[#16537e] bg-white text-[#16537e] hover:bg-[#16537e] hover:text-white'
-              }`}
-          >
-            <svg className="w-3.5 h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-          <div data-wishlist-btn={product._id} className="hidden">
-            <WishlistButton productId={product._id} />
+        <div className="absolute inset-0 bg-[#1e2a3a]/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3">
+          <div className="flex w-full sm:w-auto gap-1.5 sm:gap-2 justify-center">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const wishlistBtn = document.querySelector(`[data-wishlist-btn="${product._id}"] button`)
+                wishlistBtn?.click()
+              }}
+              className={`p-1.5 sm:px-3 sm:py-2 border text-[9px] sm:text-xs font-sans font-bold uppercase tracking-widest rounded-lg sm:rounded-xl transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-[50ms] flex items-center justify-center ${wishlisted
+                  ? 'border-[#16537e] bg-[#16537e] text-white hover:bg-[#124470]'
+                  : 'border-[#16537e] bg-white text-[#16537e] hover:bg-[#16537e] hover:text-white'
+                }`}
+            >
+              <svg className="w-3.5 h-3.5" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </button>
+            <div data-wishlist-btn={product._id} className="hidden">
+              <WishlistButton productId={product._id} />
+            </div>
+            <button onClick={(e) => { e.stopPropagation(); onShowDetails(product); }}
+              className="flex-1 sm:flex-none px-2 py-1.5 sm:px-3 sm:py-2 bg-white border border-white text-[#1e2a3a] text-[9px] sm:text-xs font-sans font-bold uppercase tracking-widest rounded-lg sm:rounded-xl hover:bg-[#d7e9f2] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75">
+              View
+            </button>
           </div>
-          <button onClick={() => onShowDetails(product)}
-            className="px-3 py-2 bg-white border border-white text-[#1e2a3a] text-xs font-sans font-bold uppercase tracking-widest rounded-xl hover:bg-[#d7e9f2] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75">
-            View
-          </button>
-          <button onClick={() => onOrder(product)}
-            className="px-3 py-2 border border-[#16537e] bg-[#16537e] text-white text-xs font-sans font-bold uppercase tracking-widest rounded-xl hover:bg-[#124470] hover:border-[#124470] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100">
+          <button onClick={(e) => { e.stopPropagation(); onOrder(product); }}
+            className="w-full sm:w-auto px-2 py-1.5 sm:px-3 sm:py-2 border border-[#16537e] bg-[#16537e] text-white text-[9px] sm:text-xs font-sans font-bold uppercase tracking-widest rounded-lg sm:rounded-xl hover:bg-[#124470] hover:border-[#124470] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100">
             Order
           </button>
         </div>
       </div>
 
-      <div className="p-6 flex flex-col flex-1 relative bg-white border-t border-[#b0d3e6]/30 z-10">
+      <div className="p-3 sm:p-5 md:p-6 flex flex-col flex-1 relative bg-white border-t border-[#b0d3e6]/30 z-10">
         <div className="mb-auto">
-          <h3 className="font-sans font-bold text-[#1e2a3a] text-lg leading-tight mb-3 line-clamp-2 group-hover:text-[#16537e] transition-colors duration-300">
+          <h3 className="font-sans font-bold text-[#1e2a3a] text-xs sm:text-base md:text-lg leading-tight mb-2 sm:mb-3 line-clamp-2 group-hover:text-[#16537e] transition-colors duration-300">
             {product.name}
           </h3>
           <div className="flex items-center justify-between gap-3">
-            <span className="text-[#16537e] text-2xl font-semibold">
+            <span className="text-[#16537e] text-sm sm:text-xl md:text-2xl font-semibold">
               ₹{Number(product.pricePerMeter).toLocaleString()}
             </span>
           </div>
@@ -702,7 +705,7 @@ export default function HomePage() {
               <p className="font-mono text-sm uppercase tracking-widest text-[#16537e]/60">Collection coming soon</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
               {(Array.isArray(products) ? products : []).map((p, i) => (
                 <div key={p._id} className="animate-fade-up opacity-0" style={{ animationDelay: `${i * 100}ms`, animationFillMode: 'forwards' }}>
                   <ProductCard product={p} onShowDetails={setSelectedProduct} onOrder={handleOrder} />
