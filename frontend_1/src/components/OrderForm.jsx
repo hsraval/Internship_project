@@ -4,11 +4,11 @@ import { useState } from "react";
 import { createOrder } from "../api/api";
 
 const INPUT =
-  "w-full bg-gradient-to-br from-white to-[#FAFAFA] border border-[#CBD5E1]/50 rounded-xl px-4 sm:px-5 py-3 text-[#333333] placeholder-[#94A3B8] focus:outline-none focus:border-[#C5A059] focus:shadow-[0_0_0_3px_rgba(197,165,2,0.1)] transition-all duration-300 text-sm font-medium";
+  "w-full bg-[#f4f9fb] border border-[#b0d3e6]/50 rounded-xl px-4 sm:px-5 py-3 text-[#1e2a3a] placeholder-[#80b3ba] focus:outline-none focus:border-[#16537e] focus:bg-white focus:ring-2 focus:ring-[#16537e]/20 transition-all duration-300 text-sm font-sans font-medium shadow-sm hover:border-[#80b3ba]";
 const LABEL =
-  "block text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748B]/80 mb-2 flex items-center gap-2";
+  "block text-[10px] font-sans font-bold uppercase tracking-widest text-[#16537e]/80 mb-2 flex items-center gap-2";
 const SECTION =
-  "border border-[#CBD5E1]/30 bg-gradient-to-br from-white via-[#FAFAFA] to-[#F8F9FA] rounded-2xl p-5 sm:p-6 space-y-5 shadow-lg shadow-[#CBD5E1]/10 backdrop-blur-sm";
+  "border border-[#b0d3e6]/50 bg-white rounded-2xl p-5 sm:p-6 space-y-5 shadow-sm hover:shadow-md transition-shadow duration-300";
 
 export default function OrderForm({ productId, onSuccess }) {
   const [quantity, setQuantity] = useState(1);
@@ -110,7 +110,7 @@ export default function OrderForm({ productId, onSuccess }) {
     <form onSubmit={handleSubmit} className="space-y-5">
 
       {error && (
-        <div className="bg-gradient-to-r from-[#EF4444]/10 to-[#DC2626]/5 border border-[#EF4444]/30 text-[#EF4444] text-sm px-5 py-4 rounded-xl font-mono shadow-lg shadow-[#EF4444]/10 backdrop-blur-sm">
+        <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-5 py-4 rounded-xl font-sans shadow-sm">
           <div className="flex items-center gap-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.932-3L13.932 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.932 3z" />
@@ -122,7 +122,7 @@ export default function OrderForm({ productId, onSuccess }) {
 
       {/* ── Order Info ── */}
       <div className={SECTION}>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">
+        <p className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold">
           Order Info
         </p>
         <div>
@@ -140,7 +140,7 @@ export default function OrderForm({ productId, onSuccess }) {
 
       {/* ── Stitching ── */}
       <div className={SECTION}>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">
+        <p className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold">
           Stitching
         </p>
 
@@ -149,16 +149,16 @@ export default function OrderForm({ productId, onSuccess }) {
           <div
             onClick={() => setStitchingEnabled((p) => !p)}
             className={`w-11 h-6 rounded-full transition-colors duration-200 flex items-center px-1 ${
-              stitchingEnabled ? "bg-[#C5A059]" : "bg-[#C5A059]/20"
+              stitchingEnabled ? "bg-[#16537e]" : "bg-[#d7e9f2]"
             }`}
           >
             <div
-              className={`w-4 h-4 rounded-full bg-[#FFFFFF] shadow transition-transform duration-200 ${
+              className={`w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${
                 stitchingEnabled ? "translate-x-5" : "translate-x-0"
               }`}
             />
           </div>
-          <span className="text-sm text-[#C5A059]">
+          <span className="text-sm font-semibold text-[#16537e]">
             {stitchingEnabled ? "Stitching required" : "No stitching"}
           </span>
         </label>
@@ -180,10 +180,10 @@ export default function OrderForm({ productId, onSuccess }) {
 
       {/* ── Measurements ── */}
       {stitchingEnabled && (
-        <div className={`border border-[#CBD5E1] rounded-xl p-4 sm:p-5 space-y-4 bg-gradient-to-br from-[#FAFAFA] to-[#F8F9FA] transition-all duration-300 ${SECTION}`}>
+        <div className={`border border-[#b0d3e6]/50 rounded-xl p-4 sm:p-5 space-y-4 bg-[#f4f9fb] transition-all duration-300`}>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse" />
-            <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">
+            <div className="w-2 h-2 rounded-full bg-[#16537e] animate-pulse" />
+            <p className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold">
               Measurements Required
             </p>
           </div>
@@ -209,7 +209,7 @@ export default function OrderForm({ productId, onSuccess }) {
                   value={measurements[key]}
                   onChange={setM(key)}
                   placeholder="0.0"
-                  className={`${INPUT} border-[#CBD5E1]/50 focus:border-[#C5A059] focus:shadow-[0_0_0_3px_rgba(197,165,2,0.1)] transition-all duration-200`}
+                  className={INPUT}
                 />
               </div>
             ))}
@@ -219,7 +219,7 @@ export default function OrderForm({ productId, onSuccess }) {
 
       {/* ── Delivery Address ── */}
       <div className={SECTION}>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-[#6B5F50]">
+        <p className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold">
           Delivery Address
         </p>
 
@@ -268,7 +268,7 @@ export default function OrderForm({ productId, onSuccess }) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#C5A059] hover:bg-[#0F172A] disabled:bg-[#94A3B8] disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-sm tracking-wide shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2"
+        className="w-full bg-[#16537e] hover:bg-[#124470] disabled:bg-[#d7e9f2] disabled:text-[#80b3ba] disabled:cursor-not-allowed text-white font-sans font-bold py-3 px-6 rounded-xl transition-all duration-300 text-sm uppercase tracking-wider shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
       >
         {loading ? (
           <>

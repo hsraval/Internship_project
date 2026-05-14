@@ -183,29 +183,29 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
       <div className="absolute inset-0 bg-[#0F172A]/20 backdrop-blur-md" />
 
       <div
-        className="relative z-10 w-full max-w-lg bg-[#FFFFFF] border border-[#CBD5E1] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="relative z-10 w-full max-w-lg bg-white border border-[#b0d3e6] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-[#CBD5E1]/30 flex-shrink-0 bg-gradient-to-r from-[#F8FAFC] via-white to-[#FAFAFA]">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-[#b0d3e6]/50 flex-shrink-0 bg-[#d7e9f2]/30">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A059] to-[#B8944A] flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-[#16537e] flex items-center justify-center shadow-md">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
             </div>
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-[#C5A059] font-semibold">
+              <p className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/60 font-semibold">
                 {isEdit ? 'Edit' : 'New'} Item
               </p>
-              <h2 className="font-serif text-xl font-bold text-[#0F172A] mt-0.5">
+              <h2 className="font-sans text-xl font-bold text-[#1e2a3a] mt-0.5">
                 {isEdit ? product.name : 'Add to Catalogue'}
               </h2>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-[#E2E8F0] text-[#64748B] hover:bg-[#F1F5F9] hover:border-[#C5A059] hover:text-[#C5A059] transition-all duration-200 shadow-sm hover:shadow-md"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-[#b0d3e6] text-[#80b3ba] hover:bg-[#f4f9fb] hover:border-[#16537e] hover:text-[#16537e] transition-all duration-300 shadow-sm hover:shadow-md"
             aria-label="Close"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -264,27 +264,27 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
                     e.stopPropagation()
                     setIsCategoryOpen(!isCategoryOpen)
                   }}
-                  className="relative w-full pl-3 pr-8 py-2.5 text-left bg-white border border-[#E2E8F0] rounded-lg shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] text-sm transition-all hover:border-[#CBD5E1]"
+                  className="relative w-full pl-3 pr-8 py-2.5 text-left bg-[#f4f9fb] border border-[#b0d3e6]/50 rounded-xl shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#16537e]/20 focus:border-[#16537e] focus:bg-white text-sm font-sans font-medium transition-all hover:border-[#80b3ba]"
                 >
-                  <span className="block truncate text-[#334155]">
+                  <span className="block truncate text-[#1e2a3a]">
                     {values.category ? categories.find(c => c._id === values.category)?.name || 'Select category…' : 'Select category…'}
                   </span>
                   <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg className="h-4 w-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-4 w-4 text-[#80b3ba]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </span>
                 </button>
 
                 {isCategoryOpen && (
-                  <div className="rounded-lg bg-white shadow-xl border border-[#E2E8F0] max-h-60 overflow-auto" style={getCategoryDropdownPosition()}>
+                  <div className="rounded-xl bg-white shadow-xl border border-[#b0d3e6]/50 max-h-60 overflow-auto" style={getCategoryDropdownPosition()}>
                     <div className="py-1">
                       {categories.map((c) => (
                         <button
                           key={c._id}
                           type="button"
                           onClick={() => handleCategorySelect(c._id)}
-                          className={`w-full text-left px-3 py-2.5 text-sm transition-colors ${values.category === c._id ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                          className={`w-full text-left px-3 py-2.5 text-sm font-sans transition-colors ${values.category === c._id ? 'bg-[#16537e]/10 text-[#16537e] font-bold' : 'text-[#1e2a3a] hover:bg-[#f4f9fb]'}`}
                         >
                           {c.name}
                         </button>
@@ -306,36 +306,36 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
                   e.stopPropagation()
                   setIsTypeOpen(!isTypeOpen)
                 }}
-                className="relative w-full pl-3 pr-8 py-2.5 text-left bg-white border border-[#E2E8F0] rounded-lg shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 focus:border-[#C5A059] text-sm transition-all hover:border-[#CBD5E1]"
+                className="relative w-full pl-3 pr-8 py-2.5 text-left bg-[#f4f9fb] border border-[#b0d3e6]/50 rounded-xl shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#16537e]/20 focus:border-[#16537e] focus:bg-white text-sm font-sans font-medium transition-all hover:border-[#80b3ba]"
               >
-                <span className="block truncate text-[#334155] flex items-center gap-2">
-                  <span className={`w-2 h-2 rounded-full ${productType === 'fabric' ? 'bg-[#C5A059]' : 'bg-[#0F172A]'}`} />
+                <span className="block truncate text-[#1e2a3a] flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${productType === 'fabric' ? 'bg-[#16537e]' : 'bg-[#80b3ba]'}`} />
                   {productType === 'fabric' ? 'Fabric (Roll)' : 'Product (Finished)'}
                 </span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="h-4 w-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-4 w-4 text-[#80b3ba]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </span>
               </button>
 
               {isTypeOpen && (
-                <div className="rounded-lg bg-white shadow-xl border border-[#E2E8F0] overflow-hidden" style={getTypeDropdownPosition()}>
+                <div className="rounded-xl bg-white shadow-xl border border-[#b0d3e6]/50 overflow-hidden" style={getTypeDropdownPosition()}>
                   <div className="py-1">
                     <button
                       type="button"
                       onClick={() => handleTypeSelect('product')}
-                      className={`w-full text-left px-3 py-2.5 text-sm transition-colors flex items-center gap-2 ${productType === 'product' ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                      className={`w-full text-left px-3 py-2.5 text-sm font-sans transition-colors flex items-center gap-2 ${productType === 'product' ? 'bg-[#16537e]/10 text-[#16537e] font-bold' : 'text-[#1e2a3a] hover:bg-[#f4f9fb]'}`}
                     >
-                      <span className="w-2 h-2 rounded-full bg-[#0F172A]" />
+                      <span className="w-2 h-2 rounded-full bg-[#80b3ba]" />
                       Product (Finished)
                     </button>
                     <button
                       type="button"
                       onClick={() => handleTypeSelect('fabric')}
-                      className={`w-full text-left px-3 py-2.5 text-sm transition-colors flex items-center gap-2 ${productType === 'fabric' ? 'bg-[#C5A059]/10 text-[#C5A059] font-medium' : 'text-[#334155] hover:bg-[#F8FAFC]'}`}
+                      className={`w-full text-left px-3 py-2.5 text-sm font-sans transition-colors flex items-center gap-2 ${productType === 'fabric' ? 'bg-[#16537e]/10 text-[#16537e] font-bold' : 'text-[#1e2a3a] hover:bg-[#f4f9fb]'}`}
                     >
-                      <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
+                      <span className="w-2 h-2 rounded-full bg-[#16537e]" />
                       Fabric (Roll)
                     </button>
                   </div>
@@ -357,7 +357,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
                   {/* Existing images */}
                   {existingImages.map((img, i) => (
                     <div key={`existing-${i}`} className="relative group aspect-square">
-                      <div className="w-full h-full rounded-xl overflow-hidden border-2 border-[#E2E8F0] shadow-sm hover:shadow-md transition-all duration-200">
+                      <div className="w-full h-full rounded-xl overflow-hidden border-2 border-[#b0d3e6]/50 shadow-sm hover:shadow-md transition-all duration-300">
                         <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       <button
@@ -376,11 +376,11 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
                   {/* New images */}
                   {imagePreviews.map((url, i) => (
                     <div key={`new-${i}`} className="relative group aspect-square">
-                      <div className="w-full h-full rounded-xl overflow-hidden border-2 border-[#C5A059]/30 shadow-sm hover:shadow-md transition-all duration-200">
+                      <div className="w-full h-full rounded-xl overflow-hidden border-2 border-[#16537e]/30 shadow-sm hover:shadow-md hover:border-[#16537e] transition-all duration-300">
                         <img src={url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       <div className="absolute top-1 left-1">
-                        <span className="text-[8px] bg-gradient-to-r from-[#C5A059] to-[#B8944A] text-white px-2 py-0.5 rounded-full font-mono font-bold shadow-sm">NEW</span>
+                        <span className="text-[8px] bg-[#16537e] text-white px-2 py-0.5 rounded-full font-sans font-bold shadow-sm">NEW</span>
                       </div>
                       <button
                         type="button"
@@ -403,9 +403,9 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="group relative w-full py-4 px-6 border-2 border-dashed border-[#CBD5E1] rounded-xl text-[#64748B] hover:border-[#C5A059] hover:bg-gradient-to-r hover:from-[#F8FAFC] hover:to-[#FAFAFA] hover:text-[#C5A059] transition-all duration-200 text-sm font-mono uppercase tracking-wider flex items-center justify-center gap-3 hover:shadow-md"
+                    className="group relative w-full py-4 px-6 border-2 border-dashed border-[#b0d3e6] rounded-xl text-[#16537e]/70 hover:border-[#16537e] hover:bg-[#f4f9fb] hover:text-[#16537e] transition-all duration-300 text-sm font-sans font-semibold uppercase tracking-wider flex items-center justify-center gap-3 hover:shadow-md"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F1F5F9] to-[#E2E8F0] group-hover:from-[#C5A059]/10 group-hover:to-[#C5A059]/20 flex items-center justify-center transition-all duration-200">
+                    <div className="w-10 h-10 rounded-lg bg-[#d7e9f2] group-hover:bg-[#16537e] group-hover:text-white flex items-center justify-center transition-colors duration-300">
                       <svg className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
@@ -430,11 +430,11 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
         </form>
 
         {/* Footer */}
-        <div className="flex gap-3 px-6 py-5 border-t border-[#E2E8F0]/30 flex-shrink-0 bg-gradient-to-r from-[#FAFAFA] to-white">
+        <div className="flex gap-3 px-6 py-5 border-t border-[#b0d3e6]/50 flex-shrink-0 bg-[#f4f9fb]">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-3 px-4 bg-white border-2 border-[#E2E8F0] text-[#64748B] rounded-xl font-mono text-xs uppercase tracking-wider hover:border-[#C5A059] hover:text-[#C5A059] hover:bg-[#F8FAFC] transition-all duration-200 font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5"
+            className="flex-1 py-3 px-4 bg-white border border-[#b0d3e6] text-[#16537e]/70 rounded-xl font-sans text-xs uppercase tracking-wider hover:border-[#16537e] hover:text-[#16537e] hover:bg-[#d7e9f2]/30 transition-all duration-300 font-bold shadow-sm hover:shadow-md hover:-translate-y-0.5"
           >
             <span className="flex items-center justify-center gap-2">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -447,7 +447,7 @@ export default function ProductForm({ product, categories, onClose, onSaved }) {
             type="submit"
             onClick={handleSubmit}
             disabled={submitting}
-            className="flex-1 py-3 px-4 bg-gradient-to-r from-[#C5A059] to-[#B8944A] text-white rounded-xl font-mono text-xs uppercase tracking-wider hover:from-[#0F172A] hover:to-[#1E293B] transition-all duration-200 font-bold disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:translate-y-0 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            className="flex-1 py-3 px-4 bg-[#16537e] text-white rounded-xl font-sans text-xs uppercase tracking-wider hover:bg-[#124470] transition-all duration-300 font-bold disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:translate-y-0 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-0.5"
           >
             {submitting ? (
               <>
@@ -478,10 +478,10 @@ function Field({ label, error, hint, children }) {
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label className="font-mono text-[10px] uppercase tracking-widest text-[#475569] font-semibold flex items-center gap-2">
+        <label className="font-sans text-[10px] uppercase tracking-widest text-[#16537e]/80 font-bold flex items-center gap-2">
           {label}
           {hint && (
-            <span className="text-[8px] text-[#94A3B8] font-normal normal-case tracking-normal">({hint})</span>
+            <span className="text-[8px] text-[#80b3ba] font-normal normal-case tracking-normal">({hint})</span>
           )}
         </label>
       )}
@@ -501,5 +501,5 @@ function Field({ label, error, hint, children }) {
 }
 
 function formInput(error) {
-  return `w-full px-4 py-3 bg-gradient-to-r from-white to-[#FAFAFA] border ${error ? 'border-[#EF4444] ring-2 ring-[#EF4444]/20' : 'border-[#E2E8F0]'} rounded-xl text-[#0F172A] text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 focus:from-white focus:to-[#F8FAFC] transition-all duration-200 font-mono shadow-sm hover:shadow-md`
+  return `w-full px-4 py-3 bg-[#f4f9fb] border ${error ? 'border-red-400 ring-2 ring-red-400/20 bg-red-50' : 'border-[#b0d3e6]/50'} rounded-xl text-[#1e2a3a] text-sm placeholder-[#80b3ba] font-sans font-medium focus:outline-none focus:border-[#16537e] focus:bg-white focus:ring-2 focus:ring-[#16537e]/20 transition-all duration-300 shadow-sm hover:border-[#80b3ba]`
 }

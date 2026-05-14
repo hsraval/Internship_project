@@ -30,24 +30,24 @@
   /* ─── PRIMARY BUTTON ─────────────────────────────────────────── */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3
-           bg-[#16537e] text-white font-body font-medium text-sm
-           rounded-lg transition-all duration-200
-           hover:bg-[#124470] active:scale-[0.98]
-           disabled:opacity-50 disabled:cursor-not-allowed
-           focus:outline-none focus:ring-2 focus:ring-[#80b3ba] focus:ring-offset-2
-           focus:ring-offset-[#d7e9f2];
+           bg-[#16537e] text-white font-sans font-bold text-sm
+           rounded-xl transition-all duration-300
+           hover:bg-[#124470] hover:-translate-y-0.5 active:scale-[0.98] hover:shadow-lg hover:shadow-[#16537e]/20
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none
+           focus:outline-none focus:ring-2 focus:ring-[#16537e] focus:ring-offset-2
+           focus:ring-offset-[#d7e9f2] shadow-md;
   }
 
   /* ─── GHOST BUTTON ───────────────────────────────────────────── */
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3
-           bg-transparent text-[#16537e] font-body font-medium text-sm
-           rounded-lg border border-[#80b3ba]
-           transition-all duration-200
-           hover:bg-[#d7e9f2] hover:border-[#16537e]
+           bg-transparent text-[#16537e] font-sans font-bold text-sm
+           rounded-xl border-2 border-[#16537e]/20
+           transition-all duration-300
+           hover:bg-[#f4f9fb] hover:border-[#16537e] hover:-translate-y-0.5 hover:shadow-md
            active:scale-[0.98]
-           disabled:opacity-50 disabled:cursor-not-allowed
-           focus:outline-none focus:ring-2 focus:ring-[#80b3ba] focus:ring-offset-2;
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none
+           focus:outline-none focus:ring-2 focus:ring-[#16537e] focus:ring-offset-2;
   }
 
   /* dark mode ghost */
@@ -57,11 +57,11 @@
 
   /* ─── INPUT FIELD ────────────────────────────────────────────── */
   .input-field {
-    @apply w-full px-4 py-3 bg-white border border-[#b0d3e6] rounded-lg
+    @apply w-full px-4 py-3 bg-[#f4f9fb] border border-[#b0d3e6]/50 rounded-xl
            text-[#1e2a3a] placeholder-[#80b3ba]
-           font-body text-sm transition-all duration-200
-           focus:outline-none focus:border-[#16537e] focus:ring-2 focus:ring-[#80b3ba]/30
-           hover:border-[#80b3ba] shadow-inset-top;
+           font-sans font-medium text-sm transition-all duration-300
+           focus:outline-none focus:border-[#16537e] focus:bg-white focus:ring-2 focus:ring-[#16537e]/20
+           hover:border-[#80b3ba] shadow-sm;
   }
 
   .dark .input-field {
@@ -70,13 +70,13 @@
   }
 
   .input-field.error {
-    @apply border-red-400 focus:border-red-500 focus:ring-red-100;
+    @apply border-red-400 focus:border-red-500 focus:ring-red-100 bg-red-50;
   }
 
   /* ─── LABEL ──────────────────────────────────────────────────── */
   .label {
-    @apply block text-xs font-mono font-medium text-[#16537e]
-           uppercase tracking-widest mb-2;
+    @apply block text-xs font-sans font-bold text-[#16537e]/80
+           uppercase tracking-widest mb-1.5;
   }
 
   .dark .label {
@@ -85,7 +85,7 @@
 
   /* ─── AUTH CARD ──────────────────────────────────────────────── */
   .auth-card {
-    @apply bg-white rounded-2xl shadow-card border border-[#b0d3e6] p-8 md:p-10;
+    @apply bg-white rounded-3xl shadow-xl border border-[#b0d3e6]/30 p-8 md:p-10;
   }
 
   .dark .auth-card {
