@@ -6,6 +6,7 @@ import { useWishlist } from '../context/WishlistContext'
 import { getProducts, getFabricProducts } from '../api/api'    // ← added getFabricProducts
 import toast from 'react-hot-toast'
 import WishlistButton from '../components/WishlistButton'
+import OrderModal from '../components/OrderModal'
 
 // ─── Styles for Custom Animations ─────────────────────────────────────────────
 const styleSheet = document.createElement("style");
@@ -499,6 +500,7 @@ export default function HomePage() {
   const [loadingProducts, setLoadingProducts] = useState(true)
   const [fabrics, setFabrics] = useState([])   // ← NEW
   const [selectedProduct, setSelectedProduct] = useState(null)
+  const [orderProduct, setOrderProduct] = useState(null)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -528,7 +530,7 @@ export default function HomePage() {
     if (!isAuthenticated) {
       navigate('/login')
     } else {
-      navigate(`/order?product=${product._id}`)
+      setOrderProduct(product)
     }
   }
 
@@ -843,6 +845,13 @@ export default function HomePage() {
 
       {selectedProduct && (
         <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      )}
+      {orderProduct && (
+        <OrderModal 
+          product={orderProduct} 
+          onClose={() => setOrderProduct(null)} 
+          onSuccess={() => { setOrderProduct(null); navigate('/orders') }} 
+        />
       )}
     </div>
   )

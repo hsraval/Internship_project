@@ -7,6 +7,7 @@ import { getProducts, getCategories } from '../api/api'
 import toast from 'react-hot-toast'
 import OrderForm from '../components/OrderForm'
 import WishlistButton from '../components/WishlistButton'
+import OrderModal from '../components/OrderModal'
 
 // ─── Product Detail Modal ─────────────────────────────────────────────────────
 
@@ -186,6 +187,7 @@ export default function ProductPage() {
   const [page, setPage]             = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [selected, setSelected]     = useState(null)
+  const [orderProduct, setOrderProduct] = useState(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const LIMIT = 8
 
@@ -243,7 +245,7 @@ export default function ProductPage() {
 
   const handleOrder = (product) => {
     if (!isAuthenticated) { navigate('/login'); return }
-    navigate(`/order?product=${product._id}`)
+    setOrderProduct(product)
   }
 
   return (
@@ -420,6 +422,13 @@ export default function ProductPage() {
 
       {selected && (
         <ProductModal product={selected} onClose={() => setSelected(null)} onOrder={handleOrder} />
+      )}
+      {orderProduct && (
+        <OrderModal 
+          product={orderProduct} 
+          onClose={() => setOrderProduct(null)} 
+          onSuccess={() => { setOrderProduct(null); navigate('/orders') }} 
+        />
       )}
     </>
   )
